@@ -1,47 +1,56 @@
 <div align="center">
 
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ HERO SECTION ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-
-# 🏥 Sistema de Gestión de Clínica de Fisioterapia
-
-<img src="https://img.shields.io/badge/Estado-En%20Desarrollo-00d4ff?style=for-the-badge&labelColor=0a0a0a" alt="Estado"/>
-
-### 🌟 *Plataforma integral para la gestión de citas, profesionales y pacientes*
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1a2e,50:16213e,100:0f3460&height=220&section=header&text=🏥%20FisioClinic&fontSize=70&fontColor=00d4ff&animation=fadeIn&fontAlignY=30&desc=Sistema%20de%20Gestión%20de%20Clínica%20de%20Fisioterapia&descSize=20&descAlignY=52&descAlign=50"/>
 
 <br/>
 
-![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white&labelColor=1a1a2e)
-![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white&labelColor=1a1a2e)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white&labelColor=1a1a2e)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=1a1a2e)
-![Filament](https://img.shields.io/badge/Filament-FFAA00?style=for-the-badge&logo=laravel&logoColor=white&labelColor=1a1a2e)
-![Blade](https://img.shields.io/badge/Blade-FF2D20?style=for-the-badge&logo=laravel&logoColor=white&labelColor=1a1a2e)
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=00D4FF&center=true&vCenter=true&width=600&lines=Gestión+de+Citas+Inteligente;Panel+Administrativo+Moderno;Integración+con+TPV+Virtual;Tienda+Online+Integrada" alt="Typing SVG" />
+
+<br/><br/>
+
+[![Estado](https://img.shields.io/badge/🚀_Estado-En_Desarrollo-00d4ff?style=for-the-badge&labelColor=1a1a2e)](https://github.com/Naoufal-Charafat/IW_Grupal_parte2)
+[![Versión](https://img.shields.io/badge/📦_Versión-1.0.0-ff6b6b?style=for-the-badge&labelColor=1a1a2e)](https://github.com/Naoufal-Charafat/IW_Grupal_parte2)
+[![Licencia](https://img.shields.io/badge/📄_Licencia-MIT-4ecdc4?style=for-the-badge&labelColor=1a1a2e)](LICENSE)
+
+<br/><br/>
+
+### 💡 Plataforma integral para la gestión de citas, profesionales y pacientes
 
 <br/>
 
-```
-╔══════════════════════════════════════════════════════════════════╗
-║  🔮  SISTEMA MODERNO DE GESTIÓN CLÍNICA  🔮                      ║
-║──────────────────────────────────────────────────────────────────║
-║  ⚡ Reservas inteligentes    │  🔐 Multi-rol seguro             ║
-║  📊 Dashboard analítico      │  💳 Pagos integrados             ║
-║  📧 Notificaciones auto      │  🏨 Integración hoteles          ║
-╚══════════════════════════════════════════════════════════════════╝
-```
+[![PHP](https://img.shields.io/badge/PHP_8.x-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![Laravel](https://img.shields.io/badge/Laravel_11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
+[![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Filament](https://img.shields.io/badge/Filament-FFAA00?style=for-the-badge&logo=laravel&logoColor=white)](https://filamentphp.com)
 
 </div>
 
----
+<br/>
+
+## 📑 Índice
 
 <div align="center">
 
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░ TECNOLOGÍAS SECTION ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+[🛠️ Stack Tecnológico](#-stack-tecnológico) •
+[🔌 Integraciones API](#-integraciones-api-rest) •
+[🗺️ Roadmap](#-roadmap-de-funcionalidades) •
+[🔄 Metodología](#-metodología-de-desarrollo) •
+[👥 Equipo](#-equipo---grupo-g17)
+
+</div>
+
+<br/>
+
+---
+
+<br/>
+
+<div align="center">
 
 ## 🛠️ Stack Tecnológico
+
+*Tecnologías cuidadosamente seleccionadas para un desarrollo robusto y escalable*
 
 </div>
 
@@ -49,61 +58,55 @@
 
 <table align="center">
 <tr>
-<td align="center" width="50%">
+<td align="center" width="33%">
 
-### 🗄️ Base de Datos
-```
-╭─────────────────────────────────╮
-│         ⚡ MySQL ⚡              │
-├─────────────────────────────────┤
-│  ✦ Motor relacional robusto    │
-│  ✦ Alta disponibilidad         │
-│  ✦ Integridad referencial      │
-│  ✦ Transacciones ACID          │
-│  ✦ Escalabilidad probada       │
-╰─────────────────────────────────╯
-```
+<img src="https://img.shields.io/badge/🗄️_BASE_DE_DATOS-1a1a2e?style=for-the-badge" alt="BD"/>
 
-**¿Por qué MySQL?**
-> Base de datos relacional madura y confiable, perfecta para manejar las relaciones complejas entre pacientes, profesionales, citas y pagos. Su integración nativa con Laravel mediante Eloquent ORM facilita las operaciones CRUD.
+<br/><br/>
+
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" width="80"/>
+
+<br/>
+
+**MySQL**
+
+Motor relacional robusto con integridad referencial, transacciones ACID y escalabilidad probada.
+
+*Integración nativa con Laravel mediante Eloquent ORM*
 
 </td>
-<td align="center" width="50%">
+<td align="center" width="33%">
 
-### ⚙️ Backend
-```
-╭─────────────────────────────────╮
-│    🔥 Laravel + Filament 🔥     │
-├─────────────────────────────────┤
-│  ✦ PHP 8.x con Laravel 11      │
-│  ✦ Filament Admin Panel        │
-│  ✦ Filament Shield (RBAC)      │
-│  ✦ API RESTful                 │
-│  ✦ Queue Jobs para emails      │
-╰─────────────────────────────────╯
-```
+<img src="https://img.shields.io/badge/⚙️_BACKEND-1a1a2e?style=for-the-badge" alt="Backend"/>
 
-**¿Por qué Laravel + Filament?**
-> Laravel ofrece una arquitectura MVC limpia, mientras que Filament proporciona un panel de administración moderno y Filament Shield gestiona roles y permisos de forma elegante.
+<br/><br/>
+
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/laravel/laravel-original.svg" width="80"/>
+
+<br/>
+
+**Laravel 11 + Filament**
+
+Arquitectura MVC limpia con panel de administración moderno. Filament Shield para gestión de roles y permisos (RBAC).
+
+*API RESTful + Queue Jobs para emails*
 
 </td>
-</tr>
-<tr>
-<td align="center" colspan="2">
+<td align="center" width="33%">
 
-### 🎨 Frontend
-```
-╭───────────────────────────────────────────────────────────────────╮
-│                    💎 Blade + Tailwind CSS 💎                      │
-├───────────────────────────────────────────────────────────────────┤
-│  ✦ Blade Templates       │  ✦ Tailwind CSS 3.x                   │
-│  ✦ Componentes reutiliza │  ✦ Diseño responsive                  │
-│  ✦ Livewire (reactivo)   │  ✦ UI/UX moderna                      │
-╰───────────────────────────────────────────────────────────────────╯
-```
+<img src="https://img.shields.io/badge/🎨_FRONTEND-1a1a2e?style=for-the-badge" alt="Frontend"/>
 
-**¿Por qué Blade + Tailwind?**
-> Blade se integra perfectamente con Laravel manteniendo una sintaxis limpia. Tailwind CSS permite crear interfaces modernas con utility-first CSS, acelerando el desarrollo sin sacrificar personalización.
+<br/><br/>
+
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg" width="80"/>
+
+<br/>
+
+**Blade + Tailwind CSS**
+
+Templates integrados con Laravel y utility-first CSS para interfaces modernas y responsive.
+
+*Livewire para componentes reactivos*
 
 </td>
 </tr>
@@ -113,13 +116,13 @@
 
 ---
 
+<br/>
+
 <div align="center">
 
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░ INTEGRACIONES API ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-
 ## 🔌 Integraciones API REST
+
+*Arquitectura de servicios conectados*
 
 </div>
 
@@ -127,329 +130,292 @@
 
 > 💡 **Nota**: Un TPV Virtual (Terminal Punto de Venta) es esencialmente una **API REST** que expone endpoints para procesar pagos. Cuando nos conectamos al TPV de otro grupo, estamos consumiendo su API.
 
+<br/>
+
 <table align="center">
 <tr>
 <td align="center" width="50%">
 
-### 💳 TPV Virtual (Consumidor)
-```
-╭─────────────────────────────────╮
-│   🏦 API REST del TPV 🏦        │
-├─────────────────────────────────┤
-│  ✦ Consumimos API de otro      │
-│    grupo del curso             │
-│  ✦ Iniciar transacciones       │
-│  ✦ Consultar estado de pagos   │
-│  ✦ Procesar reembolsos         │
-│  ✦ Recibir webhooks            │
-╰─────────────────────────────────╯
-```
+<img src="https://img.shields.io/badge/💳_TPV_VIRTUAL-Consumidor-00d4ff?style=for-the-badge&labelColor=1a1a2e" alt="TPV"/>
 
-**Rol: CONSUMIDOR**
-> Consumimos la API REST del TPV Virtual desarrollada por otro grupo. Todas las transacciones de citas y tienda online se procesan a través de este servicio. El TPV nos devuelve IDs de transacción y estados que almacenamos localmente.
+<br/><br/>
+
+**🏦 API REST del TPV**
+
+| Funcionalidad | Descripción |
+|:-------------:|:------------|
+| 🔄 | Consumimos API de otro grupo |
+| 💰 | Iniciar transacciones |
+| 📊 | Consultar estado de pagos |
+| ↩️ | Procesar reembolsos |
+| 🔔 | Recibir webhooks |
+
+<br/>
+
+> Todas las transacciones de citas y tienda online se procesan a través del TPV externo.
 
 </td>
 <td align="center" width="50%">
 
-### 🛍️ Catálogo de Servicios (Proveedor)
-```
-╭─────────────────────────────────╮
-│  📡 Nuestra API REST 📡         │
-├─────────────────────────────────┤
-│  ✦ Exponemos tratamientos      │
-│  ✦ Catálogo de productos       │
-│  ✦ Disponibilidad profesional  │
-│  ✦ Precios y tarifas           │
-│  ✦ Endpoints RESTful           │
-╰─────────────────────────────────╯
-```
+<img src="https://img.shields.io/badge/📡_CATÁLOGO-Proveedor-ff6b6b?style=for-the-badge&labelColor=1a1a2e" alt="API"/>
 
-**Rol: PROVEEDOR**
-> Exponemos nuestra propia API REST para que el TPV y otros sistemas externos puedan consultar nuestro catálogo de servicios y productos de la clínica.
+<br/><br/>
+
+**🛍️ Nuestra API REST**
+
+| Endpoint | Descripción |
+|:--------:|:------------|
+| 📋 | Tratamientos disponibles |
+| 🛒 | Catálogo de productos |
+| 👨‍⚕️ | Disponibilidad profesional |
+| 💲 | Precios y tarifas |
+| 🔗 | Endpoints RESTful |
+
+<br/>
+
+> Exponemos nuestra API para que el TPV y otros sistemas consulten nuestro catálogo.
 
 </td>
 </tr>
 </table>
 
+<br/>
+
 <div align="center">
 
-```
-┌────────────────────────────────────────────────────────────────────────────────┐
-│                     🔄 FLUJO DE INTEGRACIÓN CON TPV 🔄                         │
-├────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                │
-│   ┌──────────────┐         ┌──────────────────┐         ┌──────────────┐      │
-│   │   CLIENTE    │ ──────▶ │  NUESTRA APP     │ ──────▶ │  API TPV     │      │
-│   │  (Browser)   │  Pago   │  (Laravel)       │  POST   │ (Otro Grupo) │      │
-│   └──────────────┘         └──────────────────┘         └──────────────┘      │
-│                                     │                          │               │
-│                                     │ Almacena:                │ Responde:     │
-│                                     │ - tpv_transaction_id     │ - ID trans.   │
-│                                     │ - tpv_status             │ - Estado      │
-│                                     ▼                          │               │
-│                            ┌──────────────────┐                │               │
-│                            │    MySQL DB      │ ◀──────────────┘               │
-│                            │   (payments)     │     Webhook/Callback           │
-│                            └──────────────────┘                                │
-│                                     │                                          │
-│                                     │ Expone API                               │
-│                                     ▼                                          │
-│                            ┌──────────────────┐                                │
-│                            │  NUESTRA API     │ ◀────── TPV / Otros Grupos     │
-│                            │  (Servicios)     │         (Consultan catálogo)   │
-│                            └──────────────────┘                                │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────┘
-```
+### Flujo de Integración
 
 </div>
 
+```
+                    ┌─────────────────────────────────────────────────────────────┐
+                    │                                                             │
+    ┌─────────┐     │     ┌─────────────┐            ┌─────────────┐             │
+    │ Cliente │────▶│────▶│  FisioClinic │───POST───▶│   API TPV   │             │
+    │(Browser)│     │     │  (Laravel)   │◀──────────│(Otro Grupo) │             │
+    └─────────┘     │     └──────┬───────┘  Response └─────────────┘             │
+                    │            │                                                │
+                    │            │ Almacena                                       │
+                    │            ▼                                                │
+                    │     ┌─────────────┐                                         │
+                    │     │   MySQL DB  │                                         │
+                    │     │  (payments) │◀─────── Webhook/Callback                │
+                    │     └──────┬──────┘                                         │
+                    │            │                                                │
+                    │            │ Expone API                                     │
+                    │            ▼                                                │
+                    │     ┌─────────────┐                                         │
+                    │     │ Nuestra API │◀─────── TPV / Otros Grupos              │
+                    │     │ (Servicios) │                                         │
+                    │     └─────────────┘                                         │
+                    │                                                             │
+                    └─────────────────────────────────────────────────────────────┘
+```
+
+<br/>
+
 ---
 
-<div align="center">
+<br/>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ROADMAP SECTION ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+<div align="center">
 
 ## 🗺️ Roadmap de Funcionalidades
 
+*Desarrollo incremental organizado en fases*
+
 </div>
 
 <br/>
-
-```
-                    ╔═══════════════════════════════════════════════════════════╗
-                    ║           🚀 ROADMAP DE DESARROLLO 🚀                     ║
-                    ╚═══════════════════════════════════════════════════════════╝
-
-    ┌─────────────────────────────────────────────────────────────────────────────────┐
-    │                                                                                 │
-    │   ╭──────────────────────────────────────────────────────────────────────────╮  │
-    │   │ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │  │
-    │   │ ░░                    FASE 1: FUNDAMENTOS                            ░░ │  │
-    │   │ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │  │
-    │   ╰──────────────────────────────────────────────────────────────────────────╯  │
-    │                                                                                 │
-    │   ┌────────────────────────────────────────────────────────────────────────┐    │
-    │   │  🔹 Configuración del entorno Laravel + Filament                       │    │
-    │   │  🔹 Diseño e implementación del esquema de base de datos              │    │
-    │   │  🔹 Sistema de autenticación y autorización (Filament Shield)         │    │
-    │   │  🔹 Gestión de roles: Admin, Recepcionista, Profesional, Cliente      │    │
-    │   │  🔹 CRUD de usuarios con asignación de roles                          │    │
-    │   └────────────────────────────────────────────────────────────────────────┘    │
-    │                                              │                                  │
-    │                                              ▼                                  │
-    │   ╭──────────────────────────────────────────────────────────────────────────╮  │
-    │   │ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │  │
-    │   │ ▓▓                  FASE 2: NÚCLEO DEL SISTEMA                       ▓▓ │  │
-    │   │ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │  │
-    │   ╰──────────────────────────────────────────────────────────────────────────╯  │
-    │                                                                                 │
-    │   ┌────────────────────────────────────────────────────────────────────────┐    │
-    │   │  🔸 Gestión de salas/instalaciones                                     │    │
-    │   │  🔸 Configuración de horarios de clínica                              │    │
-    │   │  🔸 Gestión de profesionales y especialidades                         │    │
-    │   │  🔸 Sistema de reservas con calendario interactivo                    │    │
-    │   │  🔸 Asignación inteligente de salas                                   │    │
-    │   │  🔸 Bloqueo de horarios por profesional                               │    │
-    │   └────────────────────────────────────────────────────────────────────────┘    │
-    │                                              │                                  │
-    │                                              ▼                                  │
-    │   ╭──────────────────────────────────────────────────────────────────────────╮  │
-    │   │ ░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░ │  │
-    │   │ ▓░                FASE 3: EXPERIENCIA DE USUARIO                     ░▓ │  │
-    │   │ ░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░▓░ │  │
-    │   ╰──────────────────────────────────────────────────────────────────────────╯  │
-    │                                                                                 │
-    │   ┌────────────────────────────────────────────────────────────────────────┐    │
-    │   │  🔹 Portal público: Quiénes somos, contacto, horarios                  │    │
-    │   │  🔹 Panel de cliente: historial, citas pendientes                     │    │
-    │   │  🔹 Panel de profesional: agenda, historial de pacientes              │    │
-    │   │  🔹 Panel de recepcionista: gestión integral de reservas              │    │
-    │   │  🔹 Sistema de notificaciones por email (confirmación/recordatorio)   │    │
-    │   │  🔹 Diseño responsive con Tailwind CSS                                │    │
-    │   └────────────────────────────────────────────────────────────────────────┘    │
-    │                                              │                                  │
-    │                                              ▼                                  │
-    │   ╭──────────────────────────────────────────────────────────────────────────╮  │
-    │   │ ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ │  │
-    │   │ ▒▒               FASE 4: PAGOS Y TIENDA ONLINE                       ▒▒ │  │
-    │   │ ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ │  │
-    │   ╰──────────────────────────────────────────────────────────────────────────╯  │
-    │                                                                                 │
-    │   ┌────────────────────────────────────────────────────────────────────────┐    │
-    │   │  🔸 Integración con pasarela de pago (TPV Virtual)                     │    │
-    │   │  🔸 Gestión de estados de pago                                        │    │
-    │   │  🔸 Catálogo de productos (tienda online)                             │    │
-    │   │  🔸 Carrito de compras para usuarios autenticados                     │    │
-    │   │  🔸 Historial de transacciones                                        │    │
-    │   └────────────────────────────────────────────────────────────────────────┘    │
-    │                                              │                                  │
-    │                                              ▼                                  │
-    │   ╭──────────────────────────────────────────────────────────────────────────╮  │
-    │   │ ████████████████████████████████████████████████████████████████████████ │  │
-    │   │ ██             FASE 5: INTEGRACIONES Y ANALYTICS                     ██ │  │
-    │   │ ████████████████████████████████████████████████████████████████████████ │  │
-    │   ╰──────────────────────────────────────────────────────────────────────────╯  │
-    │                                                                                 │
-    │   ┌────────────────────────────────────────────────────────────────────────┐    │
-    │   │  🔹 Integración con hoteles asociados                                  │    │
-    │   │  🔹 Sistema de valoraciones post-cita                                 │    │
-    │   │  🔹 Dashboard analítico para administradores                          │    │
-    │   │  🔹 Informes de reservas y ocupación                                  │    │
-    │   │  🔹 Informes financieros con gráficos                                 │    │
-    │   │  🔹 Exportación de datos (CSV/PDF)                                    │    │
-    │   │  🔹 Logs y monitorización del sistema                                 │    │
-    │   └────────────────────────────────────────────────────────────────────────┘    │
-    │                                                                                 │
-    └─────────────────────────────────────────────────────────────────────────────────┘
-```
-
-<br/>
-
-<div align="center">
-
-### 📋 Resumen de Funcionalidades por Rol
-
-</div>
 
 <table align="center">
 <tr>
-<th>🌐 Público</th>
-<th>👤 Cliente</th>
-<th>🩺 Profesional</th>
-<th>🖥️ Recepcionista</th>
-<th>⚙️ Administrador</th>
+<td>
+
+### 🔷 Fase 1: Fundamentos
+
+> *Configuración base del proyecto*
+
+- ✅ Configuración del entorno Laravel + Filament
+- ⬜ Diseño e implementación del esquema de BD
+- ⬜ Sistema de autenticación y autorización
+- ⬜ Gestión de roles (Admin, Recepcionista, Profesional, Cliente)
+- ⬜ CRUD de usuarios con asignación de roles
+
+</td>
 </tr>
 <tr>
-<td valign="top">
+<td>
 
-```
-┌──────────────┐
-│ • Info legal │
-│ • Contacto   │
-│ • Horarios   │
-│ • Quiénes    │
-│   somos      │
-│ • Ver tienda │
-│   (sin       │
-│   comprar)   │
-└──────────────┘
-```
+### 🔶 Fase 2: Núcleo del Sistema
+
+> *Funcionalidades core de la clínica*
+
+- ⬜ Gestión de salas/instalaciones
+- ⬜ Configuración de horarios de clínica
+- ⬜ Gestión de profesionales y especialidades
+- ⬜ Sistema de reservas con calendario interactivo
+- ⬜ Asignación inteligente de salas
+- ⬜ Bloqueo de horarios por profesional
 
 </td>
-<td valign="top">
+</tr>
+<tr>
+<td>
 
-```
-┌────────────────┐
-│ • Registro     │
-│ • Login/Logout │
-│ • Editar perfil│
-│ • Crear citas  │
-│ • Ver historial│
-│ • Cancelar     │
-│ • Pagar (TPV)  │
-│ • Valorar      │
-│ • Comprar      │
-└────────────────┘
-```
+### 🔷 Fase 3: Experiencia de Usuario
 
-</td>
-<td valign="top">
+> *Interfaces y notificaciones*
 
-```
-┌────────────────┐
-│ • Ver agenda   │
-│ • Bloquear     │
-│   horarios     │
-│ • Historial    │
-│   pacientes    │
-│ • Notas citas  │
-│ • Crear citas  │
-│   (opcional)   │
-└────────────────┘
-```
+- ⬜ Portal público: Quiénes somos, contacto, horarios
+- ⬜ Panel de cliente: historial, citas pendientes
+- ⬜ Panel de profesional: agenda, historial de pacientes
+- ⬜ Panel de recepcionista: gestión integral de reservas
+- ⬜ Sistema de notificaciones por email
+- ⬜ Diseño responsive con Tailwind CSS
 
 </td>
-<td valign="top">
+</tr>
+<tr>
+<td>
 
-```
-┌────────────────┐
-│ • CRUD reservas│
-│ • Asignar salas│
-│ • Calendario   │
-│ • Filtros      │
-│   avanzados    │
-│ • Config       │
-│   horarios     │
-│ • Notificar    │
-└────────────────┘
-```
+### 🔶 Fase 4: Pagos y Tienda Online
+
+> *Integración con TPV y e-commerce*
+
+- ⬜ Integración con pasarela de pago (TPV Virtual)
+- ⬜ Gestión de estados de pago
+- ⬜ Catálogo de productos (tienda online)
+- ⬜ Carrito de compras para usuarios autenticados
+- ⬜ Historial de transacciones
 
 </td>
-<td valign="top">
+</tr>
+<tr>
+<td>
 
-```
-┌────────────────┐
-│ • CRUD usuarios│
-│ • CRUD salas   │
-│ • Config global│
-│ • Reportes     │
-│ • Analytics    │
-│ • Logs sistema │
-│ • Gestión      │
-│   completa     │
-└────────────────┘
-```
+### 🔷 Fase 5: Integraciones y Analytics
+
+> *Funcionalidades avanzadas*
+
+- ⬜ Integración con hoteles asociados
+- ⬜ Sistema de valoraciones post-cita
+- ⬜ Dashboard analítico para administradores
+- ⬜ Informes de reservas y ocupación
+- ⬜ Informes financieros con gráficos
+- ⬜ Exportación de datos (CSV/PDF)
+- ⬜ Logs y monitorización del sistema
 
 </td>
 </tr>
 </table>
 
----
+<br/>
 
 <div align="center">
 
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░ METODOLOGÍA SECTION ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+### 📋 Funcionalidades por Rol
+
+</div>
+
+<br/>
+
+<table align="center">
+<tr>
+<th align="center">🌐 Público</th>
+<th align="center">👤 Cliente</th>
+<th align="center">🩺 Profesional</th>
+<th align="center">🖥️ Recepcionista</th>
+<th align="center">⚙️ Admin</th>
+</tr>
+<tr>
+<td valign="top">
+
+• Info legal<br/>
+• Contacto<br/>
+• Horarios<br/>
+• Quiénes somos<br/>
+• Ver tienda
+
+</td>
+<td valign="top">
+
+• Registro<br/>
+• Login/Logout<br/>
+• Editar perfil<br/>
+• Crear citas<br/>
+• Ver historial<br/>
+• Pagar (TPV)<br/>
+• Valorar<br/>
+• Comprar
+
+</td>
+<td valign="top">
+
+• Ver agenda<br/>
+• Bloquear horarios<br/>
+• Historial pacientes<br/>
+• Notas citas<br/>
+• Crear citas
+
+</td>
+<td valign="top">
+
+• CRUD reservas<br/>
+• Asignar salas<br/>
+• Calendario<br/>
+• Filtros avanzados<br/>
+• Config horarios<br/>
+• Notificar
+
+</td>
+<td valign="top">
+
+• CRUD usuarios<br/>
+• CRUD salas<br/>
+• Config global<br/>
+• Reportes<br/>
+• Analytics<br/>
+• Logs sistema
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+---
+
+<br/>
+
+<div align="center">
 
 ## 🔄 Metodología de Desarrollo
 
+> ⚠️ **Recordatorio**: Este proyecto sigue estrictamente la metodología **Git Flow**. Se asume que todos los miembros del equipo conocen y aplican esta metodología de trabajo.
+
+<br/>
+
+![main](https://img.shields.io/badge/main-🔵_Producción-2ea44f?style=for-the-badge&labelColor=1a1a2e)
+![develop](https://img.shields.io/badge/develop-🟢_Integración-00d4ff?style=for-the-badge&labelColor=1a1a2e)
+![feature](https://img.shields.io/badge/feature/*-🟣_Funcionalidades-a855f7?style=for-the-badge&labelColor=1a1a2e)
+![release](https://img.shields.io/badge/release/*-🟡_Versiones-fbbf24?style=for-the-badge&labelColor=1a1a2e)
+![hotfix](https://img.shields.io/badge/hotfix/*-🔴_Urgentes-ef4444?style=for-the-badge&labelColor=1a1a2e)
+![bugfix](https://img.shields.io/badge/bugfix/*-🟠_Correcciones-f97316?style=for-the-badge&labelColor=1a1a2e)
+
 </div>
+
+<br/>
+
+---
 
 <br/>
 
 <div align="center">
 
-```
-╔════════════════════════════════════════════════════════════════════════════════════╗
-║                              🌊 GIT FLOW 🌊                                         ║
-╠════════════════════════════════════════════════════════════════════════════════════╣
-║                                                                                    ║
-║     main ─────●─────────────────────────────────────●─────────────────▶ 🏷️ v1.0   ║
-║               │                                     ▲                              ║
-║               │                                     │                              ║
-║    develop ───┼────●────●────●────●────●────●───────┼────●────●────▶              ║
-║               │    │    │    ▲    │    ▲    │       │                              ║
-║               │    │    │    │    │    │    │       │                              ║
-║   feature/  ──┼────┴────┤    │    ├────┘    │       │                              ║
-║   auth        │         │    │    │         │       │                              ║
-║               │         ▼    │    │         │       │                              ║
-║   feature/  ──┼─────────┴────┘    │         │       │                              ║
-║   reservas    │                   │         │       │                              ║
-║               │                   │         │       │                              ║
-║   feature/  ──┼───────────────────┴─────────┘       │                              ║
-║   pagos       │                                     │                              ║
-║               │                                     │                              ║
-║   release/  ──┼─────────────────────────────────────┘                              ║
-║   v1.0        │                                                                    ║
-║               │                                                                    ║
-║   hotfix/   ──┴── (correcciones urgentes en producción)                            ║
-║                                                                                    ║
-╚════════════════════════════════════════════════════════════════════════════════════╝
-```
+## 👥 Equipo - Grupo G17
+
+*Dream Team de Desarrollo*
 
 </div>
 
@@ -457,37 +423,48 @@
 
 <table align="center">
 <tr>
-<td align="center" width="20%">
+<td align="center" width="25%">
 
-### 🔵 `main`
-Producción estable
+<img src="https://img.shields.io/badge/👨‍💻-1a1a2e?style=for-the-badge" width="60"/>
 
-</td>
-<td align="center" width="20%">
+**Naoufal Charafat Azaouiat**
 
-### 🟢 `develop`
-Integración continua
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Naoufal-Charafat)
 
-</td>
-<td align="center" width="20%">
-
-### 🟣 `feature/*`
-Nuevas funcionalidades
+`Desarrollador`
 
 </td>
-<td align="center" width="20%">
+<td align="center" width="25%">
 
-### 🟡 `release/*`
-Preparación de versiones
+<img src="https://img.shields.io/badge/👩‍💻-1a1a2e?style=for-the-badge" width="60"/>
+
+**Maha Essaoudi**
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/me58-ua)
+
+`Desarrolladora`
 
 </td>
-<td align="center" width="20%">
+<td align="center" width="25%">
 
-### 🔴 `hotfix/*` desde main
-Correcciones urgentes
+<img src="https://img.shields.io/badge/👨‍💻-1a1a2e?style=for-the-badge" width="60"/>
 
-### 🔴 `bugfix/*` desde dev
-Correcciones 
+**Sergiy Kazantsev**
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/)
+
+`Desarrollador`
+
+</td>
+<td align="center" width="25%">
+
+<img src="https://img.shields.io/badge/👩‍💻-1a1a2e?style=for-the-badge" width="60"/>
+
+**Sabrine Bentaleb Kheyar**
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/)
+
+`Desarrolladora`
 
 </td>
 </tr>
@@ -495,89 +472,14 @@ Correcciones
 
 <br/>
 
-<div align="center">
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     📝 CONVENCIÓN DE COMMITS                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   feat:     ✨  Nueva funcionalidad                             │
-│   fix:      🐛  Corrección de bugs                              │
-│   docs:     📚  Documentación                                   │
-│   style:    💎  Estilos (sin cambios de lógica)                 │
-│   refactor: ♻️   Refactorización de código                       │
-│   test:     🧪  Tests                                           │
-│   chore:    🔧  Tareas de mantenimiento                         │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-</div>
-
 ---
-
-<div align="center">
-
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ EQUIPO SECTION ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-
-## 👥 Equipo - Grupo G17
 
 <br/>
 
-```
-╔══════════════════════════════════════════════════════════════════════════════════╗
-║                                                                                  ║
-║   ┌─────────────────────────────────────────────────────────────────────────┐    ║
-║   │                        🚀 DREAM TEAM 🚀                                 │    ║
-║   └─────────────────────────────────────────────────────────────────────────┘    ║
-║                                                                                  ║
-║         ╭──────────────────────────╮    ╭──────────────────────────╮            ║
-║         │    👨‍💻 NAOUFAL           │    │    👩‍💻 MAHA              │            ║
-║         │  Charafat Azaouiat      │    │    Essaoudi              │            ║
-║         │  ───────────────────    │    │  ───────────────────     │            ║
-║         │  💼 Desarrollador       │    │  💼 Desarrolladora       │            ║
-║         ╰──────────────────────────╯    ╰──────────────────────────╯            ║
-║                                                                                  ║
-║         ╭──────────────────────────╮    ╭──────────────────────────╮            ║
-║         │    👨‍💻 SERGIY            │    │    👩‍💻 SABRINE           │            ║
-║         │    Kazantsev            │    │  Bentaleb Kheyar         │            ║
-║         │  ───────────────────    │    │  ───────────────────     │            ║
-║         │  💼 Desarrollador       │    │  💼 Desarrolladora       │            ║
-║         ╰──────────────────────────╯    ╰──────────────────────────╯            ║
-║                                                                                  ║
-╚══════════════════════════════════════════════════════════════════════════════════╝
-```
-
-</br>
-
-| Integrante | Rol | GitHub |
-|:----------:|:---:|:------:|
-| **Naoufal Charafat Azaouiat** | 👨‍💻 Desarrollador | [![GitHub](https://img.shields.io/badge/-Profile-181717?style=flat-square&logo=github)](https://github.com/) |
-| **Maha Essaoudi** | 👩‍💻 Desarrolladora | [![GitHub](https://img.shields.io/badge/-Profile-181717?style=flat-square&logo=github)](https://github.com/) |
-| **Sergiy Kazantsev** | 👨‍💻 Desarrollador | [![GitHub](https://img.shields.io/badge/-Profile-181717?style=flat-square&logo=github)](https://github.com/) |
-| **Sabrine Bentaleb Kheyar** | 👩‍💻 Desarrolladora | [![GitHub](https://img.shields.io/badge/-Profile-181717?style=flat-square&logo=github)](https://github.com/) |
-
-</div>
-
----
-
 <div align="center">
 
-```
-╔══════════════════════════════════════════════════════════════════════════════════╗
-║                                                                                  ║
-║                    📚  Universidad de Alicante  📚                               ║
-║                      Ingeniería Web - Curso 2024/25                              ║
-║                                                                                  ║
-╚══════════════════════════════════════════════════════════════════════════════════╝
-```
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f3460,50:16213e,100:1a1a2e&height=120&section=footer"/>
 
 <br/>
 
-![Made with ❤️](https://img.shields.io/badge/Made%20with-❤️-ff0055?style=for-the-badge&labelColor=1a1a2e)
-![Universidad de Alicante](https://img.shields.io/badge/UA-Ingeniería%20Web-00d4ff?style=for-the-badge&labelColor=1a1a2e)
-
-</div>
+**Universidad de Alicante** · Ingeniería Web · Curso 2024/25
