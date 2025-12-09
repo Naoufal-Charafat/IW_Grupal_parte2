@@ -203,6 +203,15 @@ npm run dev
 - 🌐 Aplicación: `http://localhost:8000`
 - 📊 Panel Admin: `http://localhost:8000/admin`
 
+> **ℹ️ Credenciales por Defecto del Admin**
+> 
+> Para acceder al panel de administración tras la instalación, utiliza:
+> - **Usuario**: `admin`
+> - **Email**: `admin@admin.es`
+> - **Contraseña**: `adminadmin`
+>
+> ⚠️ **Por seguridad, cambia estas credenciales después del primer login** en el panel de administración.
+
 ### Testing
 ```bash
 composer run test
