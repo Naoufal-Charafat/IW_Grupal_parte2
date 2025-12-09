@@ -143,13 +143,25 @@ git clone https://github.com/Naoufal-Charafat/IW_Grupal_parte2.git
 cd IW_Grupal_parte2
 ```
 
-**2. Instalación automática (recomendado)**
+**⚠️ IMPORTANTE - Leer primero para nuevos usuarios**
+
+> **TODOS los nuevos usuarios DEBEN ejecutar el archivo `setup.sh` antes de trabajar en el proyecto**. Este script automatiza la instalación completa del proyecto, incluyendo:
+> - Instalación de Composer y dependencias PHP
+> - Instalación de Node.js/NPM y dependencias de frontend
+> - Instalación y configuración de MySQL
+> - Creación de la base de datos
+> - Ejecución de migraciones
+> - Compilación de assets
+
+**2. Instalación automática (recomendado para nuevos usuarios)**
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
-**3. O instalación manual**
+El script te guiará interactivamente a través de toda la configuración necesaria. **Es la forma más rápida y segura de preparar tu entorno de desarrollo.**
+
+**3. O instalación manual (solo si el setup.sh falla)**
 ```bash
 # Instalar dependencias PHP
 composer install
