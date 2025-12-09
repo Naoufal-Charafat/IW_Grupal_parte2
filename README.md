@@ -1,485 +1,337 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1a2e,50:16213e,100:0f3460&height=220&section=header&text=🏥%20FisioClinic&fontSize=70&fontColor=00d4ff&animation=fadeIn&fontAlignY=30&desc=Sistema%20de%20Gestión%20de%20Clínica%20de%20Fisioterapia&descSize=20&descAlignY=52&descAlign=50"/>
+# 🏥 FisioClinic
 
-<br/>
+**Sistema de Gestión de Clínica de Fisioterapia**
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=00D4FF&center=true&vCenter=true&width=600&lines=Gestión+de+Citas+Inteligente;Panel+Administrativo+Moderno;Integración+con+TPV+Virtual;Tienda+Online+Integrada" alt="Typing SVG" />
+[![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-blue?style=flat-square)](#)
+[![Versión](https://img.shields.io/badge/Versión-1.0.0-green?style=flat-square)](#)
+[![Licencia](https://img.shields.io/badge/Licencia-MIT-orange?style=flat-square)](#-licencia)
+[![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=flat-square&logo=php)](#)
+[![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=flat-square&logo=laravel)](#)
 
-<br/><br/>
+Plataforma integral para la gestión de citas, profesionales y pacientes en clínicas de fisioterapia.
 
-[![Estado](https://img.shields.io/badge/🚀_Estado-En_Desarrollo-00d4ff?style=for-the-badge&labelColor=1a1a2e)](https://github.com/Naoufal-Charafat/IW_Grupal_parte2)
-[![Versión](https://img.shields.io/badge/📦_Versión-1.0.0-ff6b6b?style=for-the-badge&labelColor=1a1a2e)](https://github.com/Naoufal-Charafat/IW_Grupal_parte2)
-[![Licencia](https://img.shields.io/badge/📄_Licencia-MIT-4ecdc4?style=for-the-badge&labelColor=1a1a2e)](LICENSE)
-
-<br/><br/>
-
-### 💡 Plataforma integral para la gestión de citas, profesionales y pacientes
-
-<br/>
-
-[![PHP](https://img.shields.io/badge/PHP_8.x-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
-[![Laravel](https://img.shields.io/badge/Laravel_11-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
-[![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
-[![Filament](https://img.shields.io/badge/Filament-FFAA00?style=for-the-badge&logo=laravel&logoColor=white)](https://filamentphp.com)
+[Documentación](#-documentación) • [Instalación](#-instalación) • [Uso](#-uso) • [Contribuir](#-contribuir)
 
 </div>
-
-<br/>
-
-## 📑 Índice
-
-<div align="center">
-
-[🛠️ Stack Tecnológico](#-stack-tecnológico) •
-[🔌 Integraciones API](#-integraciones-api-rest) •
-[🗺️ Roadmap](#-roadmap-de-funcionalidades) •
-[🔄 Metodología](#-metodología-de-desarrollo) •
-[👥 Equipo](#-equipo---grupo-g17)
-
-</div>
-
-<br/>
 
 ---
 
-<br/>
+## 📖 Descripción
 
-<div align="center">
+**FisioClinic** es una solución completa para clínicas de fisioterapia que facilita:
 
-## 🛠️ Stack Tecnológico
+- 📅 **Gestión de Citas** - Sistema inteligente de reservas con calendario interactivo
+- 👥 **Múltiples Roles** - Diferenciación de permisos por tipo de usuario
+- 💳 **Procesamiento de Pagos** - Integración con TPV Virtual
+- 🛒 **Tienda Online** - Catálogo de productos y servicios
+- 📊 **Reportes** - Dashboard con estadísticas y análisis
+- 📧 **Notificaciones** - Sistema automático de emails
 
-*Tecnologías cuidadosamente seleccionadas para un desarrollo robusto y escalable*
+El proyecto sigue la metodología **Git Flow** y se encuentra en fase de desarrollo inicial.
 
-</div>
+---
 
-<br/>
+## 🛠️ Tecnologías
 
-<table align="center">
+<table>
 <tr>
 <td align="center" width="33%">
 
-<img src="https://img.shields.io/badge/🗄️_BASE_DE_DATOS-1a1a2e?style=for-the-badge" alt="BD"/>
+**Backend**
 
-<br/><br/>
-
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" width="80"/>
-
-<br/>
-
-**MySQL**
-
-Motor relacional robusto con integridad referencial, transacciones ACID y escalabilidad probada.
-
-*Integración nativa con Laravel mediante Eloquent ORM*
+![Laravel](https://img.shields.io/badge/Laravel-12.42.0-FF2D20?style=flat-square&logo=laravel)
+![PHP](https://img.shields.io/badge/PHP-8.4.15-777BB4?style=flat-square&logo=php)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql)
 
 </td>
 <td align="center" width="33%">
 
-<img src="https://img.shields.io/badge/⚙️_BACKEND-1a1a2e?style=for-the-badge" alt="Backend"/>
+**Frontend**
 
-<br/><br/>
-
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/laravel/laravel-original.svg" width="80"/>
-
-<br/>
-
-**Laravel 11 + Filament**
-
-Arquitectura MVC limpia con panel de administración moderno. Filament Shield para gestión de roles y permisos (RBAC).
-
-*API RESTful + Queue Jobs para emails*
+![Tailwind](https://img.shields.io/badge/Tailwind-4.1.17-38B2AC?style=flat-square&logo=tailwindcss)
+![Blade](https://img.shields.io/badge/Blade-Templates-FF2D20?style=flat-square)
+![Livewire](https://img.shields.io/badge/Livewire-Components-4F46E5?style=flat-square)
 
 </td>
 <td align="center" width="33%">
 
-<img src="https://img.shields.io/badge/🎨_FRONTEND-1a1a2e?style=for-the-badge" alt="Frontend"/>
+**Herramientas**
 
-<br/><br/>
-
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg" width="80"/>
-
-<br/>
-
-**Blade + Tailwind CSS**
-
-Templates integrados con Laravel y utility-first CSS para interfaces modernas y responsive.
-
-*Livewire para componentes reactivos*
+![Vite](https://img.shields.io/badge/Vite-7.0.7-646CFF?style=flat-square&logo=vite)
+![Filament](https://img.shields.io/badge/Filament-Admin-FFAA00?style=flat-square)
+![PHPUnit](https://img.shields.io/badge/PHPUnit-11.5-367A51?style=flat-square)
 
 </td>
 </tr>
 </table>
 
-<br/>
+---
+
+## 🎯 Características Principales
+
+### 🔐 Autenticación y Roles
+- Sistema de login/registro seguro
+- 5 roles diferenciados: Público, Cliente, Profesional, Recepcionista, Admin
+- Control de acceso basado en roles (RBAC)
+
+### 📅 Gestión de Reservas
+- Calendario interactivo
+- Crear, modificar y cancelar citas
+- Asignación automática de salas
+- Filtrados avanzados
+
+### 👨‍⚕️ Gestión de Profesionales
+- Registro de especialidades
+- Control de disponibilidad
+- Bloqueo de horarios
+- Historial de pacientes
+
+### 🏥 Administración
+- Gestión de usuarios y salas
+- Configuración de horarios
+- Generación de reportes
+- Logs y monitorización
+
+### 💳 Integraciones
+- API TPV Virtual para pagos
+- API REST propia para servicios
+- Sistema de notificaciones por email
 
 ---
 
-<br/>
-
-<div align="center">
-
-## 🔌 Integraciones API REST
-
-*Arquitectura de servicios conectados*
-
-</div>
-
-<br/>
-
-> 💡 **Nota**: Un TPV Virtual (Terminal Punto de Venta) es esencialmente una **API REST** que expone endpoints para procesar pagos. Cuando nos conectamos al TPV de otro grupo, estamos consumiendo su API.
-
-<br/>
-
-<table align="center">
-<tr>
-<td align="center" width="50%">
-
-<img src="https://img.shields.io/badge/💳_TPV_VIRTUAL-Consumidor-00d4ff?style=for-the-badge&labelColor=1a1a2e" alt="TPV"/>
-
-<br/><br/>
-
-**🏦 API REST del TPV**
-
-| Funcionalidad | Descripción |
-|:-------------:|:------------|
-| 🔄 | Consumimos API de otro grupo |
-| 💰 | Iniciar transacciones |
-| 📊 | Consultar estado de pagos |
-| ↩️ | Procesar reembolsos |
-| 🔔 | Recibir webhooks |
-
-<br/>
-
-> Todas las transacciones de citas y tienda online se procesan a través del TPV externo.
-
-</td>
-<td align="center" width="50%">
-
-<img src="https://img.shields.io/badge/📡_CATÁLOGO-Proveedor-ff6b6b?style=for-the-badge&labelColor=1a1a2e" alt="API"/>
-
-<br/><br/>
-
-**🛍️ Nuestra API REST**
-
-| Endpoint | Descripción |
-|:--------:|:------------|
-| 📋 | Tratamientos disponibles |
-| 🛒 | Catálogo de productos |
-| 👨‍⚕️ | Disponibilidad profesional |
-| 💲 | Precios y tarifas |
-| 🔗 | Endpoints RESTful |
-
-<br/>
-
-> Exponemos nuestra API para que el TPV y otros sistemas consulten nuestro catálogo.
-
-</td>
-</tr>
-</table>
-
-<br/>
-
-<div align="center">
-
-### Flujo de Integración
-
-</div>
+## 📦 Estructura del Proyecto
 
 ```
-                    ┌─────────────────────────────────────────────────────────────┐
-                    │                                                             │
-    ┌─────────┐     │     ┌─────────────┐            ┌─────────────┐             │
-    │ Cliente │────▶│────▶│  FisioClinic │───POST───▶│   API TPV   │             │
-    │(Browser)│     │     │  (Laravel)   │◀──────────│(Otro Grupo) │             │
-    └─────────┘     │     └──────┬───────┘  Response └─────────────┘             │
-                    │            │                                                │
-                    │            │ Almacena                                       │
-                    │            ▼                                                │
-                    │     ┌─────────────┐                                         │
-                    │     │   MySQL DB  │                                         │
-                    │     │  (payments) │◀─────── Webhook/Callback                │
-                    │     └──────┬──────┘                                         │
-                    │            │                                                │
-                    │            │ Expone API                                     │
-                    │            ▼                                                │
-                    │     ┌─────────────┐                                         │
-                    │     │ Nuestra API │◀─────── TPV / Otros Grupos              │
-                    │     │ (Servicios) │                                         │
-                    │     └─────────────┘                                         │
-                    │                                                             │
-                    └─────────────────────────────────────────────────────────────┘
+proyecto/
+├── app/
+│   ├── Http/Controllers/        # Controladores
+│   ├── Models/                  # Modelos Eloquent
+│   └── Providers/               # Servicios
+├── database/
+│   ├── migrations/              # Migraciones
+│   ├── factories/               # Factories
+│   └── seeders/                 # Seeders
+├── resources/
+│   ├── views/                   # Plantillas Blade
+│   ├── css/                     # Estilos
+│   └── js/                      # Scripts
+├── routes/                      # Rutas web y API
+├── config/                      # Configuración
+├── storage/                     # Logs y cache
+├── tests/                       # Tests
+└── Docs/                        # Documentación
 ```
 
-<br/>
+---
+
+## 🚀 Instalación
+
+### Requisitos Previos
+- PHP 8.2+
+- Composer
+- Node.js 18+
+- MySQL 8.0+
+- Git
+
+### Pasos
+
+**1. Clonar el repositorio**
+```bash
+git clone https://github.com/Naoufal-Charafat/IW_Grupal_parte2.git
+cd IW_Grupal_parte2
+```
+
+**2. Instalación automática (recomendado)**
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+**3. O instalación manual**
+```bash
+# Instalar dependencias PHP
+composer install
+
+# Configurar entorno
+cp .env.example .env
+php artisan key:generate
+
+# Base de datos
+# Edita .env con tus credenciales MySQL
+php artisan migrate --force
+
+# Instalar dependencias frontend
+npm install
+npm run build
+```
 
 ---
 
-<br/>
+## 💻 Uso
 
-<div align="center">
+### Desarrollo
 
-## 🗺️ Roadmap de Funcionalidades
+**Opción 1: Ejecución paralela (recomendado)**
+```bash
+composer run dev
+```
 
-*Desarrollo incremental organizado en fases*
+**Opción 2: Manualmente**
+```bash
+# Terminal 1
+php artisan serve
 
-</div>
+# Terminal 2
+npm run dev
+```
 
-<br/>
+### URLs de Acceso
+- 🌐 Aplicación: `http://localhost:8000`
+- 📊 Panel Admin: `http://localhost:8000/admin`
 
-<table align="center">
-<tr>
-<td>
-
-### 🔷 Fase 1: Fundamentos
-
-> *Configuración base del proyecto*
-
-- ✅ Configuración del entorno Laravel + Filament
-- ⬜ Diseño e implementación del esquema de BD
-- ⬜ Sistema de autenticación y autorización
-- ⬜ Gestión de roles (Admin, Recepcionista, Profesional, Cliente)
-- ⬜ CRUD de usuarios con asignación de roles
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🔶 Fase 2: Núcleo del Sistema
-
-> *Funcionalidades core de la clínica*
-
-- ⬜ Gestión de salas/instalaciones
-- ⬜ Configuración de horarios de clínica
-- ⬜ Gestión de profesionales y especialidades
-- ⬜ Sistema de reservas con calendario interactivo
-- ⬜ Asignación inteligente de salas
-- ⬜ Bloqueo de horarios por profesional
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🔷 Fase 3: Experiencia de Usuario
-
-> *Interfaces y notificaciones*
-
-- ⬜ Portal público: Quiénes somos, contacto, horarios
-- ⬜ Panel de cliente: historial, citas pendientes
-- ⬜ Panel de profesional: agenda, historial de pacientes
-- ⬜ Panel de recepcionista: gestión integral de reservas
-- ⬜ Sistema de notificaciones por email
-- ⬜ Diseño responsive con Tailwind CSS
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🔶 Fase 4: Pagos y Tienda Online
-
-> *Integración con TPV y e-commerce*
-
-- ⬜ Integración con pasarela de pago (TPV Virtual)
-- ⬜ Gestión de estados de pago
-- ⬜ Catálogo de productos (tienda online)
-- ⬜ Carrito de compras para usuarios autenticados
-- ⬜ Historial de transacciones
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🔷 Fase 5: Integraciones y Analytics
-
-> *Funcionalidades avanzadas*
-
-- ⬜ Integración con hoteles asociados
-- ⬜ Sistema de valoraciones post-cita
-- ⬜ Dashboard analítico para administradores
-- ⬜ Informes de reservas y ocupación
-- ⬜ Informes financieros con gráficos
-- ⬜ Exportación de datos (CSV/PDF)
-- ⬜ Logs y monitorización del sistema
-
-</td>
-</tr>
-</table>
-
-<br/>
-
-<div align="center">
-
-### 📋 Funcionalidades por Rol
-
-</div>
-
-<br/>
-
-<table align="center">
-<tr>
-<th align="center">🌐 Público</th>
-<th align="center">👤 Cliente</th>
-<th align="center">🩺 Profesional</th>
-<th align="center">🖥️ Recepcionista</th>
-<th align="center">⚙️ Admin</th>
-</tr>
-<tr>
-<td valign="top">
-
-• Info legal<br/>
-• Contacto<br/>
-• Horarios<br/>
-• Quiénes somos<br/>
-• Ver tienda
-
-</td>
-<td valign="top">
-
-• Registro<br/>
-• Login/Logout<br/>
-• Editar perfil<br/>
-• Crear citas<br/>
-• Ver historial<br/>
-• Pagar (TPV)<br/>
-• Valorar<br/>
-• Comprar
-
-</td>
-<td valign="top">
-
-• Ver agenda<br/>
-• Bloquear horarios<br/>
-• Historial pacientes<br/>
-• Notas citas<br/>
-• Crear citas
-
-</td>
-<td valign="top">
-
-• CRUD reservas<br/>
-• Asignar salas<br/>
-• Calendario<br/>
-• Filtros avanzados<br/>
-• Config horarios<br/>
-• Notificar
-
-</td>
-<td valign="top">
-
-• CRUD usuarios<br/>
-• CRUD salas<br/>
-• Config global<br/>
-• Reportes<br/>
-• Analytics<br/>
-• Logs sistema
-
-</td>
-</tr>
-</table>
-
-<br/>
+### Testing
+```bash
+composer run test
+# o
+php artisan test
+```
 
 ---
 
-<br/>
+## 👥 Roles y Funcionalidades
 
-<div align="center">
-
-## 🔄 Metodología de Desarrollo
-
-> ⚠️ **Recordatorio**: Este proyecto sigue estrictamente la metodología **Git Flow**. Se asume que todos los miembros del equipo conocen y aplican esta metodología de trabajo.
-
-<br/>
-
-![main](https://img.shields.io/badge/main-🔵_Producción-2ea44f?style=for-the-badge&labelColor=1a1a2e)
-![develop](https://img.shields.io/badge/develop-🟢_Integración-00d4ff?style=for-the-badge&labelColor=1a1a2e)
-![feature](https://img.shields.io/badge/feature/*-🟣_Funcionalidades-a855f7?style=for-the-badge&labelColor=1a1a2e)
-![release](https://img.shields.io/badge/release/*-🟡_Versiones-fbbf24?style=for-the-badge&labelColor=1a1a2e)
-![hotfix](https://img.shields.io/badge/hotfix/*-🔴_Urgentes-ef4444?style=for-the-badge&labelColor=1a1a2e)
-![bugfix](https://img.shields.io/badge/bugfix/*-🟠_Correcciones-f97316?style=for-the-badge&labelColor=1a1a2e)
-
-</div>
-
-<br/>
+| Rol | Funciones Principales |
+|-----|----------------------|
+| **Público** | Ver información, consultar horarios, registrarse |
+| **Cliente** | Crear citas, ver historial, realizar pagos, comprar |
+| **Profesional** | Ver agenda, bloquear horarios, anotar citas |
+| **Recepcionista** | CRUD completo de citas, asignar salas, notificar |
+| **Administrador** | Gestión completa: usuarios, salas, reportes, config |
 
 ---
 
-<br/>
+## 🔌 Integraciones
 
-<div align="center">
+### TPV Virtual (Consumidor)
+```
+Cliente → FisioClinic → API Terceros (Pago)
+```
+- Procesamiento de transacciones
+- Consulta de estado de pagos
+- Webhooks de confirmación
 
-## 👥 Equipo - Grupo G17
-
-*Dream Team de Desarrollo*
-
-</div>
-
-<br/>
-
-<table align="center">
-<tr>
-<td align="center" width="25%">
-
-<img src="https://img.shields.io/badge/👨‍💻-1a1a2e?style=for-the-badge" width="60"/>
-
-**Naoufal Charafat Azaouiat**
-
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Naoufal-Charafat)
-
-`Desarrollador`
-
-</td>
-<td align="center" width="25%">
-
-<img src="https://img.shields.io/badge/👩‍💻-1a1a2e?style=for-the-badge" width="60"/>
-
-**Maha Essaoudi**
-
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/me58-ua)
-
-`Desarrolladora`
-
-</td>
-<td align="center" width="25%">
-
-<img src="https://img.shields.io/badge/👨‍💻-1a1a2e?style=for-the-badge" width="60"/>
-
-**Sergiy Kazantsev**
-
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/)
-
-`Desarrollador`
-
-</td>
-<td align="center" width="25%">
-
-<img src="https://img.shields.io/badge/👩‍💻-1a1a2e?style=for-the-badge" width="60"/>
-
-**Sabrine Bentaleb Kheyar**
-
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/)
-
-`Desarrolladora`
-
-</td>
-</tr>
-</table>
-
-<br/>
+### API REST (Proveedor)
+```
+GET /api/treatments     # Tratamientos
+GET /api/products       # Productos
+GET /api/professionals  # Profesionales
+GET /api/pricing        # Precios
+```
 
 ---
 
-<br/>
+## 📚 Documentación
 
-<div align="center">
+- **[ResumenProyecto.md](./Docs/ResumenProyecto.md)** - Análisis completo del proyecto
+- **[RutaFuncionalidades.md](./Docs/RutaFuncionalidades.md)** - Detalles de funcionalidades
+- **[Laravel Docs](https://laravel.com/docs)** - Documentación oficial
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f3460,50:16213e,100:1a1a2e&height=120&section=footer"/>
+---
 
-<br/>
+## 🗺️ Roadmap
 
-**Universidad de Alicante** · Ingeniería Web · Curso 2024/25
+- **Fase 1** ✅ Configuración entorno
+- **Fase 2** ⬜ Núcleo del sistema (BD, usuarios, roles)
+- **Fase 3** ⬜ Paneles de usuario (reservas, citas)
+- **Fase 4** ⬜ Pagos y tienda online
+- **Fase 5** ⬜ Analytics e integraciones
+
+---
+
+## 🔒 Seguridad
+
+- ✅ Autenticación segura con Laravel Sanctum
+- ✅ Validación de entradas
+- ✅ Protección CSRF
+- ✅ HTTPS en producción
+- ✅ Rate limiting en APIs
+
+---
+
+## 🤝 Contribuir
+
+### Git Flow
+
+```bash
+# Crear rama de feature
+git checkout develop
+git checkout -b feature/mi-funcionalidad
+
+# Realizar cambios
+git add .
+git commit -m "feat: descripción"
+git push origin feature/mi-funcionalidad
+
+# Crear Pull Request
+```
+
+### Convenciones de Commits
+```
+feat:     Nueva funcionalidad
+fix:      Corrección de bug
+refactor: Cambio sin nuevas features
+test:     Añadir/actualizar tests
+docs:     Cambios en documentación
+style:    Formateo de código
+```
+
+### Ramas del Proyecto
+- `main` - Producción (estable)
+- `develop` - Integración (desarrollo)
+- `feature/*` - Nuevas funcionalidades
+- `bugfix/*` - Correcciones
+- `hotfix/*` - Urgentes
+
+---
+
+## 📋 Requisitos del Proyecto
+
+### Funcionalidades Implementadas
+- ⬜ Base de datos relacional
+- ⬜ Sistema de autenticación
+- ⬜ Gestión de roles y permisos
+- ⬜ CRUD de usuarios
+- ⬜ Gestión de citas
+- ⬜ Procesamiento de pagos
+- ⬜ Tienda online
+- ⬜ Reportes y analytics
+
+### Estándares de Calidad
+- Cobertura de tests: 80%+
+- Code style: PSR-12
+- Documentación: Inline + Docs/
+- Commits: Convenciones Git Flow
+
+---
+
+
+## 📜 Licencia
+
+Distribuido bajo la licencia **MIT**. Ver [LICENSE](LICENSE) para más información.
+
+---
+
+## 👥 Autores
+
+**Grupo G17 - Universidad de Alicante (2024/25)**
+
+- Naoufal Charafat Azaouiat
+- Maha Essaoudi
+- Sergiy Kazantsev
+- Sabrine Bentaleb Kheyar
+
+**Asignatura**: Ingeniería Web
+
+---
