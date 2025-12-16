@@ -152,12 +152,14 @@ cd IW_Grupal_parte2
 **⚠️ IMPORTANTE - Leer primero para nuevos usuarios**
 
 > **TODOS los nuevos usuarios DEBEN ejecutar el archivo `setup.sh` antes de trabajar en el proyecto**. Este script automatiza la instalación completa del proyecto, incluyendo:
-> - Instalación de Composer y dependencias PHP (incluidas Filament y Shield)
+> - Instalación de Composer y dependencias PHP (**Filament y Shield ya vienen incluidos**)
 > - Instalación de Node.js/NPM y dependencias de frontend
 > - Instalación y configuración de MySQL
 > - Creación de la base de datos
-> - Ejecución de migraciones
+> - Ejecución de migraciones y seeders
 > - Compilación de assets
+> 
+> ℹ️ **Nota**: No necesitas instalar Filament ni Shield por separado. Ambos ya están configurados en el proyecto.
 
 **2. Instalación automática (recomendado para nuevos usuarios)**
 ```bash
@@ -171,7 +173,8 @@ El script te guiará interactivamente a través de toda la configuración necesa
 
 #### 3.1. Dependencias PHP y Configuración Laravel
 ```bash
-# Instalar dependencias PHP
+# Instalar dependencias PHP (incluidas Filament y Shield)
+# ⚠️ Esto es TODO lo que necesitas para instalar Filament y Shield
 composer install
 
 # Configurar entorno
