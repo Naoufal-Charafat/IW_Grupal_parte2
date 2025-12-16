@@ -57,11 +57,11 @@ El proyecto sigue la metodología **Git Flow** y se encuentra en fase de desarro
 </td>
 <td align="center" width="33%">
 
-**Herramientas**
+**Admin & Seguridad**
 
-![Vite](https://img.shields.io/badge/Vite-7.0.7-646CFF?style=flat-square&logo=vite)
 ![Filament](https://img.shields.io/badge/Filament-Admin-FFAA00?style=flat-square)
-![PHPUnit](https://img.shields.io/badge/PHPUnit-11.5-367A51?style=flat-square)
+![Shield](https://img.shields.io/badge/Shield-Roles%2FPermisos-4F46E5?style=flat-square)
+![Vite](https://img.shields.io/badge/Vite-7.0.7-646CFF?style=flat-square&logo=vite)
 
 </td>
 </tr>
@@ -74,7 +74,7 @@ El proyecto sigue la metodología **Git Flow** y se encuentra en fase de desarro
 ### 🔐 Autenticación y Roles
 - Sistema de login/registro seguro
 - 5 roles diferenciados: Público, Cliente, Profesional, Recepcionista, Admin
-- Control de acceso basado en roles (RBAC)
+- Control de acceso basado en roles (RBAC) con **Filament Shield**
 
 ### 📅 Gestión de Reservas
 - Calendario interactivo
@@ -89,7 +89,8 @@ El proyecto sigue la metodología **Git Flow** y se encuentra en fase de desarro
 - Historial de pacientes
 
 ### 🏥 Administración
-- Gestión de usuarios y salas
+- Panel administrativo con Filament
+- Gestión de usuarios, salas y roles
 - Configuración de horarios
 - Generación de reportes
 - Logs y monitorización
@@ -106,8 +107,10 @@ El proyecto sigue la metodología **Git Flow** y se encuentra en fase de desarro
 ```
 proyecto/
 ├── app/
+│   ├── Filament/                # Recursos y páginas del admin
 │   ├── Http/Controllers/        # Controladores
 │   ├── Models/                  # Modelos Eloquent
+│   ├── Policies/                # Políticas de autorización
 │   └── Providers/               # Servicios
 ├── database/
 │   ├── migrations/              # Migraciones
@@ -118,10 +121,13 @@ proyecto/
 │   ├── css/                     # Estilos
 │   └── js/                      # Scripts
 ├── routes/                      # Rutas web y API
-├── config/                      # Configuración
+├── config/
+│   ├── filament-shield.php      # Configuración de Shield
+│   └── permission.php           # Configuración de permisos
 ├── storage/                     # Logs y cache
 ├── tests/                       # Tests
-└── Docs/                        # Documentación
+├── Docs/                        # Documentación
+└── .env.example                 # Variables de entorno
 ```
 
 ---
@@ -146,7 +152,7 @@ cd IW_Grupal_parte2
 **⚠️ IMPORTANTE - Leer primero para nuevos usuarios**
 
 > **TODOS los nuevos usuarios DEBEN ejecutar el archivo `setup.sh` antes de trabajar en el proyecto**. Este script automatiza la instalación completa del proyecto, incluyendo:
-> - Instalación de Composer y dependencias PHP
+> - Instalación de Composer y dependencias PHP (incluidas Filament y Shield)
 > - Instalación de Node.js/NPM y dependencias de frontend
 > - Instalación y configuración de MySQL
 > - Creación de la base de datos
@@ -162,6 +168,8 @@ chmod +x setup.sh
 El script te guiará interactivamente a través de toda la configuración necesaria. **Es la forma más rápida y segura de preparar tu entorno de desarrollo.**
 
 **3. O instalación manual (solo si el setup.sh falla)**
+
+#### 3.1. Dependencias PHP y Configuración Laravel
 ```bash
 # Instalar dependencias PHP
 composer install
@@ -170,13 +178,52 @@ composer install
 cp .env.example .env
 php artisan key:generate
 
-# Base de datos
-# Edita .env con tus credenciales MySQL
-php artisan migrate --force
+# Generar configuración de caché
+php artisan config:cache
+```
 
-# Instalar dependencias frontend
+#### 3.2. Configurar la Base de Datos
+
+Edita el archivo `.env` con tus credenciales MySQL:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=clinica
+DB_USERNAME=root
+DB_PASSWORD=tu_contraseña
+```
+
+Luego ejecuta las migraciones:
+```bash
+php artisan migrate --force
+```
+
+#### 3.3. Dependencias Frontend
+```bash
 npm install
 npm run build
+```
+
+#### 3.4. Configuración de Shield (Roles y Permisos)
+
+Shield ya está configurado automáticamente, pero si necesitas regenerar los permisos para nuevos recursos:
+
+```bash
+# Generar permisos y políticas para todos los recursos
+php artisan shield:generate --all --panel=admin
+
+# Limpiar caché de permisos si es necesario
+php artisan permission:cache-reset
+```
+
+#### 3.5. Ejecutar los Seeders
+
+Los seeders crean los roles base y el usuario admin automáticamente:
+
+```bash
+php artisan db:seed
 ```
 
 ---
@@ -200,23 +247,112 @@ npm run dev
 ```
 
 ### URLs de Acceso
-- 🌐 Aplicación: `http://localhost:8000`
-- 📊 Panel Admin: `http://localhost:8000/admin`
+- 🌐 Aplicación Web: `http://localhost:8000`
+- 📊 Panel Admin Filament: `http://localhost:8000/admin`
 
-> **ℹ️ Credenciales por Defecto del Admin**
-> 
-> Para acceder al panel de administración tras la instalación, utiliza:
-> - **Usuario**: `admin`
-> - **Email**: `admin@admin.es`
-> - **Contraseña**: `adminadmin`
->
-> ⚠️ **Por seguridad, cambia estas credenciales después del primer login** en el panel de administración.
+### 🔑 Credenciales por Defecto del Super Admin
+
+Para acceder al panel de administración tras la instalación, utiliza:
+
+| Campo | Valor |
+|-------|-------|
+| **Usuario/Email** | `admin@admin.es` |
+| **Contraseña** | `adminadmin` |
+
+> ⚠️ **¡IMPORTANTE!** Por seguridad, cambia estas credenciales después del primer login en el panel de administración.
+
+### Primeros Pasos en el Panel Admin
+
+1. Accede a `http://localhost:8000/admin`
+2. Inicia sesión con las credenciales anteriores
+3. En el menú lateral, verás:
+   - **Dashboard** - Panel de inicio
+   - **Shield → Roles** - Gestión de roles y permisos
+   - Otros recursos según se desarrollen
+
+### Gestión de Roles y Permisos (Shield)
+
+#### Ver roles y permisos:
+```bash
+php artisan tinker
+
+# Ver todos los roles
+use Spatie\Permission\Models\Role;
+Role::all()->pluck('name');
+
+# Ver permisos de un rol
+$role = Role::findByName('super_admin');
+$role->permissions->pluck('name');
+```
+
+#### Crear un usuario con rol específico:
+```bash
+php artisan tinker
+
+use App\Models\User;
+use Spatie\Permission\Models\Role;
+
+$user = User::create([
+    'name' => 'Juan Pérez',
+    'email' => 'juan@example.com',
+    'password' => bcrypt('password123'),
+]);
+
+$user->assignRole('recepcionista'); # o 'profesional', 'cliente', etc.
+```
 
 ### Testing
 ```bash
 composer run test
 # o
 php artisan test
+```
+
+---
+
+## 📋 Archivos Importantes para el Despliegue
+
+### Variables de Entorno (`.env`)
+
+El archivo `.env.example` ya contiene la mayoría de configuraciones. Los archivos críticos para editar son:
+
+| Archivo | Descripción | Qué Editar |
+|---------|-------------|-----------|
+| `.env` | Variables de entorno | `DB_*`, `APP_*`, `MAIL_*` |
+| `config/app.php` | Configuración de la aplicación | Timezone, locale (opcional) |
+| `config/database.php` | Conexión a BD | Generalmente NO necesita cambios |
+| `config/filament-shield.php` | Configuración de Shield | Generalmente NO necesita cambios |
+| `config/permission.php` | Configuración de permisos | Generalmente NO necesita cambios |
+| `database/seeders/DatabaseSeeder.php` | Datos iniciales | Modificar si necesitas otros roles base |
+| `database/seeders/RoleSeeder.php` | Creación de roles | Añadir nuevos roles si lo necesitas |
+
+### Comandos Esenciales para el Despliegue
+
+```bash
+# 1. Instalar dependencias
+composer install
+npm install
+
+# 2. Preparar entorno
+cp .env.example .env
+php artisan key:generate
+php artisan config:cache
+
+# 3. Base de datos
+# ⚠️ EDITA .env CON TUS CREDENCIALES MYSQL PRIMERO
+php artisan migrate --force
+php artisan db:seed
+
+# 4. Compilar assets
+npm run build
+
+# 5. (Opcional) Regenerar permisos si has añadido nuevos recursos
+php artisan shield:generate --all --panel=admin
+php artisan permission:cache-reset
+
+# 6. Iniciar servidor
+php artisan serve  # Terminal 1
+npm run dev        # Terminal 2
 ```
 
 ---
@@ -229,7 +365,7 @@ php artisan test
 | **Cliente** | Crear citas, ver historial, realizar pagos, comprar |
 | **Profesional** | Ver agenda, bloquear horarios, anotar citas |
 | **Recepcionista** | CRUD completo de citas, asignar salas, notificar |
-| **Administrador** | Gestión completa: usuarios, salas, reportes, config |
+| **Administrador** | Gestión completa: usuarios, salas, reportes, config, roles |
 
 ---
 
@@ -257,13 +393,15 @@ GET /api/pricing        # Precios
 
 - **[ResumenProyecto.md](./Docs/ResumenProyecto.md)** - Análisis completo del proyecto
 - **[RutaFuncionalidades.md](./Docs/RutaFuncionalidades.md)** - Detalles de funcionalidades
+- **[FilamentShield.md](./Docs/FilamentShield.md)** - Guía completa de Filament Shield
 - **[Laravel Docs](https://laravel.com/docs)** - Documentación oficial
+- **[Filament Docs](https://filamentphp.com/docs)** - Documentación de Filament
 
 ---
 
 ## 🗺️ Roadmap
 
-- **Fase 1** ✅ Configuración entorno
+- **Fase 1** ✅ Configuración entorno (Filament + Shield)
 - **Fase 2** ⬜ Núcleo del sistema (BD, usuarios, roles)
 - **Fase 3** ⬜ Paneles de usuario (reservas, citas)
 - **Fase 4** ⬜ Pagos y tienda online
@@ -274,8 +412,10 @@ GET /api/pricing        # Precios
 ## 🔒 Seguridad
 
 - ✅ Autenticación segura con Laravel Sanctum
+- ✅ Control de roles y permisos con Filament Shield
 - ✅ Validación de entradas
 - ✅ Protección CSRF
+- ✅ Políticas de autorización (Policies)
 - ✅ HTTPS en producción
 - ✅ Rate limiting en APIs
 
@@ -306,6 +446,7 @@ refactor: Cambio sin nuevas features
 test:     Añadir/actualizar tests
 docs:     Cambios en documentación
 style:    Formateo de código
+chore:    Cambios de dependencias o config
 ```
 
 ### Ramas del Proyecto
@@ -320,9 +461,11 @@ style:    Formateo de código
 ## 📋 Requisitos del Proyecto
 
 ### Funcionalidades Implementadas
-- ⬜ Base de datos relacional
-- ⬜ Sistema de autenticación
-- ⬜ Gestión de roles y permisos
+- ✅ Configuración de entorno (Laravel + Filament)
+- ✅ Sistema de autenticación
+- ✅ Gestión de roles y permisos (Shield)
+- ✅ Panel administrativo (Filament)
+- ⬜ Base de datos relacional completa
 - ⬜ CRUD de usuarios
 - ⬜ Gestión de citas
 - ⬜ Procesamiento de pagos
@@ -336,7 +479,6 @@ style:    Formateo de código
 - Commits: Convenciones Git Flow
 
 ---
-
 
 ## 📜 Licencia
 
@@ -355,4 +497,4 @@ Distribuido bajo la licencia **MIT**. Ver [LICENSE](LICENSE) para más informaci
 
 **Asignatura**: Ingeniería Web
 
----
+---## 🎉 Agradecimientos
