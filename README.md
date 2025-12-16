@@ -253,16 +253,19 @@ npm run dev
 - 🌐 Aplicación Web: `http://localhost:8000`
 - 📊 Panel Admin Filament: `http://localhost:8000/admin`
 
-### 🔑 Credenciales por Defecto del Super Admin
+### 🔑 Credenciales por Defecto
 
-Para acceder al panel de administración tras la instalación, utiliza:
+Tras ejecutar los seeders, se crean automáticamente los siguientes usuarios de prueba:
 
-| Campo | Valor |
-|-------|-------|
-| **Usuario/Email** | `admin@admin.es` |
-| **Contraseña** | `admin` |
+| Rol | Email | Contraseña | ID |
+|-----|-------|------------|-----|
+| **Super Admin** | `admin@admin.com` | `admin` | 1 |
+| Cliente | `cliente@cliente.com` | `cliente` | 2 |
+| Profesional | `profesional@profesional.com` | `profesional` | 3 |
+| Recepcionista | `recepcionista@recepcionista.com` | `recepcionista` | 4 |
+| Público | `publico@publico.com` | `publico` | 5 |
 
-> ⚠️ **¡IMPORTANTE!** Por seguridad, cambia estas credenciales después del primer login en el panel de administración.
+> ⚠️ **¡IMPORTANTE!** Estas son credenciales de desarrollo. En producción, cambia estas credenciales y elimina los usuarios de prueba.
 
 ### Primeros Pasos en el Panel Admin
 
@@ -348,6 +351,33 @@ php artisan db:seed
 
 # 4. Compilar assets
 npm run build
+```
+
+### 🔄 Comandos para Resetear la Base de Datos en Desarrollo
+
+Cuando necesites recrear completamente la base de datos con datos de prueba, ejecuta **esta secuencia completa** de comandos:
+
+```bash
+# 1. Recrear base de datos y ejecutar seeders (crea usuarios y roles)
+php artisan migrate:fresh --seed
+
+# 2. Generar permisos y políticas de Shield
+php artisan shield:generate --all
+
+# 3. Limpiar caché de permisos
+php artisan permission:cache-reset
+
+# 4. Cachear iconos de Blade
+php artisan icons:cache
+
+# 5. Optimizar Filament
+php artisan filament:optimize
+
+# 6. Limpiar todas las cachés
+php artisan optimize:clear
+
+# 7. Asignar permisos de super admin al usuario admin (ID=1)
+php artisan shield:super-admin --user=1
 
 # 5. (Opcional) Regenerar permisos si has añadido nuevos recursos
 php artisan shield:generate --all --panel=admin
