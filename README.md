@@ -257,7 +257,7 @@ Para acceder al panel de administración tras la instalación, utiliza:
 | Campo | Valor |
 |-------|-------|
 | **Usuario/Email** | `admin@admin.es` |
-| **Contraseña** | `adminadmin` |
+| **Contraseña** | `admin` |
 
 > ⚠️ **¡IMPORTANTE!** Por seguridad, cambia estas credenciales después del primer login en el panel de administración.
 
@@ -488,13 +488,11 @@ Distribuido bajo la licencia **MIT**. Ver [LICENSE](LICENSE) para más informaci
 
 ## 👥 Autores
 
-**Grupo G17 - Universidad de Alicante (2024/25)**
+**Grupo G17 - Universidad de Alicante**
 
 - Naoufal Charafat Azaouiat
 - Maha Essaoudi
 - Sergiy Kazantsev
 - Sabrine Bentaleb Kheyar
 
-**Asignatura**: Ingeniería Web
-
----## 🎉 Agradecimientos
+**Asignatura**: Ingeniería Web 
