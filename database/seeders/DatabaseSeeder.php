@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         // Ejecutar el seeder de roles primero
         $this->call(RoleSeeder::class);
 
-        // Crear usuarios con cada uno de los roles
+        // Crear usuarios con cada uno de los roles -
         $roles = Role::all();
 
         foreach ($roles as $role) {
