@@ -16,18 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ejecutar el seeder de roles primero
-        $this->call(RoleSeeder::class);
+        // Importante: El orden es crucial
+        // 1. Primero los roles base
+        $this->call([
+            RoleSeeder::class,
+        ]);
 
-        // Crear usuarios con cada uno de los roles -
-        $roles = Role::all();
-
-        foreach ($roles as $role) {
-            User::factory()->create([
-                'name' => $role->name,
-                'email' => $role->name . '@' . $role->name . '.com',
-                'password' => bcrypt($role->name),
-            ])->assignRole($role->name);
-        }
+        // 2. Después los usuarios (el admin debe ser el primero con ID=1)
+        $this->call([
+            UserSeeder::class,
+        ]);
     }
 }
