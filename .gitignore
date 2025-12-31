@@ -35,4 +35,5 @@ public_html/storage
 public_html/hot
  
 /.vagrant
- 
+.agent/
+.github
