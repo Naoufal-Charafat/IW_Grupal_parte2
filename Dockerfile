@@ -40,6 +40,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
 # 6. Set working directory
+COPY . /var/www
 WORKDIR /var/www
 
 # 7. Create system user
@@ -48,7 +49,6 @@ RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
 # 8. Copy existing application
-COPY . /var/www
 COPY .env .
 
 # 9. Set permissions
