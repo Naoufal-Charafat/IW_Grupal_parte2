@@ -231,7 +231,181 @@ php artisan db:seed
 
 ---
 
-## 💻 Uso
+## � Docker
+
+### Requisitos Previos
+- Docker Engine 20.10+
+- Docker Compose 1.29+
+
+### Instalación de Docker
+
+Si no tienes Docker instalado, ejecuta:
+
+```bash
+# Actualizar repositorios
+sudo apt update
+
+# Instalar Docker Compose
+sudo apt install -y docker-compose
+
+# Verificar instalación
+docker-compose --version
+```
+
+### Lanzar el Proyecto con Docker
+
+**1. Iniciar los contenedores**
+
+```bash
+# Construir y levantar todos los servicios en segundo plano
+sudo docker-compose up -d --build
+```
+
+Este comando:
+- 🏗️ Construye la imagen de Docker para la aplicación Laravel (puede tardar 15-20 minutos la primera vez)
+- 📦 Descarga las imágenes de MySQL y Nginx
+- 🚀 Levanta 3 contenedores: `app` (Laravel), `db` (MySQL), `nginx` (servidor web)
+- ✅ Ejecuta automáticamente las migraciones y seeders
+- 🔧 Configura los permisos necesarios
+
+**2. Verificar que los contenedores están corriendo**
+
+```bash
+sudo docker-compose ps
+```
+
+Deberías ver algo como:
+```
+          Name                        Command               State                          Ports                       
+-----------------------------------------------------------------------------------------------------------------------
+iw_grupal_parte2_app_1     docker-php-entrypoint bash ...   Up      9000/tcp                                           
+iw_grupal_parte2_db_1      docker-entrypoint.sh mysqld      Up      0.0.0.0:3307->3306/tcp,:::3307->3306/tcp, 33060/tcp
+iw_grupal_parte2_nginx_1   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:8000->80/tcp,:::8000->80/tcp
+```
+
+**3. Acceder a la aplicación**
+
+- 🌐 **Aplicación Web**: `http://localhost:8000`
+- 👤 **Panel Admin**: `http://localhost:8000/admin`
+- 🗄️ **Base de Datos MySQL**: `localhost:3307` (puerto modificado para evitar conflictos)
+
+### Comandos Útiles de Docker
+
+```bash
+# Ver logs de todos los servicios
+sudo docker-compose logs
+
+# Ver logs de un servicio específico
+sudo docker-compose logs app
+sudo docker-compose logs db
+sudo docker-compose logs nginx
+
+# Ver logs en tiempo real
+sudo docker-compose logs -f app
+
+# Detener los contenedores (sin eliminarlos)
+sudo docker-compose stop
+
+# Iniciar los contenedores detenidos
+sudo docker-compose start
+
+# Reiniciar un servicio específico
+sudo docker-compose restart app
+
+# Detener y eliminar todos los contenedores
+sudo docker-compose down
+
+# Detener, eliminar contenedores Y borrar volúmenes (⚠️ BORRA LA BASE DE DATOS)
+sudo docker-compose down -v
+
+# Ejecutar comandos dentro del contenedor de la aplicación
+sudo docker exec -it iw_grupal_parte2_app_1 bash
+
+# Ejecutar comandos de Artisan
+sudo docker exec -it iw_grupal_parte2_app_1 php artisan migrate
+sudo docker exec -it iw_grupal_parte2_app_1 php artisan tinker
+```
+
+### Conexión a la Base de Datos
+
+Si necesitas conectarte a MySQL desde tu máquina local (con herramientas como MySQL Workbench, DBeaver, etc.):
+
+```
+Host: localhost
+Puerto: 3307
+Usuario: root
+Contraseña: root (definida en el archivo .env)
+Base de datos: clinica
+```
+
+> ⚠️ **Nota**: El puerto es `3307` en el host para evitar conflictos con instalaciones locales de MySQL que usan el puerto `3306`.
+
+### Solución de Problemas
+
+#### Error: "port is already allocated" (puerto ya en uso)
+
+Si obtienes un error de puerto ocupado:
+
+```bash
+# Para el puerto 3306 (MySQL):
+# - El docker-compose.yaml ya usa el puerto 3307 por defecto
+# - Si aún hay conflicto, modifica el archivo docker-compose.yaml línea 49
+
+# Para el puerto 8000 (Nginx):
+sudo lsof -i :8000  # Ver qué proceso usa el puerto
+sudo kill -9 <PID>  # Matar el proceso
+```
+
+#### Error: "permission denied" al ejecutar docker-compose
+
+```bash
+# Opción 1: Usar sudo
+sudo docker-compose up -d
+
+# Opción 2: Agregar tu usuario al grupo docker (recomendado)
+sudo usermod -aG docker $USER
+newgrp docker
+docker-compose up -d  # Ya no necesita sudo
+```
+
+#### Error 500 al acceder a la aplicación
+
+Si la aplicación responde con error 500, probablemente sea un problema de permisos. Ejecuta:
+
+```bash
+sudo docker exec iw_grupal_parte2_app_1 chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+sudo docker exec iw_grupal_parte2_app_1 chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+```
+
+#### Los cambios en el código no se reflejan
+
+```bash
+# Reconstruir la imagen después de cambios importantes
+sudo docker-compose up -d --build
+
+# O reconstruir sin caché
+sudo docker-compose build --no-cache
+sudo docker-compose up -d
+```
+
+### Notas Importantes
+
+- 📦 **Volúmenes**: La base de datos se guarda en un volumen de Docker llamado `iw_grupal_parte2_dbdata`. Los datos persisten aunque detengas los contenedores.
+- 🔄 **Código sincronizado**: Los cambios que hagas en los archivos PHP se reflejan automáticamente (el código está montado como volumen).
+- 🛠️ **Assets**: Para recompilar assets (CSS/JS), ejecuta: `sudo docker exec iw_grupal_parte2_app_1 npm run build`
+- 🗑️ **Limpiar todo**: Para empezar de cero: `sudo docker-compose down -v && sudo docker-compose up -d --build`
+
+### Estructura de Docker
+
+El proyecto incluye:
+- **`Dockerfile`**: Definición de la imagen PHP con todas las extensiones necesarias
+- **`docker-compose.yaml`**: Orquestación de los 3 servicios (app, db, nginx)
+- **`docker/entrypoint.sh`**: Script que se ejecuta al iniciar el contenedor (migraciones, seeders, permisos)
+- **`docker/nginx/conf.d/app.conf`**: Configuración de Nginx para servir Laravel
+
+---
+
+## �💻 Uso
 
 ### Desarrollo
 
