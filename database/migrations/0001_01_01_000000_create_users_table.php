@@ -18,6 +18,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('telefono')->nullable();
+            $table->string('line_1')->nullable();
+            $table->string('line_2')->nullable();
+            $table->string('postal_code')->nullable();
             $table->boolean('esta_activo')->default(true);
             $table->enum('tipo', ['particular', 'empresa'])->default('particular');
             $table->rememberToken();
