@@ -58,6 +58,11 @@ php artisan permission:cache-reset
 print_info "Running Seeders..."
 php artisan db:seed
 
-# 7. Start PHP-FPM
+# 7. Fix permissions for storage and cache
+print_info "Fixing permissions..."
+chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
+# 8. Start PHP-FPM
 print_info "Starting Server..."
 php-fpm

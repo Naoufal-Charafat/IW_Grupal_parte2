@@ -21,7 +21,10 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     # This runs the migration/startup script
-    entrypoint: ["/bin/bash", "-c", "sed -i 's/\r$//' /var/www/docker/entrypoint.sh && chmod +x /var/www/docker/entrypoint.sh && /var/www/docker/entrypoint.sh"]
+    command: >
+      bash -c "sed -i 's/\r$$//' /var/www/docker/entrypoint.sh &&
+      chmod +x /var/www/docker/entrypoint.sh &&
+      /var/www/docker/entrypoint.sh"
 
   # Nginx Web Server (To serve the app)
   nginx:
@@ -43,7 +46,7 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - dbdata:/var/lib/mysql
 
