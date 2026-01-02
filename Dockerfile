@@ -1,10 +1,10 @@
-FROM php:8.2-fpm
+FROM php:8.4-fpm
 
-# Argumentos definidos en docker-compose.yml
 ARG user
 ARG uid
 
-# 1. Instalar dependencias del sistema
+# 1. Install System Dependencies
+# Added: libicu-dev (REQUIRED for intl), libjpeg/freetype (for gd)
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -13,36 +13,57 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    libgbm-dev \
-    libnss3 \
-    libasound2
+    libzip-dev \
+    default-mysql-client \
+    libicu-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# 2. Limpiar caché
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# 2. Configure GD Extension (Enable JPEG and Freetype support)
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
-# 3. Instalar extensiones de PHP requeridas por Laravel
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+# 3. Install PHP Extensions
+# I've split this into two Run commands. This reduces the memory load
+# per step and makes debugging easier.
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath zip
 
-# 4. Instalar Composer (Paso 1 de tu script original)
+
+
+RUN docker-php-ext-install gd intl
+
+# 4. Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 5. Instalar Node.js y NPM (Paso 2 de tu script original)
-# Instalamos la versión LTS directamente
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+# 5. Install Node.js & NPM
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
-# 6. Crear usuario del sistema para ejecutar comandos de Composer y Artisan
+# 6. Set working directory
+WORKDIR /var/www
+
+# 7. Create system user
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
-# 7. Configurar directorio de trabajo
-WORKDIR /var/www
+# 8. Copy existing application
+COPY . /var/www
+COPY .env .
 
-# Copiar el script de entrada personalizado
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint
-RUN chmod +x /usr/local/bin/entrypoint
+# 9. Set permissions
+RUN chown -R $user:$user /var/www
 
+# Switch to user
 USER $user
 
-ENTRYPOINT ["entrypoint"]
+# 10. Install PHP Dependencies
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# 11. Install Node Dependencies and Build
+RUN npm install && npm run build
+
+# Switch back to root
+USER root
+
+EXPOSE 9000
