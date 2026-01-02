@@ -6,6 +6,7 @@ use App\Models\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Tratamiento extends Model
 {
@@ -50,6 +51,14 @@ class Tratamiento extends Model
         return $this->belongsToMany(Profesional::class, 'profesional_tratamiento')
             ->withPivot(['precio_personalizado', 'duracion_personalizada', 'esta_activo'])
             ->withTimestamps();
+    }
+
+    /**
+     * Get the reservations for this treatment.
+     */
+    public function reservas(): HasMany
+    {
+        return $this->hasMany(Reserva::class);
     }
 
     /**
