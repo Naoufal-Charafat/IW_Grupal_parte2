@@ -58,6 +58,135 @@
         </div>
     </div>
 
+    <!-- Search and Filters Section -->
+    <div class="bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <form method="GET" action="{{ route('tratamientos.index') }}" class="space-y-4">
+                <!-- Search Bar -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1">
+                        <label for="buscar" class="block text-sm font-medium text-gray-700 mb-2">
+                            Buscar Tratamiento
+                        </label>
+                        <div class="relative">
+                            <input 
+                                type="text" 
+                                name="buscar" 
+                                id="buscar"
+                                value="{{ request('buscar') }}"
+                                placeholder="Ej: Masaje, Rehabilitación..."
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                            >
+                            <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Precio Mínimo -->
+                    <div>
+                        <label for="precio_min" class="block text-sm font-medium text-gray-700 mb-2">
+                            Precio Mínimo (€)
+                        </label>
+                        <input 
+                            type="number" 
+                            name="precio_min" 
+                            id="precio_min"
+                            value="{{ request('precio_min') }}"
+                            min="0"
+                            step="5"
+                            placeholder="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                    </div>
+
+                    <!-- Precio Máximo -->
+                    <div>
+                        <label for="precio_max" class="block text-sm font-medium text-gray-700 mb-2">
+                            Precio Máximo (€)
+                        </label>
+                        <input 
+                            type="number" 
+                            name="precio_max" 
+                            id="precio_max"
+                            value="{{ request('precio_max') }}"
+                            min="0"
+                            step="5"
+                            placeholder="100"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                    </div>
+
+                    <!-- Duración Mínima -->
+                    <div>
+                        <label for="duracion_min" class="block text-sm font-medium text-gray-700 mb-2">
+                            Duración Mínima (min)
+                        </label>
+                        <input 
+                            type="number" 
+                            name="duracion_min" 
+                            id="duracion_min"
+                            value="{{ request('duracion_min') }}"
+                            min="0"
+                            step="5"
+                            placeholder="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                    </div>
+
+                    <!-- Duración Máxima -->
+                    <div>
+                        <label for="duracion_max" class="block text-sm font-medium text-gray-700 mb-2">
+                            Duración Máxima (max)
+                        </label>
+                        <input 
+                            type="number" 
+                            name="duracion_max" 
+                            id="duracion_max"
+                            value="{{ request('duracion_max') }}"
+                            min="0"
+                            step="5"
+                            placeholder="120"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button 
+                        type="submit"
+                        class="inline-flex items-center justify-center px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                    >
+                        <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        Buscar
+                    </button>
+                    <a 
+                        href="{{ route('tratamientos.index') }}"
+                        class="inline-flex items-center justify-center px-6 py-2 bg-gray-200 text-gray-700 font-medium rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors"
+                    >
+                        <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        Limpiar Filtros
+                    </a>
+                </div>
+
+                <!-- Results Count -->
+                @if(request()->hasAny(['buscar', 'precio_min', 'precio_max', 'duracion_min', 'duracion_max']))
+                    <div class="text-sm text-gray-600">
+                        <span class="font-medium">{{ $tratamientos->count() }}</span> tratamiento(s) encontrado(s)
+                    </div>
+                @endif
+            </form>
+        </div>
+    </div>
+
     <!-- Treatments Grid -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         @if($tratamientos->isEmpty())
@@ -66,7 +195,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <h3 class="mt-2 text-sm font-medium text-gray-900">No hay tratamientos disponibles</h3>
-                <p class="mt-1 text-sm text-gray-500">Estamos actualizando nuestros servicios. Vuelve pronto.</p>
+                <p class="mt-1 text-sm text-gray-500">
+                    @if(request()->hasAny(['buscar', 'precio_min', 'precio_max', 'duracion_min', 'duracion_max']))
+                        No se encontraron tratamientos con los criterios seleccionados. Intenta con otros filtros.
+                    @else
+                        Estamos actualizando nuestros servicios. Vuelve pronto.
+                    @endif
+                </p>
             </div>
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
