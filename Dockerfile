@@ -53,6 +53,7 @@ COPY .env .
 
 # 9. Set permissions
 RUN chown -R $user:$user /var/www
+RUN chmod +x /var/www/docker/entrypoint.sh
 
 # Switch to user
 USER $user

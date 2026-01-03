@@ -21,10 +21,7 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     # This runs the migration/startup script
-    command: >
-      bash -c "sed -i 's/\r$$//' /var/www/docker/entrypoint.sh &&
-      chmod +x /var/www/docker/entrypoint.sh &&
-      /var/www/docker/entrypoint.sh"
+    entrypoint: ["/var/www/docker/entrypoint.sh"]
 
   # Nginx Web Server (To serve the app)
   nginx:
