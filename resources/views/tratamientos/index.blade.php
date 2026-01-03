@@ -248,6 +248,11 @@
                     </div>
                 @endforeach
             </div>
+
+            <!-- Pagination Links -->
+            <div class="mt-8">
+                {{ $tratamientos->links() }}
+            </div>
         @endif
     </div>
 

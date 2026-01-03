@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 class TratamientoController extends Controller
 {
     /**
-     * Display a listing of active treatments for public view.
+     * listado de trataminetos activos
      */
     public function index(Request $request)
     {
-        // Query base: solo tratamientos activos
+        //solo tratamientos activos
         $query = Tratamiento::where('esta_activo', true);
 
         // Búsqueda por nombre
@@ -40,8 +40,8 @@ class TratamientoController extends Controller
             $query->where('duracion_minutos', '<=', $request->duracion_max);
         }
 
-        // Obtener tratamientos ordenados por nombre
-        $tratamientos = $query->orderBy('nombre')->get();
+        // Obtener tratamientos con paginación (9 por página)
+        $tratamientos = $query->orderBy('nombre')->paginate(9)->withQueryString();
 
         return view('tratamientos.index', compact('tratamientos'));
     }
@@ -50,12 +50,11 @@ class TratamientoController extends Controller
     // detalle del tratamiento
     public function show(Tratamiento $tratamiento)
     {
-        // Only show if the treatment is active
         if (!$tratamiento->esta_activo) {
             abort(404);
         }
 
-        // Load professionals who offer this treatment
+        // Load professionals who offer this treatment (despues ahora no esta) 
         $tratamiento->load('profesionales.user');
 
         return view('tratamientos.show', compact('tratamiento'));
