@@ -26,5 +26,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
         ]);
+
+        // 3. Luego los tratamientos disponibles en la clínica
+        $this->call([
+            TratamientoSeeder::class,
+        ]);
     }
 }
