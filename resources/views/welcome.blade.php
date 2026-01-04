@@ -422,14 +422,60 @@
             margin-bottom: 5px;
         }
         
-        /* CTA y Footer  */
+       /* CTA y Footer  */
         .cta {
             background: linear-gradient(135deg, var(--azul), var(--turquesa));
             color: white;
             padding: 60px 0;
             text-align: center;
         }
-        
+
+        .cta-simple {
+            padding: 60px 0;
+            text-align: center;
+            background: rgba(79, 195, 247, 0.05);  /* Color del "bienestar" muy suave */
+            border-top: 1px solid rgba(79, 195, 247, 0.1);
+        }
+
+        .cta-simple h2 {
+            color: #4FC3F7;  /* Mismo color que "bienestar" */
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-simple p {
+            color: #546E7A;  /* Gris azulado */
+            margin-bottom: 30px;
+        }
+
+        .cta-btns-simple {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-simple {
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-simple.primary {
+            background: #0066CC;
+            color: white;
+        }
+
+        .btn-simple.secondary {
+            background: white;
+            color: #0066CC;
+            border: 2px solid #0066CC;
+        }
+
         .footer {
             background: var(--texto);
             color: white;
@@ -664,22 +710,21 @@
         </div>
     </section>
     <!-- CTA -->
-    <section class="cta">
-        <h2>¿Listo para comenzar tu recuperación?</h2>
-        <p style="max-width: 600px; margin: 0 auto 30px;">
-            Reserva tu primera consulta de valoración
-        </p>
-        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+    <section class="cta-simple">
+        <h2>¿Listo para comenzar?</h2>
+        <p>Reserva tu cita y comienza tu camino hacia el bienestar</p>
+        
+        <div class="cta-btns-simple">
             @auth
-                <a href="{{ url('/dashboard') }}" class="btn-primary">
+                <a href="{{ url('/dashboard') }}" class="btn-simple primary">
                     <i class="fas fa-calendar-alt"></i> Agendar Cita
                 </a>
             @else
-                <a href="{{ route('register') }}" class="btn-primary">
+                <a href="{{ route('register') }}" class="btn-simple primary">
                     <i class="fas fa-user-plus"></i> Crear Cuenta
                 </a>
-                <a href="{{ route('login') }}" class="btn-secondary">
-                    <i class="fas fa-sign-in-alt"></i> Acceder
+                <a href="{{ route('login') }}" class="btn-simple secondary">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                 </a>
             @endauth
         </div>
@@ -783,7 +828,7 @@
                 });
             }
 
-            
+
             // Carrusel simple de profesionales
             const teamContainer = document.getElementById('teamContainer');
             const prevBtn = document.getElementById('prevBtn');
