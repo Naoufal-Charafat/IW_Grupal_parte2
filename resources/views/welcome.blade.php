@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FisioClinic</title>
     
-    <!-- Fonts & Styles -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Paleta profesional simplificada */
         :root {
             --azul: #0066CC;
             --turquesa: #0097A7;
@@ -34,7 +32,6 @@
             line-height: 1.6;
         }
         
-        /* Navegación simplificada */
         .nav {
             background: transparent;
             position: fixed;
@@ -126,7 +123,7 @@
             color: var(--blanco);
         }
         
-        /* HERO SECTION MEJORADA (de la segunda versión) */
+        /* HERO SECTION  */
         .hero {
             position: relative;
             height: 100vh;
@@ -159,7 +156,7 @@
             opacity: 1;
         }
         
-        /* Imágenes profesionales para fisioterapia (3 imágenes) */
+        /* Imágenes  */
         .slide-1 {
             background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), 
                               url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
@@ -259,7 +256,7 @@
             border: 2px solid white;
         }
         
-        /* ESTADÍSTICAS DEL HERO (nuevas) */
+        /* ESTADÍSTICAS DEL HERO  */
         .hero-stats {
             display: flex;
             justify-content: center;
@@ -319,7 +316,7 @@
             transform: scale(1.2);
         }
         
-        /* Secciones generales (simplificadas) */
+        /* Secciones generales  */
         .section {
             padding: 80px 0;
         }
@@ -348,7 +345,7 @@
             margin-right: auto;
         }
         
-        /* Características optimizadas */
+        /* Características  */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -387,7 +384,7 @@
             font-size: 0.95rem;
         }
         
-        /* Equipo optimizado */
+        /* Equipo  */
         .team-container {
             display: flex;
             gap: 25px;
@@ -425,7 +422,7 @@
             margin-bottom: 5px;
         }
         
-        /* CTA y Footer simplificados */
+        /* CTA y Footer  */
         .cta {
             background: linear-gradient(135deg, var(--azul), var(--turquesa));
             color: white;
@@ -453,7 +450,6 @@
             color: #90A4AE;
         }
         
-        /* Responsive mínimo */
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.2rem;
@@ -504,16 +500,14 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION MEJORADA (con estadísticas y 3 imágenes) -->
+    <!-- HERO SECTION -->
     <section class="hero">
-        <!-- Carrusel de imágenes -->
         <div class="hero-carousel">
             <div class="carousel-slide slide-1 active"></div>
             <div class="carousel-slide slide-2"></div>
             <div class="carousel-slide slide-3"></div>
         </div>
         
-        <!-- Contenido sobre el carrusel -->
         <div class="hero-overlay">
             <div class="hero-content">
                 <h1 class="hero-title">
@@ -533,7 +527,6 @@
             </div>
         </div>
         
-        <!-- Indicadores del carrusel -->
         <div class="carousel-dots">
             <button class="carousel-dot active" data-slide="0"></button>
             <button class="carousel-dot" data-slide="1"></button>
@@ -631,9 +624,6 @@
                                 <span style="color: var(--azul); font-weight: 600;">
                                     {{ number_format($profesional->tarifa_hora, 2) }}€/hora
                                 </span>
-                                <a href="#" style="color: var(--turquesa); text-decoration: none;">
-                                    <i class="fas fa-calendar-alt"></i> Disponible
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -698,10 +688,10 @@
         </div>
     </footer>
 
-    <!-- JavaScript optimizado -->
+    <!-- JavaScript  -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ========== 1. CARRUSEL AUTOMÁTICO HERO ==========
+            // carrusel automát.
             const slides = document.querySelectorAll('.carousel-slide');
             const dots = document.querySelectorAll('.carousel-dot');
             
@@ -710,12 +700,10 @@
                 const slideInterval = 3000; // Cambia cada 3 segundos
                 
                 function showSlide(n) {
-                    // Ocultar todas las slides
                     slides.forEach(slide => {
                         slide.classList.remove('active');
                     });
                     
-                    // Desactivar todos los dots
                     dots.forEach(dot => {
                         dot.classList.remove('active');
                     });
@@ -759,7 +747,6 @@
                 }
             }
             
-            // ========== 2. NAVEGACIÓN SCROLL ==========
             const nav = document.getElementById('mainNav');
             if (nav) {
                 window.addEventListener('scroll', function() {
@@ -771,7 +758,6 @@
                 });
             }
             
-            // ========== 3. SCROLL SUAVE ==========
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -787,16 +773,6 @@
                     }
                 });
             });
-            
-            // ========== 4. MENÚ MÓVIL BÁSICO ==========
-            const mobileBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-            
-            if (mobileBtn && navLinks) {
-                mobileBtn.addEventListener('click', () => {
-                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-                });
-            }
         });
     </script>
 </body>
