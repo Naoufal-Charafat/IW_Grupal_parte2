@@ -340,6 +340,25 @@ Base de datos: clinica
 
 > ⚠️ **Nota**: El puerto es `3307` en el host para evitar conflictos con instalaciones locales de MySQL que usan el puerto `3306`.
 
+
+### 🔄 Alternar entre Docker y Local (IMPORTANTE)
+
+Si trabajas con Docker y luego quieres volver a ejecutar `php artisan serve` localmente, es posible que encuentres errores de permisos o rutas incorrectas debido a la caché.
+
+Para solucionar esto automáticamente, hemos creado un script:
+
+```bash
+# Ejecutar siempre que cambies de Docker a local
+./scripts/clean_env.sh
+```
+
+Este script se encarga de:
+1. Limpiar todas las cachés de Laravel
+2. Eliminar archivos de configuración generados por Docker
+3. Restaurar los permisos de escritura para tu usuario local
+
+---
+
 ### Solución de Problemas
 
 #### Error: "port is already allocated" (puerto ya en uso)
