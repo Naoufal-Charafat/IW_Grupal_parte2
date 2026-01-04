@@ -31,5 +31,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TratamientoSeeder::class,
         ]);
+
+        $this->call([
+            ProfesionalSeeder::class,
+        ]);
     }
 }

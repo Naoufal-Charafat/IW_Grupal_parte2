@@ -13,7 +13,7 @@ class ProfesionalSeeder extends Seeder
     {
         // Verificar si ya existen profesionales
         if (Profesional::count() > 0) {
-            echo "ℹ  Ya existen profesionales en la base de datos\n";
+            echo "Ya existen profesionales en la base de datos\n";
             return;
         }
 
@@ -72,6 +72,79 @@ class ProfesionalSeeder extends Seeder
                     'tarifa_hora' => 55.00,
                 ]
             ],
+            [
+                'usuario' => [
+                    'name' => 'Dr. Javier Rodríguez',
+                    'email' => 'javier.rodriguez@fisioclinic.com',
+                    'password' => Hash::make('password123'),
+                    'email_verified_at' => now(),
+                    'telefono' => '+34 600 777 888',
+                    'line_1' => 'Calle Terapia 12',
+                    'postal_code' => '28004',
+                    'esta_activo' => 1,
+                    'tipo' => 'particular',
+                ],
+                'profesional' => [
+                    'numero_licencia' => 'FT-98765',
+                    'biografia' => 'Especialista en fisioterapia traumatológica. Experto en recuperación post-quirúrgica y lesiones deportivas. Certificado en técnicas de punción seca.',
+                    'tarifa_hora' => 70.00,
+                ]
+            ],
+            [
+                'usuario' => [
+                    'name' => 'Dra. Laura Sánchez',
+                    'email' => 'laura.sanchez@fisioclinic.com',
+                    'password' => Hash::make('password123'),
+                    'email_verified_at' => now(),
+                    'telefono' => '+34 600 999 000',
+                    'line_1' => 'Avenida Movimiento 34',
+                    'postal_code' => '28005',
+                    'esta_activo' => 1,
+                    'tipo' => 'empresa',
+                ],
+                'profesional' => [
+                    'numero_licencia' => 'FT-13579',
+                    'biografia' => 'Fisioterapeuta especializada en suelo pélvico y salud femenina. Máster en Uroginecología y Obstetricia. Enfoque integral para la mujer en todas las etapas.',
+                    'tarifa_hora' => 75.00,
+                ]
+            ],
+            [
+                'usuario' => [
+                    'name' => 'Dr. Miguel Torres',
+                    'email' => 'miguel.torres@fisioclinic.com',
+                    'password' => Hash::make('password123'),
+                    'email_verified_at' => now(),
+                    'telefono' => '+34 600 222 333',
+                    'line_1' => 'Plaza Equilibrio 8',
+                    'postal_code' => '28006',
+                    'esta_activo' => 1,
+                    'tipo' => 'particular',
+                ],
+                'profesional' => [
+                    'numero_licencia' => 'FT-24680',
+                    'biografia' => 'Experto en fisioterapia respiratoria y cardíaca. Especializado en pacientes con patologías pulmonares crónicas. Terapeuta certificado en drenaje linfático manual.',
+                    'tarifa_hora' => 62.00,
+                ]
+            ],
+            [
+                'usuario' => [
+                    'name' => 'Dra. Elena Fernández',
+                    'email' => 'elena.fernandez@fisioclinic.com',
+                    'password' => Hash::make('password123'),
+                    'email_verified_at' => now(),
+                    'telefono' => '+34 600 444 555',
+                    'line_1' => 'Calle Rehabilitación 56',
+                    'line_2' => '2º D',
+                    'postal_code' => '28007',
+                    'esta_activo' => 1,
+                    'tipo' => 'particular',
+                ],
+                'profesional' => [
+                    'numero_licencia' => 'FT-11223',
+                    'biografia' => 'Fisioterapeuta pediátrica y del desarrollo. Especialista en atención temprana y trastornos del neurodesarrollo. Formada en terapia Vojta y Bobath.',
+                    'tarifa_hora' => 68.00,
+                ]
+            ],
         ];
 
         $creados = 0;
@@ -81,8 +154,10 @@ class ProfesionalSeeder extends Seeder
             $user = User::where('email', $data['usuario']['email'])->first();
             
             if (!$user) {
-                // Crear usuario si no existe
                 $user = User::create($data['usuario']);
+                if (class_exists('\Spatie\Permission\Models\Role')) {
+                    $user->assignRole('profesional');
+                }
             }
             
             // Verificar si ya tiene profesional asociado

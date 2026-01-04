@@ -449,6 +449,20 @@
             border-top: 1px solid rgba(255,255,255,0.1);
             color: #90A4AE;
         }
+
+        /* Flechas simples para el equipo */
+        .team-nav-btn {
+            background: none;
+            border: none;
+            font-size: 30px;
+            color: var(--texto);
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .team-nav-btn:hover {
+            color: var(--azul);
+        }
         
         @media (max-width: 768px) {
             .hero-title {
@@ -607,27 +621,39 @@
             <p class="section-subtitle">Profesionales comprometidos con tu recuperación</p>
             
             @if(isset($profesionales) && $profesionales->count() > 0)
-                <div class="team-container">
-                    @foreach($profesionales as $profesional)
-                    <div class="team-card">
-                        <img src="https://images.unsplash.com/photo-1612349317150?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                            alt="{{ $profesional->user->name ?? 'Profesional' }}" class="team-img">
-                        <div class="team-info">
-                            <h3 class="team-name">{{ $profesional->user->name ?? 'Profesional' }}</h3>
-                            <p class="team-specialty" style="color: var(--turquesa); margin-bottom: 15px;">
-                                <i class="fas fa-graduation-cap"></i> Fisioterapeuta
-                            </p>
-                            <p style="color: #546E7A; margin-bottom: 15px;">
-                                {{ Str::limit($profesional->biografia ?? 'Especialista en fisioterapia.', 80) }}
-                            </p>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: var(--azul); font-weight: 600;">
-                                    {{ number_format($profesional->tarifa_hora, 2) }}€/hora
-                                </span>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
+                    <button id="prevBtn" class="team-nav-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="team-container" id="teamContainer" style="display: flex; gap: 25px; width: 650px; overflow: hidden;">
+                        @foreach($profesionales as $profesional)
+                        <div class="team-card" style="min-width: 300px; background: var(--blanco); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                            <img src="https://images.unsplash.com/photo-1612349317150?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                alt="{{ $profesional->user->name ?? 'Profesional' }}" style="width: 100%; height: 200px; object-fit: cover;">
+                            <div style="padding: 20px;">
+                                <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--texto); margin-bottom: 5px;">
+                                    {{ $profesional->user->name ?? 'Profesional' }}
+                                </h3>
+                                <p style="color: var(--turquesa); margin-bottom: 15px;">
+                                    <i class="fas fa-graduation-cap"></i> Fisioterapeuta
+                                </p>
+                                <p style="color: #546E7A; margin-bottom: 15px;">
+                                    {{ Str::limit($profesional->biografia ?? 'Especialista en fisioterapia.', 80) }}
+                                </p>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="color: var(--azul); font-weight: 600;">
+                                        {{ number_format($profesional->tarifa_hora, 2) }}€/hora
+                                    </span>
+                                </div>
                             </div>
                         </div>
+                        @endforeach
                     </div>
-                    @endforeach
+                    
+                    <button id="nextBtn" class="team-nav-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             @else
                 <div style="text-align: center; padding: 40px; background: var(--blanco); border-radius: 12px;">
@@ -637,7 +663,6 @@
             @endif
         </div>
     </section>
-
     <!-- CTA -->
     <section class="cta">
         <h2>¿Listo para comenzar tu recuperación?</h2>
@@ -757,7 +782,59 @@
                     }
                 });
             }
+
             
+            // Carrusel simple de profesionales
+            const teamContainer = document.getElementById('teamContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (teamContainer && prevBtn && nextBtn) {
+                const cards = teamContainer.querySelectorAll('.team-card');
+                let currentIndex = 0;
+                const cardsPerView = 2;
+                const totalCards = cards.length;
+                
+                // Mostrar solo 2 tarjetas al inicio
+                function showCards() {
+                    // Ocultar todas las tarjetas
+                    cards.forEach(card => {
+                        card.style.display = 'none';
+                    });
+                    
+                    // Mostrar solo las 2 tarjetas actuales
+                    for (let i = currentIndex; i < currentIndex + cardsPerView && i < totalCards; i++) {
+                        cards[i].style.display = 'block';
+                    }
+                }
+                
+                // Botón anterior
+                prevBtn.onclick = () => {
+                    if (currentIndex > 0) {
+                        currentIndex -= cardsPerView;
+                        if (currentIndex < 0) currentIndex = 0;
+                        showCards();
+                    }
+                };
+                
+                // Botón siguiente
+                nextBtn.onclick = () => {
+                    if (currentIndex + cardsPerView < totalCards) {
+                        currentIndex += cardsPerView;
+                        showCards();
+                    }
+                };
+                
+                // Inicializar: mostrar primeros 2 profesionales
+                showCards();
+                
+                // Ocultar flechas si hay 2 o menos profesionales
+                if (totalCards <= cardsPerView) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                }
+            }
+                        
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();

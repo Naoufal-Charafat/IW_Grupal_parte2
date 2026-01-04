@@ -7,19 +7,18 @@ use App\Http\Controllers\TratamientoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    // 1. Tratamientos destacados desde BD
+    // Tratamientos destacados desde BD
     $tratamientosDestacados = Tratamiento::where('esta_activo', true)
                                           ->orderBy('created_at', 'desc')
                                           ->take(3)
                                           ->get();
     
-    // 2. Profesionales desde BD con sus usuarios
     $profesionales = Profesional::with('user')
-                                 ->take(3)
-                                 ->get();
+                                 ->get();  
+
     
     // 3. Pasar todo a la vista
-    return view('welcome', [
+    return view('welcome', [  
         'tratamientosDestacados' => $tratamientosDestacados,
         'profesionales' => $profesionales
     ]);
