@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reserva;
 use App\Models\Tratamiento;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
@@ -50,6 +51,24 @@ class TratamientoControllerApiRest extends Controller
         $query = Tratamiento::where('esta_activo', true);
         $tratamientos = $query->orderBy('nombre')->get();
 
-        return $this->success($tratamientos, 'Listado de tratamientos obtenido correctamente');
+        $services = $tratamientos->map(function (Tratamiento $tratamiento) use ($fromDate, $tillDate) {
+            return [
+                'id' => $tratamiento->id,
+                'name' => $tratamiento->nombre,
+                'description' => $tratamiento->descripcion,
+                'price' => (float) $tratamiento->precio,
+                //'url' => url("/services/booking?uid={$uid}&treatment={$tratamiento->id}"),
+                'url' => url(config('APP_URL') . "/tratamientos/" . $tratamiento->id),
+                'duration' => $tratamiento->duracion_minutos . 'min',
+                //'image' => $imageUrl,
+                'availability' => Reserva::where('tratamiento_id', $tratamiento->id)
+                    ->where('estado', 'borrador')
+                    ->where('fecha', '>=', $fromDate)
+                    ->where('fecha', '<=', $tillDate)
+                    ->get(),
+            ];
+        });
+
+        return $this->success($services, null, 200, 'services');
     }
 }
