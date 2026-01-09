@@ -545,7 +545,7 @@
                 <a href="/" class="nav-link">Inicio</a>
                 <a href="{{ route('tratamientos.index') }}" class="nav-link">Tratamientos</a>
                 <a href="#equipo" class="nav-link">Equipo</a>
-                <a href="#contacto" class="nav-link">Contacto</a>
+                <a href="{{ route('contacto') }}" class="nav-link">Contacto</a>
                 
                 @auth
                     <a href="{{ url('/dashboard') }}" class="nav-link">Mi Cuenta</a>

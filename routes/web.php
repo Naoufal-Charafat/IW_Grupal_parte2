@@ -4,6 +4,7 @@ use App\Models\Tratamiento;
 use App\Models\Profesional;
 use App\Models\User;
 use App\Http\Controllers\TratamientoController;
+use App\Http\Controllers\ContactoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,5 +28,8 @@ Route::get('/', function () {
 // Rutas públicas de tratamientos
 Route::get('/tratamientos', [TratamientoController::class, 'index'])->name('tratamientos.index');
 Route::get('/tratamientos/{tratamiento}', [TratamientoController::class, 'show'])->name('tratamientos.show');
+
+
+Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto');
 
 require __DIR__ . '/auth.php';
