@@ -14,6 +14,9 @@ Route::get('/tratamientos/{tratamiento}', [TratamientoController::class, 'show']
 Route::middleware('auth')->group(function () {
     Route::get('/reservas/tratamiento/{tratamiento}/profesionales', [ReservaController::class, 'selectProfesional'])
         ->name('reservas.select-profesional');
+    
+    Route::get('/reservas/tratamiento/{tratamiento}/profesional/{profesional}/fecha-hora', [ReservaController::class, 'selectDateTime'])
+        ->name('reservas.select-datetime');
 });
 
 require __DIR__ . '/auth.php';

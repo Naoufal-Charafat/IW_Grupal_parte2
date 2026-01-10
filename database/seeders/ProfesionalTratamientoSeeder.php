@@ -75,9 +75,9 @@ class ProfesionalTratamientoSeeder extends Seeder
             // Dra. Laura Sánchez - Tarifa: 75€/h - Especialista suelo pélvico (la más cara)
             'laura.sanchez@fisioclinic.com' => [
                 'Fisioterapia para el Suelo Pélvico' => ['precio' => 70.00],  // +5€ especialista máster
-                'Masaje Terapéutico' => ['precio' => 50.00],
-                'Electroterapia' => ['precio' => 38.00],€
-                'Ultrasonoterapia' => ['precio' => 33.00],
+                'Masaje Terapéutico' => ['precio' => 50.00],  // +5€
+                'Electroterapia' => ['precio' => 38.00],  // +3€
+                'Ultrasonoterapia' => ['precio' => 33.00],  // +3€
             ],
             
             // Dr. Miguel Torres - Tarifa: 62€/h - Experto respiratoria

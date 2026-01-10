@@ -112,27 +112,63 @@
             <!-- Professionals Section -->
             @if($tratamiento->profesionales->isNotEmpty())
                 <div class="px-8 py-8 bg-gray-50 border-t border-gray-200">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Profesionales Disponibles</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Profesionales Disponibles</h2>
+                    <p class="text-gray-600 mb-6">Selecciona un profesional para reservar tu cita</p>
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($tratamiento->profesionales as $profesional)
-                            <div class="bg-white rounded-lg shadow p-6">
-                                <div class="flex items-center mb-4">
-                                    <div class="bg-indigo-100 rounded-full p-3">
-                                        <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
+                            @php
+                                $precio = $profesional->pivot->precio_personalizado ?? $tratamiento->precio;
+                                $duracion = $profesional->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos;
+                            @endphp
+                            
+                            <a href="@auth{{ route('reservas.select-datetime', ['tratamiento' => $tratamiento, 'profesional' => $profesional]) }}@else{{ route('login', ['redirect' => route('reservas.select-datetime', ['tratamiento' => $tratamiento, 'profesional' => $profesional])]) }}@endauth" 
+                               class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                                <!-- Professional Header -->
+                                <div class="p-6">
+                                    <div class="flex items-center mb-4">
+                                        <div class="bg-indigo-100 rounded-full p-3 group-hover:bg-indigo-200 transition-colors">
+                                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                        </div>
+                                        <div class="ml-4 flex-1">
+                                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
+                                                {{ $profesional->user->name }}
+                                            </h3>
+                                            <p class="text-sm text-gray-500">Fisioterapeuta</p>
+                                        </div>
                                     </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-semibold text-gray-900">
-                                            {{ $profesional->user->name }}
-                                        </h3>
-                                        <p class="text-sm text-gray-500">Fisioterapeuta</p>
+                                    
+                                    @if($profesional->biografia)
+                                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                                            {{ Str::limit($profesional->biografia, 120) }}
+                                        </p>
+                                    @endif
+                                    
+                                    <!-- Price and Duration -->
+                                    <div class="border-t border-gray-200 pt-4 mt-4">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-sm text-gray-600">Duración:</span>
+                                            <span class="font-semibold text-gray-900">{{ $duracion }} min</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm text-gray-600">Precio:</span>
+                                            <span class="text-xl font-bold text-indigo-600">{{ number_format($precio, 2) }}€</span>
+                                        </div>
                                     </div>
                                 </div>
-                                @if($profesional->biografia)
-                                    <p class="text-gray-600 text-sm">{{ Str::limit($profesional->biografia, 100) }}</p>
-                                @endif
-                            </div>
+                                
+                                <!-- Action Footer -->
+                                <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 group-hover:bg-indigo-50 transition-colors">
+                                    <div class="flex items-center justify-center text-indigo-600 font-medium">
+                                        <span>Seleccionar Profesional</span>
+                                        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </a>
                         @endforeach
                     </div>
                 </div>

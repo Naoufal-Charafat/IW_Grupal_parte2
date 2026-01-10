@@ -200,9 +200,9 @@
 
                     <!-- Action Button -->
                     <div class="px-6 pb-6">
-                        <a href="#" 
+                        <a href="{{ route('reservas.select-datetime', ['tratamiento' => $tratamiento, 'profesional' => $profesional]) }}" 
                            class="block w-full text-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-semibold">
-                            Continuar con {{ $profesional->user->name }}
+                            Continuar con {{ explode(' ', $profesional->user->name)[0] }}
                         </a>
                     </div>
                 </div>
