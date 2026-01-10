@@ -137,18 +137,18 @@
             <div class="px-8 py-8 bg-white border-t border-gray-200">
                 <div class="flex flex-col sm:flex-row gap-4">
                     @auth
-                        <a href="{{ url('/dashboard') }}" 
+                        <a href="{{ route('reservas.select-profesional', $tratamiento) }}" 
                            class="flex-1 text-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-semibold">
                             Reservar Cita
                         </a>
                     @else
-                        <a href="{{ route('register') }}" 
+                        <a href="{{ route('login', ['redirect' => route('reservas.select-profesional', $tratamiento)]) }}" 
                            class="flex-1 text-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-semibold">
-                            Crear Cuenta para Reservar
+                            Iniciar Sesión para Reservar
                         </a>
-                        <a href="{{ route('login') }}" 
+                        <a href="{{ route('register') }}" 
                            class="flex-1 text-center bg-gray-200 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-300 transition-colors duration-200 font-semibold">
-                            Iniciar Sesión
+                            Crear Cuenta
                         </a>
                     @endauth
                     <a href="{{ route('tratamientos.index') }}" 
