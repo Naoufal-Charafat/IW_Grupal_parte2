@@ -41,7 +41,10 @@ class TratamientoController extends Controller
         }
 
         // Obtener tratamientos con paginación (9 por página)
-        $tratamientos = $query->orderBy('nombre')->paginate(9)->withQueryString();
+        // Cargar relación con profesionales para calcular rangos de precio
+        $tratamientos = $query->with(['profesionales' => function ($query) {
+            $query->wherePivot('esta_activo', true);
+        }])->orderBy('nombre')->paginate(9)->withQueryString();
 
         return view('tratamientos.index', compact('tratamientos'));
     }
@@ -54,8 +57,10 @@ class TratamientoController extends Controller
             abort(404);
         }
 
-        // Load professionals who offer this treatment (despues ahora no esta) 
-        $tratamiento->load('profesionales.user');
+        // Load professionals who offer this treatment with active pivot relationships
+        $tratamiento->load(['profesionales' => function ($query) {
+            $query->wherePivot('esta_activo', true)->with('user');
+        }]);
 
         return view('tratamientos.show', compact('tratamiento'));
     }
