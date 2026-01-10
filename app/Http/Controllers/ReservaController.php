@@ -63,4 +63,46 @@ class ReservaController extends Controller
 
         return view('reservas.select-datetime', compact('tratamiento', 'profesional', 'precio', 'duracion'));
     }
+
+    /**
+     * Show la pagina de resumen de cita antes la confirmacion
+     */
+    public function showConfirmation(Request $request)
+    {
+        // Validate required parameters
+        $request->validate([
+            'tratamiento_id' => 'required|exists:tratamientos,id',
+            'profesional_id' => 'required|exists:profesionales,id',
+            'fecha' => 'required|date|after_or_equal:today',
+            'hora' => 'required',
+        ]);
+
+        $tratamiento = Tratamiento::findOrFail($request->tratamiento_id);
+        $profesional = Profesional::with('user')->findOrFail($request->profesional_id);
+
+        // Verify professional can perform this treatment
+        $pivotData = $profesional->tratamientos()
+            ->where('tratamiento_id', $tratamiento->id)
+            ->wherePivot('esta_activo', true)
+            ->first();
+
+        if (!$pivotData) {
+            return redirect()
+                ->route('tratamientos.index')
+                ->with('error', 'Combinación inválida de tratamiento y profesional.');
+        }
+
+        // Get price and duration
+        $precio = $pivotData->pivot->precio_personalizado ?? $tratamiento->precio;
+        $duracion = $pivotData->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos;
+
+        return view('reservas.confirmar', [
+            'tratamiento' => $tratamiento,
+            'profesional' => $profesional,
+            'fecha' => $request->fecha,
+            'hora' => $request->hora,
+            'precio' => $precio,
+            'duracion' => $duracion,
+        ]);
+    }
 }

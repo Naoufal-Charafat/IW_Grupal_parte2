@@ -273,7 +273,7 @@
             container.innerHTML = '<p class="text-gray-500 text-center py-4">Cargando horarios disponibles...</p>';
             
             // TODO: Fetch actual availability from backend
-            // For now, generate dummy slots
+            // por ahora, genera dummy slots
             setTimeout(() => {
                 generateTimeSlots(date);
             }, 500);
@@ -283,12 +283,12 @@
             const container = document.getElementById('time-slots-container');
             const slots = [];
             
-            // Generate slots from 9:00 to 19:00
+            // generar citas entre 9:00 a 19:00
             for (let hour = 9; hour < 19; hour++) {
                 for (let minute = 0; minute < 60; minute += 30) {
                     const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
                     
-                    // Simulate some booked slots (this should come from backend)
+                    // simular alginas citas (para que se muestren como no disponible)
                     const isBooked = Math.random() > 0.7;
                     
                     slots.push({ time: timeString, available: !isBooked });
@@ -334,8 +334,16 @@
         document.getElementById('continue-btn').onclick = () => {
             if (selectedDate && selectedTime) {
                 const formattedDate = selectedDate.toISOString().split('T')[0];
-                // TODO: Navigate to confirmation page
-                alert(`Fecha: ${formattedDate}\nHora: ${selectedTime}\n\nPróxima página: Confirmación de reserva`);
+                
+                // Navigate to confirmation page with query parameters
+                const params = new URLSearchParams({
+                    tratamiento_id: tratamientoId,
+                    profesional_id: profesionalId,
+                    fecha: formattedDate,
+                    hora: selectedTime
+                });
+                
+                window.location.href = `{{ route('reservas.confirmar') }}?${params.toString()}`;
             }
         };
 
