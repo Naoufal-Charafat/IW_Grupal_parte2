@@ -221,7 +221,7 @@
                     class="w-full px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold text-lg">
                 Cancelar
             </button>
-            <form method="POST" action="#" class="w-full">
+            <form method="POST" action="{{ route('reservas.store') }}" class="w-full">
                 @csrf
                 <input type="hidden" name="tratamiento_id" value="{{ $tratamiento->id }}">
                 <input type="hidden" name="profesional_id" value="{{ $profesional->id }}">
