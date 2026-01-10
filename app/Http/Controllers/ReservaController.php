@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profesional;
+use App\Models\Reserva;
 use App\Models\Tratamiento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ReservaController extends Controller
 {
@@ -104,5 +106,77 @@ class ReservaController extends Controller
             'precio' => $precio,
             'duracion' => $duracion,
         ]);
+    }
+
+    /**
+     * Store la reservacion en la base de datos
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'tratamiento_id' => 'required|exists:tratamientos,id',
+            'profesional_id' => 'required|exists:profesionales,id',
+            'fecha' => 'required|date|after_or_equal:today',
+            'hora' => 'required',
+        ]);
+
+        $tratamiento = Tratamiento::findOrFail($validated['tratamiento_id']);
+        $profesional = Profesional::findOrFail($validated['profesional_id']);
+
+        // Verify professional can perform this treatment
+        $pivotData = $profesional->tratamientos()
+            ->where('tratamiento_id', $tratamiento->id)
+            ->wherePivot('esta_activo', true)
+            ->first();
+
+        if (!$pivotData) {
+            return redirect()
+                ->route('tratamientos.index')
+                ->with('error', 'Combinación inválida de tratamiento y profesional.');
+        }
+
+        // Get price and duration
+        $precio = $pivotData->pivot->precio_personalizado ?? $tratamiento->precio;
+        $duracion = $pivotData->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos;
+
+        // Parse fecha y hora
+        $fechaHora = \Carbon\Carbon::parse($validated['fecha'] . ' ' . $validated['hora']);
+
+        // Generate unique confirmation code
+        $codigoConfirmacion = 'CITA-' . strtoupper(Str::random(8));
+
+        // Ensure uniqueness
+        while (Reserva::where('codigo_confirmacion', $codigoConfirmacion)->exists()) {
+            $codigoConfirmacion = 'CITA-' . strtoupper(Str::random(8));
+        }
+
+        // Create reservation
+        $reserva = Reserva::create([
+            'user_id' => auth()->id(),
+            'profesional_id' => $profesional->id,
+            'tratamiento_id' => $tratamiento->id,
+            'fecha_hora' => $fechaHora,
+            'duracion_minutos' => $duracion,
+            'precio_pagado' => $precio,
+            'estado' => 'confirmada',
+            'codigo_confirmacion' => $codigoConfirmacion,
+        ]);
+
+        return redirect()->route('reservas.exito', $reserva);
+    }
+
+    /**
+     * Show pagina de exito de reservacion
+     */
+    public function success(Reserva $reserva)
+    {
+        if ($reserva->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        // Load relationships
+        $reserva->load(['profesional.user', 'tratamiento']);
+
+        return view('reservas.exito', compact('reserva'));
     }
 }
