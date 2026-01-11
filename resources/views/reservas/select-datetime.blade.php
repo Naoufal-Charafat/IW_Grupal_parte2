@@ -272,8 +272,12 @@
             const container = document.getElementById('time-slots-container');
             container.innerHTML = '<p class="text-gray-500 text-center py-4">Cargando horarios disponibles...</p>';
             
-            // Fetch la disponibilidad real del profesional desde el backend
-            const fechaFormatted = date.toISOString().split('T')[0]; // YYYY-MM-DD
+            // Format date without timezone conversion
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const fechaFormatted = `${year}-${month}-${day}`;
+            
             const url = `{{ route('api.profesional.disponibilidad', $profesional) }}?fecha=${fechaFormatted}`;
             
             fetch(url)
@@ -362,7 +366,11 @@
         // Continue to confirmation
         document.getElementById('continue-btn').onclick = () => {
             if (selectedDate && selectedTime) {
-                const formattedDate = selectedDate.toISOString().split('T')[0];
+                // Format date without timezone conversion
+                const year = selectedDate.getFullYear();
+                const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+                const day = String(selectedDate.getDate()).padStart(2, '0');
+                const formattedDate = `${year}-${month}-${day}`;
                 
                 // Navigate to confirmation page with query parameters
                 const params = new URLSearchParams({

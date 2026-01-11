@@ -140,14 +140,14 @@ class ReservaController extends Controller
         $duracion = $pivotData->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos;
 
         // Parse fecha y hora
-        $fecha = \Carbon\Carbon::parse($validated['fecha']);
-        $horaInicio = \Carbon\Carbon::parse($validated['fecha'] . ' ' . $validated['hora']);
+        $fecha = \Carbon\Carbon::createFromFormat('Y-m-d', $validated['fecha'])->startOfDay();
+        $horaInicio = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $validated['fecha'] . ' ' . $validated['hora']);
         $horaFin = $horaInicio->copy()->addMinutes($duracion);
 
-        // Generate unique confirmation code
+        // generau cod de conformacion unique
         $codigoConfirmacion = 'CITA-' . strtoupper(Str::random(8));
 
-        // Ensure uniqueness
+        // Ensure que esta unique
         while (Reserva::where('codigo_confirmacion', $codigoConfirmacion)->exists()) {
             $codigoConfirmacion = 'CITA-' . strtoupper(Str::random(8));
         }
