@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/reservas/exito/{reserva}', [ReservaController::class, 'success'])
         ->name('reservas.exito');
+    
+    // API endpoint for checking professional availability
+    Route::get('/api/profesional/{profesional}/disponibilidad', [ReservaController::class, 'getAvailability'])
+        ->name('api.profesional.disponibilidad');
 });
 
 require __DIR__ . '/auth.php';

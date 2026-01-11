@@ -272,14 +272,22 @@
             const container = document.getElementById('time-slots-container');
             container.innerHTML = '<p class="text-gray-500 text-center py-4">Cargando horarios disponibles...</p>';
             
-            // TODO: Fetch actual availability from backend
-            // por ahora, genera dummy slots
-            setTimeout(() => {
-                generateTimeSlots(date);
-            }, 500);
+            // Fetch la disponibilidad real del profesional desde el backend
+            const fechaFormatted = date.toISOString().split('T')[0]; // YYYY-MM-DD
+            const url = `{{ route('api.profesional.disponibilidad', $profesional) }}?fecha=${fechaFormatted}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    generateTimeSlots(date, data.horas_ocupadas);
+                })
+                .catch(error => {
+                    console.error('Error fetching availability:', error);
+                    container.innerHTML = '<p class="text-red-500 text-center py-4">Error al cargar horarios. Por favor intenta de nuevo.</p>';
+                });
         }
 
-        function generateTimeSlots(date) {
+        function generateTimeSlots(date, horasOcupadas = []) {
             const container = document.getElementById('time-slots-container');
             const slots = [];
             
@@ -288,8 +296,8 @@
                 for (let minute = 0; minute < 60; minute += 30) {
                     const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
                     
-                    // simular alginas citas (para que se muestren como no disponible)
-                    const isBooked = Math.random() > 0.7;
+                    // Check if this time slot is booked
+                    const isBooked = isTimeSlotOccupied(timeString, horasOcupadas);
                     
                     slots.push({ time: timeString, available: !isBooked });
                 }
@@ -314,6 +322,27 @@
                 
                 grid.appendChild(button);
             });
+        }
+
+        function isTimeSlotOccupied(timeSlot, horasOcupadas) {
+            // Check if the time slot overlaps with any occupied time range
+            const [hours, minutes] = timeSlot.split(':').map(Number);
+            const slotTime = hours * 60 + minutes;
+            
+            for (const ocupada of horasOcupadas) {
+                const [inicioHours, inicioMinutes] = ocupada.inicio.split(':').map(Number);
+                const [finHours, finMinutes] = ocupada.fin.split(':').map(Number);
+                
+                const inicioTime = inicioHours * 60 + inicioMinutes;
+                const finTime = finHours * 60 + finMinutes;
+                
+                // Check if slot overlaps with occupied range
+                if (slotTime >= inicioTime && slotTime < finTime) {
+                    return true;
+                }
+            }
+            
+            return false;
         }
 
         function selectTime(time, button) {

@@ -184,4 +184,34 @@ class ReservaController extends Controller
 
         return view('reservas.exito', compact('reserva'));
     }
+
+    /**
+     * Get professional availability for a specific date (AJAX endpoint)
+     */
+    public function getAvailability(Request $request, Profesional $profesional)
+    {
+        $fecha = $request->input('fecha');
+        
+        if (!$fecha) {
+            return response()->json(['error' => 'Fecha requerida'], 400);
+        }
+
+        // Get all reservations for this professional on this date
+        $reservas = Reserva::where('profesional_id', $profesional->id)
+            ->where('fecha', $fecha)
+            ->whereIn('estado', ['confirmado', 'bloqueado'])
+            ->get(['hora_inicio', 'hora_fin']);
+
+        // Convert to simple array of time ranges
+        $horasOcupadas = $reservas->map(function ($reserva) {
+            return [
+                'inicio' => \Carbon\Carbon::parse($reserva->hora_inicio)->format('H:i'),
+                'fin' => \Carbon\Carbon::parse($reserva->hora_fin)->format('H:i'),
+            ];
+        });
+
+        return response()->json([
+            'horas_ocupadas' => $horasOcupadas
+        ]);
+    }
 }
