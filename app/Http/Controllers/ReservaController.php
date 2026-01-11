@@ -140,7 +140,9 @@ class ReservaController extends Controller
         $duracion = $pivotData->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos;
 
         // Parse fecha y hora
-        $fechaHora = \Carbon\Carbon::parse($validated['fecha'] . ' ' . $validated['hora']);
+        $fecha = \Carbon\Carbon::parse($validated['fecha']);
+        $horaInicio = \Carbon\Carbon::parse($validated['fecha'] . ' ' . $validated['hora']);
+        $horaFin = $horaInicio->copy()->addMinutes($duracion);
 
         // Generate unique confirmation code
         $codigoConfirmacion = 'CITA-' . strtoupper(Str::random(8));
@@ -155,11 +157,14 @@ class ReservaController extends Controller
             'user_id' => auth()->id(),
             'profesional_id' => $profesional->id,
             'tratamiento_id' => $tratamiento->id,
-            'fecha_hora' => $fechaHora,
+            'fecha' => $fecha,
+            'hora_inicio' => $horaInicio,
+            'hora_fin' => $horaFin,
             'duracion_minutos' => $duracion,
-            'precio_pagado' => $precio,
-            'estado' => 'confirmada',
+            'monto_total' => $precio,
+            'estado' => 'confirmado',
             'codigo_confirmacion' => $codigoConfirmacion,
+            'creado_por' => auth()->id(),
         ]);
 
         return redirect()->route('reservas.exito', $reserva);

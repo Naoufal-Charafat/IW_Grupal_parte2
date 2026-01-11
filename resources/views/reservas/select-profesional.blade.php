@@ -143,7 +143,6 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($profesionales as $profesional)
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                    <!-- Professional Header -->
                     <div class="bg-gradient-to-r from-indigo-500 to-blue-500 px-6 py-8 text-white text-center">
                         <div class="inline-flex items-center justify-center w-24 h-24 bg-white rounded-full mb-4">
                             <svg class="h-16 w-16 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
