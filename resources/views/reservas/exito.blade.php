@@ -119,9 +119,9 @@
                 <div>
                     <p class="text-sm text-gray-500 mb-1">Fecha y Hora</p>
                     <p class="text-lg font-bold text-gray-900">
-                        {{ $reserva->fecha_hora->format('d/m/Y') }}
+                        {{ $reserva->fecha->format('d/m/Y') }}
                     </p>
-                    <p class="text-sm text-gray-600">{{ $reserva->fecha_hora->format('H:i') }}</p>
+                    <p class="text-sm text-gray-600">{{ \Carbon\Carbon::parse($reserva->hora_inicio)->format('H:i') }}</p>
                 </div>
             </div>
         </div>
