@@ -215,27 +215,38 @@
             </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <button onclick="window.history.back()"
-                    class="w-full px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold text-lg">
-                Cancelar
-            </button>
-            <form method="POST" action="{{ route('reservas.store') }}" class="w-full">
+        <!-- Notas Adicionales -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Notas Adicionales (Opcional)</h3>
+            <p class="text-sm text-gray-600 mb-4">¿Tienes alguna información adicional que quieras compartir con el profesional?</p>
+            <form id="reservation-form" method="POST" action="{{ route('reservas.store') }}">
                 @csrf
                 <input type="hidden" name="tratamiento_id" value="{{ $tratamiento->id }}">
                 <input type="hidden" name="profesional_id" value="{{ $profesional->id }}">
                 <input type="hidden" name="fecha" value="{{ $fecha }}">
                 <input type="hidden" name="hora" value="{{ $hora }}">
                 
-                <button type="submit"
-                        class="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-semibold text-lg flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg>
-                    Confirmar Cita
-                </button>
+                <textarea name="notas" 
+                          rows="4" 
+                          class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-colors resize-none"
+                          placeholder="Ej: Primera consulta, lesión previa, alergias, preferencias de tratamiento..."></textarea>
             </form>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <button onclick="window.history.back()"
+                    class="w-full px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold text-lg">
+                Cancelar
+            </button>
+            <button type="submit"
+                    form="reservation-form"
+                    class="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-semibold text-lg flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Confirmar Cita
+            </button>
         </div>
     </div>
 </body>

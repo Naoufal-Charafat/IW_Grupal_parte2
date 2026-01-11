@@ -118,6 +118,7 @@ class ReservaController extends Controller
             'profesional_id' => 'required|exists:profesionales,id',
             'fecha' => 'required|date|after_or_equal:today',
             'hora' => 'required',
+            'notas' => 'nullable|string|max:1000',
         ]);
 
         $tratamiento = Tratamiento::findOrFail($validated['tratamiento_id']);
@@ -164,6 +165,7 @@ class ReservaController extends Controller
             'monto_total' => $precio,
             'estado' => 'confirmado',
             'codigo_confirmacion' => $codigoConfirmacion,
+            'notas' => $validated['notas'] ?? null,
             'creado_por' => auth()->id(),
         ]);
 
