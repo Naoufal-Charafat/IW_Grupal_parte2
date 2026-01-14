@@ -174,13 +174,85 @@
             </div>
         </div>
 
-        <!-- Continue Button -->
-        <div class="mt-8 flex justify-end">
-            <button id="continue-btn" 
-                    disabled
-                    class="px-8 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-lg">
-                Continuar a Confirmación →
-            </button>
+        <!-- Reservation Type Selection (shown after time selection) -->
+        <div id="reservation-type-section" class="mt-8 hidden">
+            <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">¿Para quién es la reserva?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button id="btn-para-mi" 
+                            class="p-6 bg-white border-2 border-indigo-300 rounded-lg hover:bg-indigo-50 hover:border-indigo-500 transition-all group">
+                        <div class="flex flex-col items-center">
+                            <svg class="w-12 h-12 text-indigo-600 mb-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <span class="text-lg font-bold text-gray-900">Para Mí</span>
+                            <span class="text-sm text-gray-600 mt-1">{{ auth()->user()->name }}</span>
+                        </div>
+                    </button>
+                    
+                    <button id="btn-para-otro" 
+                            class="p-6 bg-white border-2 border-indigo-300 rounded-lg hover:bg-indigo-50 hover:border-indigo-500 transition-all group">
+                        <div class="flex flex-col items-center">
+                            <svg class="w-12 h-12 text-indigo-600 mb-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            <span class="text-lg font-bold text-gray-900">Para Otra Persona</span>
+                            <span class="text-sm text-gray-600 mt-1">Rellenar datos</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form for Another Person (hidden initially) -->
+        <div id="other-person-form" class="mt-8 hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900">Datos del Paciente</h3>
+                    <button id="btn-back-to-choice" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                        ← Volver
+                    </button>
+                </div>
+                
+                <form id="patient-form" class="space-y-6">
+                    <div>
+                        <label for="nombre_paciente" class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo *</label>
+                        <input type="text" 
+                               id="nombre_paciente" 
+                               name="nombre_paciente" 
+                               required
+                               class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-colors"
+                               placeholder="Nombre y apellidos del paciente">
+                    </div>
+                    
+                    <div>
+                        <label for="email_paciente" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                        <input type="email" 
+                               id="email_paciente" 
+                               name="email_paciente" 
+                               required
+                               class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-colors"
+                               placeholder="email@ejemplo.com">
+                    </div>
+                    
+                    <div>
+                        <label for="telefono_paciente" class="block text-sm font-medium text-gray-700 mb-2">Teléfono *</label>
+                        <input type="tel" 
+                               id="telefono_paciente" 
+                               name="telefono_paciente" 
+                               required
+                               class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-colors"
+                               placeholder="+34 600 000 000">
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="submit" 
+                                class="px-8 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-semibold text-lg">
+                            Continuar a Confirmación →
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -191,6 +263,7 @@
         
         let selectedDate = null;
         let selectedTime = null;
+        let reservationType = null; // 'para-mi' or 'para-otro'
 
         // Generate calendar for next 2 weeks
         function generateCalendar() {
@@ -359,12 +432,36 @@
             button.classList.add('selected');
             selectedTime = time;
             
-            // Enable continue button
-            document.getElementById('continue-btn').disabled = false;
+            // Show reservation type selection
+            document.getElementById('reservation-type-section').classList.remove('hidden');
         }
 
-        // Continue to confirmation
-        document.getElementById('continue-btn').onclick = () => {
+        // Handle "Para Mí" button
+        document.getElementById('btn-para-mi').onclick = () => {
+            reservationType = 'para-mi';
+            continueToConfirmation();
+        };
+
+        // Handle "Para Otra Persona" button
+        document.getElementById('btn-para-otro').onclick = () => {
+            reservationType = 'para-otro';
+            document.getElementById('reservation-type-section').classList.add('hidden');
+            document.getElementById('other-person-form').classList.remove('hidden');
+        };
+
+        // Handle back button in form
+        document.getElementById('btn-back-to-choice').onclick = () => {
+            document.getElementById('other-person-form').classList.add('hidden');
+            document.getElementById('reservation-type-section').classList.remove('hidden');
+        };
+
+        // Handle form submission for another person
+        document.getElementById('patient-form').onsubmit = (e) => {
+            e.preventDefault();
+            continueToConfirmation();
+        };
+
+        function continueToConfirmation() {
             if (selectedDate && selectedTime) {
                 // Format date without timezone conversion
                 const year = selectedDate.getFullYear();
@@ -372,17 +469,25 @@
                 const day = String(selectedDate.getDate()).padStart(2, '0');
                 const formattedDate = `${year}-${month}-${day}`;
                 
-                // Navigate to confirmation page with query parameters
+                // Build query parameters
                 const params = new URLSearchParams({
                     tratamiento_id: tratamientoId,
                     profesional_id: profesionalId,
                     fecha: formattedDate,
                     hora: selectedTime
                 });
+
+                // Add patient data if reservation is for another person
+                if (reservationType === 'para-otro') {
+                    params.append('es_para_otro', '1');
+                    params.append('nombre_paciente', document.getElementById('nombre_paciente').value);
+                    params.append('email_paciente', document.getElementById('email_paciente').value);
+                    params.append('telefono_paciente', document.getElementById('telefono_paciente').value);
+                }
                 
                 window.location.href = `{{ route('reservas.confirmar') }}?${params.toString()}`;
             }
-        };
+        }
 
         // Initialize calendar on page load
         document.addEventListener('DOMContentLoaded', () => {

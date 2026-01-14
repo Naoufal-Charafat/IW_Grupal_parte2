@@ -77,6 +77,10 @@ class ReservaController extends Controller
             'profesional_id' => 'required|exists:profesionales,id',
             'fecha' => 'required|date|after_or_equal:today',
             'hora' => 'required',
+            'es_para_otro' => 'nullable|boolean',
+            'nombre_paciente' => 'required_if:es_para_otro,1|string|max:255',
+            'email_paciente' => 'required_if:es_para_otro,1|email|max:255',
+            'telefono_paciente' => 'required_if:es_para_otro,1|string|max:20',
         ]);
 
         $tratamiento = Tratamiento::findOrFail($request->tratamiento_id);
@@ -105,6 +109,10 @@ class ReservaController extends Controller
             'hora' => $request->hora,
             'precio' => $precio,
             'duracion' => $duracion,
+            'es_para_otro' => $request->boolean('es_para_otro'),
+            'nombre_paciente' => $request->nombre_paciente,
+            'email_paciente' => $request->email_paciente,
+            'telefono_paciente' => $request->telefono_paciente,
         ]);
     }
 
@@ -119,12 +127,16 @@ class ReservaController extends Controller
             'fecha' => 'required|date|after_or_equal:today',
             'hora' => 'required',
             'notas' => 'nullable|string|max:1000',
+            'es_para_otro' => 'nullable|boolean',
+            'nombre_paciente' => 'required_if:es_para_otro,1|string|max:255',
+            'email_paciente' => 'required_if:es_para_otro,1|email|max:255',
+            'telefono_paciente' => 'required_if:es_para_otro,1|string|max:20',
         ]);
 
         $tratamiento = Tratamiento::findOrFail($validated['tratamiento_id']);
         $profesional = Profesional::findOrFail($validated['profesional_id']);
 
-        // Verify professional can perform this treatment
+        
         $pivotData = $profesional->tratamientos()
             ->where('tratamiento_id', $tratamiento->id)
             ->wherePivot('esta_activo', true)
@@ -166,6 +178,10 @@ class ReservaController extends Controller
             'estado' => 'confirmado',
             'codigo_confirmacion' => $codigoConfirmacion,
             'notas' => $validated['notas'] ?? null,
+            'es_para_otro' => $validated['es_para_otro'] ?? false,
+            'nombre_paciente' => $validated['nombre_paciente'] ?? null,
+            'email_paciente' => $validated['email_paciente'] ?? null,
+            'telefono_paciente' => $validated['telefono_paciente'] ?? null,
             'creado_por' => auth()->id(),
         ]);
 

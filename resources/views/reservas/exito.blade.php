@@ -105,16 +105,34 @@
             <p class="text-white text-3xl font-bold tracking-wider">{{ $reserva->codigo_confirmacion }}</p>
         </div>
 
-        <!-- Appointment Details -->
+        <!-- Details de la cita -->
         <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!--Info del paciente-->
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">Paciente</p>
+                    @if($reserva->es_para_otro)
+                        <p class="text-lg font-bold text-gray-900">{{ $reserva->nombre_paciente }}</p>
+                        <p class="text-sm text-gray-600">{{ $reserva->email_paciente }}</p>
+                        <p class="text-sm text-gray-600">{{ $reserva->telefono_paciente }}</p>
+                        <span class="inline-block mt-2 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded">Reserva para otra persona</span>
+                    @else
+                        <p class="text-lg font-bold text-gray-900">{{ $reserva->user->name }}</p>
+                        <p class="text-sm text-gray-600">{{ $reserva->user->email }}</p>
+                    @endif
+                </div>
+
                 <!-- Professional -->
                 <div>
                     <p class="text-sm text-gray-500 mb-1">Profesional</p>
                     <p class="text-lg font-bold text-gray-900">{{ $reserva->profesional->user->name }}</p>
                     <p class="text-sm text-gray-600">{{ $reserva->tratamiento->nombre }}</p>
                 </div>
+            </div>
 
+            <div class="border-t border-gray-200 my-6"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Date and Time -->
                 <div>
                     <p class="text-sm text-gray-500 mb-1">Fecha y Hora</p>
@@ -122,6 +140,12 @@
                         {{ $reserva->fecha->format('d/m/Y') }}
                     </p>
                     <p class="text-sm text-gray-600">{{ \Carbon\Carbon::parse($reserva->hora_inicio)->format('H:i') }}</p>
+                </div>
+
+                <!-- Duration -->
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">Duración</p>
+                    <p class="text-lg font-bold text-gray-900">{{ $reserva->duracion_minutos }} minutos</p>
                 </div>
             </div>
         </div>

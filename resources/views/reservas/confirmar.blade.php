@@ -112,12 +112,37 @@
 
             <!-- Card Body -->
             <div class="px-6 py-6 space-y-6">
+                <!-- Patient Info -->
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-500 mb-1">Paciente</p>
+                        @if($es_para_otro)
+                            <p class="text-lg font-bold text-gray-900">{{ $nombre_paciente }}</p>
+                            <p class="text-sm text-gray-600">{{ $email_paciente }}</p>
+                            <p class="text-sm text-gray-600">{{ $telefono_paciente }}</p>
+                            <span class="inline-block mt-1 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded">Reserva para otra persona</span>
+                        @else
+                            <p class="text-lg font-bold text-gray-900">{{ auth()->user()->name }}</p>
+                            <p class="text-sm text-gray-600">{{ auth()->user()->email }}</p>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-200"></div>
+
                 <!-- Professional -->
                 <div class="flex items-start">
                     <div class="flex-shrink-0">
                         <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
                             <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
                     </div>
@@ -225,6 +250,13 @@
                 <input type="hidden" name="profesional_id" value="{{ $profesional->id }}">
                 <input type="hidden" name="fecha" value="{{ $fecha }}">
                 <input type="hidden" name="hora" value="{{ $hora }}">
+                
+                @if($es_para_otro)
+                    <input type="hidden" name="es_para_otro" value="1">
+                    <input type="hidden" name="nombre_paciente" value="{{ $nombre_paciente }}">
+                    <input type="hidden" name="email_paciente" value="{{ $email_paciente }}">
+                    <input type="hidden" name="telefono_paciente" value="{{ $telefono_paciente }}">
+                @endif
                 
                 <textarea name="notas" 
                           rows="4" 
