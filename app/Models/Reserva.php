@@ -22,6 +22,10 @@ class Reserva extends Model
         'habitacion_id',
         'tratamiento_id',
         'codigo_confirmacion',
+        'es_para_otro',
+        'nombre_paciente',
+        'email_paciente',
+        'telefono_paciente',
         'fecha',
         'hora_inicio',
         'hora_fin',
@@ -42,6 +46,7 @@ class Reserva extends Model
     protected function casts(): array
     {
         return [
+            'es_para_otro' => 'boolean',
             'fecha' => 'date',
             'hora_inicio' => 'datetime:H:i',
             'hora_fin' => 'datetime:H:i',
