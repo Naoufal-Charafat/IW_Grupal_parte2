@@ -433,7 +433,16 @@
             selectedTime = time;
             
             // Show reservation type selection
-            document.getElementById('reservation-type-section').classList.remove('hidden');
+            const reservationTypeSection = document.getElementById('reservation-type-section');
+            reservationTypeSection.classList.remove('hidden');
+            
+            // Scroll para ver los buttones de reservar para mi o otra persona
+            setTimeout(() => {
+                reservationTypeSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 100);
         }
 
         // Handle "Para Mí" button

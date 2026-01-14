@@ -146,7 +146,7 @@
                                         </p>
                                     @endif
                                     
-                                    <!-- Price and Duration -->
+                                    <!-- precio y Duration -->
                                     <div class="border-t border-gray-200 pt-4 mt-4">
                                         <div class="flex justify-between items-center mb-2">
                                             <span class="text-sm text-gray-600">Duración:</span>
@@ -174,7 +174,6 @@
                 </div>
             @endif
 
-            <!-- Action Buttons -->
             <div class="px-8 py-8 bg-white border-t border-gray-200">
                 <div class="flex justify-center">
                     <a href="{{ route('tratamientos.index') }}" 
