@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentControllerApiRest;
 use App\Http\Controllers\TratamientoControllerApiRest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,4 +36,8 @@ Route::post('/login', function (Request $request) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/services', [TratamientoControllerApiRest::class, 'index']);
+
+    Route::post('/pagar', [PaymentControllerApiRest::class, 'initiate'])->name('payment.initiate');
+    Route::get('/pagos/respuesta', [PaymentControllerApiRest::class, 'callback'])->name('payment.callback');
 });
+

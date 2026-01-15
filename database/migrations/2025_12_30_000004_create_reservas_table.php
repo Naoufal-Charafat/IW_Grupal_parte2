@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text('notas')->nullable();
             $table->foreignId('creado_por')->constrained('users')->onDelete('cascade');
             $table->timestamps();
+            $table->string('payment_token')->nullable();
         });
     }
 

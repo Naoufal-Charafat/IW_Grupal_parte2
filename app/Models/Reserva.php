@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Reserva extends Model
 {
     use HasFactory;
+    protected $table = 'reservas';
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +31,7 @@ class Reserva extends Model
         'expira_en',
         'notas',
         'creado_por',
+        'payment_token',
     ];
 
     /**
