@@ -1,0 +1,476 @@
+<style>
+    :root {
+        --azul: #0066CC;
+        --turquesa: #0097A7;
+        --blanco: #FFFFFF;
+        --gris-claro: #F8F9FA;
+        --texto: #2C3E50;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: var(--gris-claro);
+        font-family: 'Figtree', sans-serif;
+        color: var(--texto);
+        line-height: 1.6;
+    }
+
+
+    .nav.scrolled .logo {
+        color: var(--azul);
+    }
+
+
+    .nav.scrolled .logo-icon {
+        background: var(--azul);
+        color: var(--blanco);
+    }
+
+
+    .nav.scrolled .nav-link {
+        color: var(--texto);
+    }
+
+    .nav.scrolled .btn {
+        background: linear-gradient(135deg, var(--azul), var(--turquesa));
+        color: var(--blanco);
+    }
+
+    /* HERO SECTION  */
+    .hero {
+        position: relative;
+        height: 100vh;
+        min-height: 700px;
+        margin-top: 0;
+        overflow: hidden;
+    }
+
+    .hero-carousel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .carousel-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .carousel-slide.active {
+        opacity: 1;
+    }
+
+    /* Imágenes  */
+    .slide-1 {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)),
+        url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+    }
+
+    .slide-2 {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)),
+        url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+    }
+
+    .slide-3 {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)),
+        url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+    }
+
+    .hero-overlay {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--blanco);
+        padding: 0 20px;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        padding: 20px;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .hero-title {
+        font-size: 3.2rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.2;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-title span {
+        color: #4FC3F7;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+        opacity: 0.95;
+        line-height: 1.6;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-bottom: 50px;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--azul), var(--turquesa));
+        color: white;
+        padding: 14px 35px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.1rem;
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: white;
+        padding: 14px 35px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.1rem;
+        border: 2px solid white;
+    }
+
+    /* ESTADÍSTICAS DEL HERO  */
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .stat {
+        text-align: center;
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 5px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .carousel-dots {
+        position: absolute;
+        bottom: 40px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        z-index: 3;
+    }
+
+    .carousel-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        cursor: pointer;
+    }
+
+    .carousel-dot.active {
+        background: white;
+        transform: scale(1.2);
+    }
+
+    /* Secciones generales  */
+    .section {
+        padding: 80px 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--texto);
+        margin-bottom: 15px;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: #546E7A;
+        font-size: 1.1rem;
+        margin-bottom: 50px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Características  */
+    .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .feature {
+        background: var(--blanco);
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .feature-icon {
+        background: linear-gradient(135deg, var(--azul), var(--turquesa));
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+
+    .feature h3 {
+        color: var(--texto);
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+    }
+
+    .feature p {
+        color: #546E7A;
+        font-size: 0.95rem;
+    }
+
+    /* Equipo  */
+    .team-container {
+        display: flex;
+        gap: 25px;
+        overflow-x: auto;
+        padding: 10px;
+        scrollbar-width: none;
+    }
+
+    .team-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .team-card {
+        min-width: 300px;
+        background: var(--blanco);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .team-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .team-info {
+        padding: 20px;
+    }
+
+    .team-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--texto);
+        margin-bottom: 5px;
+    }
+
+    /* CTA y Footer  */
+    .cta {
+        background: linear-gradient(135deg, var(--azul), var(--turquesa));
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+    }
+
+    .cta-simple {
+        padding: 60px 0;
+        text-align: center;
+        background: rgba(79, 195, 247, 0.05); /* Color del "bienestar" muy suave */
+        border-top: 1px solid rgba(79, 195, 247, 0.1);
+    }
+
+    .cta-simple h2 {
+        color: #4FC3F7; /* Mismo color que "bienestar" */
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+
+    .cta-simple p {
+        color: #546E7A; /* Gris azulado */
+        margin-bottom: 30px;
+    }
+
+    .cta-btns-simple {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-simple {
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-simple.primary {
+        background: #0066CC;
+        color: white;
+    }
+
+    .btn-simple.secondary {
+        background: white;
+        color: #0066CC;
+        border: 2px solid #0066CC;
+    }
+
+    .footer {
+        background: var(--texto);
+        color: white;
+        padding: 60px 0 30px;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: #90A4AE;
+    }
+
+    /* Flechas simples para el equipo */
+    .team-nav-btn {
+        background: none;
+        border: none;
+        font-size: 30px;
+        color: var(--texto);
+        cursor: pointer;
+        padding: 10px;
+    }
+
+    .team-nav-btn:hover {
+        color: var(--azul);
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.2rem;
+        }
+
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-stats {
+            gap: 20px;
+        }
+
+        .nav-links {
+            display: none;
+        }
+    }
+</style>
+
+<footer id="contacto" class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">FisioClinic</h3>
+                <p style="color: #B0BEC5;">
+                    Centro especializado en fisioterapia avanzada.
+                </p>
+            </div>
+
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Contacto</h3>
+                <p style="color: #B0BEC5; margin-bottom: 10px;">
+                    <i class="fas fa-phone"></i> +34 91 123 45 67
+                </p>
+                <p style="color: #B0BEC5;">
+                    <i class="fas fa-envelope"></i> info@fisioclinic.com
+                </p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; {{ date('Y') }} FisioClinic. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>

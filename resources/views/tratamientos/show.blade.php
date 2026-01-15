@@ -13,35 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased font-sans bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="/" class="text-2xl font-bold text-indigo-600">
-                        🏥 FisioClinic
-                    </a>
-                </div>
-                
-                <!-- Navigation Links -->
-                <div class="hidden sm:flex sm:space-x-8">
-                    <a href="/" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">
-                        Inicio
-                    </a>
-                    <a href="{{ route('tratamientos.index') }}" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">
-                        Tratamientos
-                    </a>
-                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">
-                        Iniciar Sesión
-                    </a>
-                    <a href="{{ route('register') }}" class="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-md text-sm font-medium">
-                        Registrarse
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <x-header/>
 
     <!-- Breadcrumbs -->
     <div class="bg-white border-b border-gray-200">
@@ -180,15 +152,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center">
-                <p class="text-gray-400">
-                    © {{ date('Y') }} FisioClinic. Todos los derechos reservados.
-                </p>
-            </div>
-        </div>
-    </footer>
+    <x-footer/>
 </body>
 </html>
