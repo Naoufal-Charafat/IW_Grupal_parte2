@@ -1,48 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tratamientos - FisioClinic</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    
-    <!-- Styles -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="antialiased font-sans bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="/" class="text-2xl font-bold text-indigo-600">
-                        🏥 FisioClinic
-                    </a>
-                </div>
-                
-                <!-- Navigation Links -->
-                <div class="hidden sm:flex sm:space-x-8">
-                    <a href="/" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">
-                        Inicio
-                    </a>
-                    <a href="{{ route('tratamientos.index') }}" class="text-indigo-600 border-b-2 border-indigo-600 px-3 py-2 text-sm font-medium">
-                        Tratamientos
-                    </a>
-                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium">
-                        Iniciar Sesión
-                    </a>
-                    <a href="{{ route('register') }}" class="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-md text-sm font-medium">
-                        Registrarse
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+@extends('layouts.public')
 
+@section('content')
     <!-- Hero Section -->
     <div class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -260,47 +218,4 @@
             </div>
         @endif
     </div>
-
-    <!-- Call to Action -->
-    <div class="bg-indigo-700 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">
-                    ¿Listo para comenzar tu tratamiento?
-                </h2>
-                <p class="text-xl text-indigo-100 mb-8">
-                    Reserva tu cita y comienza tu camino hacia el bienestar
-                </p>
-                @guest
-                    <div class="space-x-4">
-                        <a href="{{ route('register') }}" 
-                           class="inline-block bg-white text-indigo-700 px-8 py-3 rounded-md hover:bg-gray-100 transition-colors duration-200 font-semibold">
-                            Crear Cuenta
-                        </a>
-                        <a href="{{ route('login') }}" 
-                           class="inline-block bg-indigo-500 text-white px-8 py-3 rounded-md hover:bg-indigo-600 transition-colors duration-200 font-semibold">
-                            Iniciar Sesión
-                        </a>
-                    </div>
-                @else
-                    <a href="{{ url('/dashboard') }}" 
-                       class="inline-block bg-white text-indigo-700 px-8 py-3 rounded-md hover:bg-gray-100 transition-colors duration-200 font-semibold">
-                        Ir al Dashboard
-                    </a>
-                @endguest
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center">
-                <p class="text-gray-400">
-                    © {{ date('Y') }} FisioClinic. Todos los derechos reservados.
-                </p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+@endsection
