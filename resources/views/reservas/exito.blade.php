@@ -2,46 +2,7 @@
 
 @section('content')
     {{-- Progress Steps - MANTENER AQUÍ (es parte del proceso de reserva, NO del header) --}}
-    <!-- Progress Steps MANTENER AQUÍ (es parte del proceso de reserva, NO del header)-->
-    <div class="bg-white border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="flex items-center justify-center space-x-4">
-                <!-- Step 1 -->
-                <div class="flex items-center">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-500 text-white">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                    </div>
-                    <span class="ml-2 text-sm font-medium text-gray-500">Elegir Profesional</span>
-                </div>
-                
-                <div class="w-16 h-0.5 bg-green-500"></div>
-                
-                <!-- Step 2 -->
-                <div class="flex items-center">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-500 text-white">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                    </div>
-                    <span class="ml-2 text-sm font-medium text-gray-500">Fecha y Hora</span>
-                </div>
-                
-                <div class="w-16 h-0.5 bg-green-500"></div>
-                
-                <!-- Step 3 -->
-                <div class="flex items-center">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-500 text-white">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                    </div>
-                    <span class="ml-2 text-sm font-medium text-gray-900">Confirmar</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-reservation-steps :currentStep="4" />
 
     <!-- Main Content -->
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
