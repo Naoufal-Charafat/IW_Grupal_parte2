@@ -1,23 +1,5 @@
 @extends('layouts.public')
 
-@push('styles')
-    <style>
-        .time-slot:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-        .time-slot.selected {
-            background-color: #4f46e5;
-            color: white;
-            border-color: #4f46e5;
-        }
-        .date-btn.selected {
-            background-color: #4f46e5;
-            color: white;
-        }
-    </style>
-@endpush
-
 @section('content')
     {{-- Progress Steps - MANTENER AQUÍ (es parte del proceso de reserva, NO del header) --}}
     <!-- Progress Steps - MANTENER AQUÍ (es parte del proceso de reserva, NO del header)-->
