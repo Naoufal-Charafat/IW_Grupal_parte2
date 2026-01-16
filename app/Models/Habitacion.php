@@ -69,28 +69,25 @@ class Habitacion extends Model
      */
     public function estaDisponible(string $fecha, string $horaInicio, string $horaFin): bool
     {
-        $inicio = \Carbon\Carbon::createFromFormat('Y-m-d H:i', "$fecha $horaInicio");
-        $fin = \Carbon\Carbon::createFromFormat('Y-m-d H:i', "$fecha $horaFin");
-
         // Check for overlapping reservations
         $conflictos = $this->reservas()
             ->where('fecha', $fecha)
             ->whereIn('estado', ['confirmado', 'bloqueado'])
-            ->where(function ($query) use ($inicio, $fin) {
-                $query->where(function ($q) use ($inicio, $fin) {
+            ->where(function ($query) use ($horaInicio, $horaFin) {
+                $query->where(function ($q) use ($horaInicio, $horaFin) {
                     // New reservation starts during existing reservation
-                    $q->where('hora_inicio', '<=', $inicio)
-                      ->where('hora_fin', '>', $inicio);
+                    $q->where('hora_inicio', '<=', $horaInicio)
+                      ->where('hora_fin', '>', $horaInicio);
                 })
-                ->orWhere(function ($q) use ($inicio, $fin) {
+                ->orWhere(function ($q) use ($horaInicio, $horaFin) {
                     // New reservation ends during existing reservation
-                    $q->where('hora_inicio', '<', $fin)
-                      ->where('hora_fin', '>=', $fin);
+                    $q->where('hora_inicio', '<', $horaFin)
+                      ->where('hora_fin', '>=', $horaFin);
                 })
-                ->orWhere(function ($q) use ($inicio, $fin) {
+                ->orWhere(function ($q) use ($horaInicio, $horaFin) {
                     // New reservation completely contains existing reservation
-                    $q->where('hora_inicio', '>=', $inicio)
-                      ->where('hora_fin', '<=', $fin);
+                    $q->where('hora_inicio', '>=', $horaInicio)
+                      ->where('hora_fin', '<=', $horaFin);
                 });
             })
             ->exists();
