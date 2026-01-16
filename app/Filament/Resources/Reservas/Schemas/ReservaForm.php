@@ -48,7 +48,8 @@ class ReservaForm
                             ->tel()
                             ->visible(fn(Get $get) => $get('es_para_otro')),
                     ])
-                    ->columns(2),
+                    ->columns(1)
+                    ->columnSpanFull(),
 
                 Section::make('Servicio y Profesional')
                     ->schema([
@@ -130,7 +131,8 @@ class ReservaForm
                             ->searchable()
                             ->preload(),
                     ])
-                    ->columns(3),
+                    ->columns(1)
+                    ->columnSpanFull(),
 
                 Section::make('Fecha y Hora')
                     ->schema([
@@ -152,7 +154,8 @@ class ReservaForm
                             ->readOnly()
                             ->suffix('min'),
                     ])
-                    ->columns(4),
+                    ->columns(4)
+                    ->columnSpanFull(),
 
                 Section::make('Precio y Estado')
                     ->schema([
@@ -186,7 +189,8 @@ class ReservaForm
                             ->default('no_pagado')
                             ->required(),
                     ])
-                    ->columns(3),
+                    ->columns(3)
+                    ->columnSpanFull(),
 
                 Section::make('Información Adicional')
                     ->schema([
@@ -208,6 +212,7 @@ class ReservaForm
                             ->label('Expira en'),
                     ])
                     ->columns(2)
+                    ->columnSpanFull()
                     ->collapsible(),
             ]);
     }
