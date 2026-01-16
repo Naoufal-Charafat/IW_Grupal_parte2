@@ -1,11 +1,37 @@
-@extends('layouts.public')
-
-@section('content')
-    <x-breadcrumbs :items="[
-        ['label' => 'Inicio', 'url' => '/'],
-        ['label' => 'Tratamientos', 'url' => route('tratamientos.index')],
-        ['label' => $tratamiento->nombre]
-    ]" />
+<x-app-layout>
+    <!-- Breadcrumbs -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2">
+                    <li>
+                        <a href="/" class="text-gray-500 hover:text-gray-700">Inicio</a>
+                    </li>
+                    <li>
+                        <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </li>
+                    <li>
+                        <a href="{{ route('tratamientos.index') }}"
+                            class="text-gray-500 hover:text-gray-700">Tratamientos</a>
+                    </li>
+                    <li>
+                        <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="text-gray-900 font-medium">{{ $tratamiento->nombre }}</span>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
 
     <!-- Treatment Details -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -18,13 +44,15 @@
                 <div class="flex items-center space-x-8">
                     <div class="flex items-center">
                         <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <span class="text-lg">{{ $tratamiento->duracion_minutos }} minutos</span>
                     </div>
                     <div class="flex items-center">
                         <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <div>
                             <span class="text-2xl font-bold">{{ $tratamiento->rango_precio }}</span>
@@ -45,34 +73,21 @@
             </div>
 
             <!-- Professionals Section -->
-            @if($tratamiento->profesionales->isNotEmpty())
+            @if ($tratamiento->profesionales->isNotEmpty())
                 <div class="px-8 py-8 bg-gray-50 border-t border-gray-200">
                     <h2 class="text-2xl font-bold text-gray-900 mb-4">Profesionales Disponibles</h2>
                     <p class="text-gray-600 mb-6">Selecciona un profesional para reservar tu cita</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($tratamiento->profesionales as $profesional)
-                            @php
-                                $precio = $profesional->pivot->precio_personalizado ?? $tratamiento->precio;
-                                $duracion = $profesional->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos;
-                            @endphp
-                            
-                            <a href="@auth{{ route('reservas.select-datetime', ['tratamiento' => $tratamiento, 'profesional' => $profesional]) }}@else{{ route('login', ['redirect' => route('reservas.select-datetime', ['tratamiento' => $tratamiento, 'profesional' => $profesional])]) }}@endauth" 
-                               class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                                <!-- Professional Header -->
-                                <div class="p-6">
-                                    <div class="flex items-center mb-4">
-                                        <div class="bg-indigo-100 rounded-full p-3 group-hover:bg-indigo-200 transition-colors">
-                                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                            </svg>
-                                        </div>
-                                        <div class="ml-4 flex-1">
-                                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
-                                                {{ $profesional->user->name }}
-                                            </h3>
-                                            <p class="text-sm text-gray-500">Fisioterapeuta</p>
-                                        </div>
+                        @foreach ($tratamiento->profesionales as $profesional)
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-indigo-100 rounded-full p-3">
+                                        <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
                                     </div>
                                     
                                     @if($profesional->biografia)
@@ -103,16 +118,34 @@
                                         </svg>
                                     </div>
                                 </div>
-                            </a>
+                                @if ($profesional->biografia)
+                                    <p class="text-gray-600 text-sm">{{ Str::limit($profesional->biografia, 100) }}</p>
+                                @endif
+                            </div>
                         @endforeach
                     </div>
                 </div>
             @endif
 
             <div class="px-8 py-8 bg-white border-t border-gray-200">
-                <div class="flex justify-center">
-                    <a href="{{ route('tratamientos.index') }}" 
-                       class="text-center bg-gray-100 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-200 transition-colors duration-200 font-medium">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    @auth
+                        <a href="{{ url('/dashboard') }}"
+                            class="flex-1 text-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-semibold">
+                            Reservar Cita
+                        </a>
+                    @else
+                        <a href="{{ route('register') }}"
+                            class="flex-1 text-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-semibold">
+                            Crear Cuenta para Reservar
+                        </a>
+                        <a href="{{ route('login') }}"
+                            class="flex-1 text-center bg-gray-200 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-300 transition-colors duration-200 font-semibold">
+                            Iniciar Sesión
+                        </a>
+                    @endauth
+                    <a href="{{ route('tratamientos.index') }}"
+                        class="text-center bg-gray-100 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-200 transition-colors duration-200 font-medium">
                         ← Volver a Tratamientos
                     </a>
                 </div>
@@ -124,7 +157,8 @@
             <div class="flex">
                 <div class="flex-shrink-0">
                     <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
                 <div class="ml-3">
@@ -139,4 +173,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-app-layout>
