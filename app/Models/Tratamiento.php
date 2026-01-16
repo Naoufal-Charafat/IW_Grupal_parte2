@@ -62,10 +62,79 @@ class Tratamiento extends Model
     }
 
     /**
+     * Get the rooms where this treatment can be performed.
+     */
+    public function habitaciones(): BelongsToMany
+    {
+        return $this->belongsToMany(Habitacion::class, 'habitacion_tratamiento')
+            ->withPivot('es_preferida')
+            ->withTimestamps();
+    }
+
+    /**
      * Scope to filter only active treatments.
      */
     public function scopeActivo($query)
     {
         return $query->where('esta_activo', true);
+    }
+
+    /**
+     * Get the minimum price for this treatment across all active professionals.
+     */
+    public function getPrecioMinimoAttribute(): float
+    {
+        $profesionales = $this->profesionales()->wherePivot('esta_activo', true)->get();
+        
+        if ($profesionales->isEmpty()) {
+            return $this->precio;
+        }
+
+        $precios = $profesionales->map(function ($profesional) {
+            return $profesional->pivot->precio_personalizado ?? $this->precio;
+        });
+
+        return $precios->min();
+    }
+
+    /**
+     * Get the maximum price for this treatment across all active professionals.
+     */
+    public function getPrecioMaximoAttribute(): float
+    {
+        $profesionales = $this->profesionales()->wherePivot('esta_activo', true)->get();
+        
+        if ($profesionales->isEmpty()) {
+            return $this->precio;
+        }
+
+        $precios = $profesionales->map(function ($profesional) {
+            return $profesional->pivot->precio_personalizado ?? $this->precio;
+        });
+
+        return $precios->max();
+    }
+
+    /**
+     * Get the price range as a formatted string.
+     */
+    public function getRangoPrecioAttribute(): string
+    {
+        $min = $this->precio_minimo;
+        $max = $this->precio_maximo;
+
+        if ($min == $max) {
+            return number_format($min, 2) . '€';
+        }
+
+        return number_format($min, 2) . '€ - ' . number_format($max, 2) . '€';
+    }
+
+    /**
+     * Check if this treatment has a price range (different prices across professionals).
+     */
+    public function hasPriceRange(): bool
+    {
+        return $this->precio_minimo != $this->precio_maximo;
     }
 }

@@ -7,6 +7,12 @@ use Livewire\Volt\Component;
 
 new #[Layout('layouts.guest')] class extends Component {
     public LoginForm $form;
+    public $redirect = '';
+
+    public function mount()
+    {
+        $this->redirect = request()->query('redirect', '');
+    }
 
     /**
      * Handle an incoming authentication request.
@@ -19,7 +25,12 @@ new #[Layout('layouts.guest')] class extends Component {
 
         Session::regenerate();
 
-        $this->redirectIntended(default: '/dashboard', navigate: true);
+        // Check for redirect parameter, then session intended, then default dashboard
+        if (!empty($this->redirect)) {
+            $this->redirect($this->redirect, navigate: true);
+        } else {
+            $this->redirectIntended(default: '/dashboard', navigate: true);
+        }
     }
 }; ?>
 
@@ -28,6 +39,10 @@ new #[Layout('layouts.guest')] class extends Component {
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form wire:submit="login">
+        @if($redirect)
+            <input type="hidden" wire:model="redirect" />
+        @endif
+        
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Habitacion extends Model
@@ -46,6 +47,52 @@ class Habitacion extends Model
     public function reservas(): HasMany
     {
         return $this->hasMany(Reserva::class);
+    }
+
+    /**
+     * Get the treatments that can be performed in this room.
+     */
+    public function tratamientos(): BelongsToMany
+    {
+        return $this->belongsToMany(Tratamiento::class, 'habitacion_tratamiento')
+            ->withPivot('es_preferida')
+            ->withTimestamps();
+    }
+
+    /**
+     * Check if this room is available at a specific date and time.
+     *
+     * @param string $fecha Date in Y-m-d format
+     * @param string $horaInicio Time in H:i format
+     * @param string $horaFin Time in H:i format
+     * @return bool
+     */
+    public function estaDisponible(string $fecha, string $horaInicio, string $horaFin): bool
+    {
+        // Check for overlapping reservations
+        $conflictos = $this->reservas()
+            ->where('fecha', $fecha)
+            ->whereIn('estado', ['confirmado', 'bloqueado'])
+            ->where(function ($query) use ($horaInicio, $horaFin) {
+                $query->where(function ($q) use ($horaInicio, $horaFin) {
+                    // New reservation starts during existing reservation
+                    $q->where('hora_inicio', '<=', $horaInicio)
+                      ->where('hora_fin', '>', $horaInicio);
+                })
+                ->orWhere(function ($q) use ($horaInicio, $horaFin) {
+                    // New reservation ends during existing reservation
+                    $q->where('hora_inicio', '<', $horaFin)
+                      ->where('hora_fin', '>=', $horaFin);
+                })
+                ->orWhere(function ($q) use ($horaInicio, $horaFin) {
+                    // New reservation completely contains existing reservation
+                    $q->where('hora_inicio', '>=', $horaInicio)
+                      ->where('hora_fin', '<=', $horaFin);
+                });
+            })
+            ->exists();
+
+        return !$conflictos;
     }
 
     /**
