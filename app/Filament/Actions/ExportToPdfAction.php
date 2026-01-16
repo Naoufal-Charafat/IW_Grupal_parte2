@@ -4,16 +4,16 @@ namespace App\Filament\Actions;
 
 use App\Models\Reserva;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
-use Filament\Tables\Actions\HeaderAction;
 use Illuminate\Support\Carbon;
 
 class ExportToPdfAction
 {
-    public static function make(): HeaderAction
+    public static function make(): Action
     {
-        return HeaderAction::make('exportToPdf')
+        return Action::make('exportToPdf')
             ->label('Exportar a PDF')
             ->icon('heroicon-o-document-arrow-down')
             ->color('danger')
@@ -34,12 +34,12 @@ class ExportToPdfAction
                     ->live(),
                 DatePicker::make('start_date')
                     ->label('Fecha de Inicio')
-                    ->visible(fn ($get) => $get('period') === 'custom')
-                    ->required(fn ($get) => $get('period') === 'custom'),
+                    ->visible(fn($get) => $get('period') === 'custom')
+                    ->required(fn($get) => $get('period') === 'custom'),
                 DatePicker::make('end_date')
                     ->label('Fecha de Fin')
-                    ->visible(fn ($get) => $get('period') === 'custom')
-                    ->required(fn ($get) => $get('period') === 'custom'),
+                    ->visible(fn($get) => $get('period') === 'custom')
+                    ->required(fn($get) => $get('period') === 'custom'),
             ])
             ->action(function (array $data) {
                 // Calculate date range based on period
@@ -59,7 +59,7 @@ class ExportToPdfAction
                     'endDate' => $endDate,
                     'period' => $data['period'],
                 ])
-                ->setPaper('a4', 'landscape');
+                    ->setPaper('a4', 'landscape');
 
                 // Return PDF download
                 return response()->streamDownload(function () use ($pdf) {

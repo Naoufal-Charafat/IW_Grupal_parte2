@@ -4,13 +4,9 @@
 namespace App\Filament\Resources\Reservas\Tables;
 
 use App\Filament\Actions\ExportToPdfAction;
-use App\Filament\Exports\ReservaExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ExportAction;
-use Filament\Actions\ExportBulkAction;
-use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -105,24 +101,15 @@ class ReservasTable
                         return $query
                             ->when(
                                 $data['fecha_desde'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('fecha', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('fecha', '>=', $date),
                             )
                             ->when(
                                 $data['fecha_hasta'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('fecha', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('fecha', '<=', $date),
                             );
                     }),
             ])
             ->headerActions([
-                ExportAction::make()
-                    ->label('Exportar CSV/XLSX')
-                    ->exporter(ReservaExporter::class)
-                    ->formats([
-                        ExportFormat::Csv,
-                        ExportFormat::Xlsx,
-                    ])
-                    ->color('success')
-                    ->icon('heroicon-o-arrow-down-tray'),
                 ExportToPdfAction::make(),
             ])
             ->recordActions([
@@ -131,13 +118,6 @@ class ReservasTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
-                    ExportBulkAction::make()
-                        ->label('Exportar seleccionados')
-                        ->exporter(ReservaExporter::class)
-                        ->formats([
-                            ExportFormat::Csv,
-                            ExportFormat::Xlsx,
-                        ]),
                 ]),
             ]);
     }
