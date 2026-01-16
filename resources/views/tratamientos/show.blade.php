@@ -100,11 +100,11 @@
                                     <div class="border-t border-gray-200 pt-4 mt-4">
                                         <div class="flex justify-between items-center mb-2">
                                             <span class="text-sm text-gray-600">Duración:</span>
-                                            <span class="font-semibold text-gray-900">{{ $duracion }} min</span>
+                                            <span class="font-semibold text-gray-900">{{ $profesional->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos }} min</span>
                                         </div>
                                         <div class="flex justify-between items-center">
                                             <span class="text-sm text-gray-600">Precio:</span>
-                                            <span class="text-xl font-bold text-indigo-600">{{ number_format($precio, 2) }}€</span>
+                                            <span class="text-xl font-bold text-indigo-600">{{ number_format($profesional->pivot->precio_personalizado ?? $tratamiento->precio, 2) }}€</span>
                                         </div>
                                     </div>
                                 </div>
