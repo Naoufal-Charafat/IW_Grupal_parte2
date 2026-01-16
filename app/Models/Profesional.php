@@ -82,4 +82,24 @@ class Profesional extends Model
     {
         return $this->hasMany(Resena::class);
     }
+
+    /**
+     * Get occupied time slots for this professional on a specific date.
+     *
+     * @param string $fecha Date in Y-m-d format
+     * @return \Illuminate\Support\Collection
+     */
+    public function getHorasOcupadas(string $fecha)
+    {
+        return $this->reservas()
+            ->where('fecha', $fecha)
+            ->whereIn('estado', ['confirmado', 'bloqueado'])
+            ->get(['hora_inicio', 'hora_fin'])
+            ->map(function ($reserva) {
+                return [
+                    'inicio' => $reserva->hora_inicio->format('H:i'),
+                    'fin' => $reserva->hora_fin->format('H:i'),
+                ];
+            });
+    }
 }
