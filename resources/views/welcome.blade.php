@@ -1,41 +1,102 @@
 <x-app-layout>
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <img id="background" class="absolute -left-20 top-0 max-w-[877px]"
-            src="https://laravel.com/assets/img/welcome/background.svg" />
-        <div
-            class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-            <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
+    {{-- 1. Hero Carousel Section --}}
+    <x-hero-carousel />
 
-                <main class="mt-6">
-                    <!-- Treatments Link Card -->
-                    <div class="mb-8">
-                        <a href="{{ route('tratamientos.index') }}"
-                            class="flex items-center gap-4 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-500 p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:shadow-2xl focus:outline-none focus-visible:ring-[#FF2D20] lg:p-10">
-                            <div
-                                class="flex size-16 shrink-0 items-center justify-center rounded-full bg-white/20 backdrop-blur">
-                                <svg class="size-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                                </svg>
-                            </div>
+    {{-- 2. Treatments Section --}}
+    <x-treatments-section :limit="4" />
 
-                            <div class="flex-1">
-                                <h2 class="text-2xl font-bold text-white">Nuestros Tratamientos</h2>
-                                <p class="mt-2 text-white/90 text-lg">
-                                    Descubre nuestros servicios de fisioterapia profesional. Masajes terapéuticos,
-                                    rehabilitación deportiva y más.
-                                </p>
-                            </div>
+    {{-- 3. Por qué elegirnos Section --}}
+    <section class="bg-gradient-to-r from-indigo-600 to-blue-500 py-20">
+        <div class="container">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">¿Por Qué Elegirnos?</h2>
+                <p class="text-xl text-indigo-100 max-w-3xl mx-auto">
+                    Somos tu mejor opción para cuidar de tu salud y bienestar
+                </p>
+            </div>
 
-                            <svg class="size-8 shrink-0 stroke-white" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                            </svg>
-                        </a>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {{-- Benefit 1 --}}
+                <div class="bg-white/10 backdrop-filter backdrop-blur-lg rounded-lg p-8 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                    <div class="flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 mx-auto">
+                        <i class="fas fa-user-md text-3xl text-indigo-600"></i>
                     </div>
-                </main>
+                    <h3 class="text-xl font-bold text-white text-center mb-4">Profesionales Certificados</h3>
+                    <p class="text-indigo-100 text-center leading-relaxed">
+                        Nuestro equipo cuenta con más de 10 años de experiencia y certificaciones internacionales en fisioterapia.
+                    </p>
+                </div>
+
+                {{-- Benefit 2 --}}
+                <div class="bg-white/10 backdrop-filter backdrop-blur-lg rounded-lg p-8 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                    <div class="flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 mx-auto">
+                        <i class="fas fa-heartbeat text-3xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4">Tratamientos Personalizados</h3>
+                    <p class="text-indigo-100 text-center leading-relaxed">
+                        Cada paciente es único. Diseñamos planes de tratamiento adaptados a tus necesidades específicas.
+                    </p>
+                </div>
+
+                {{-- Benefit 3 --}}
+                <div class="bg-white/10 backdrop-filter backdrop-blur-lg rounded-lg p-8 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                    <div class="flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 mx-auto">
+                        <i class="fas fa-hospital text-3xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4">Instalaciones Modernas</h3>
+                    <p class="text-indigo-100 text-center leading-relaxed">
+                        Equipamiento de última generación y espacios diseñados para tu comodidad y recuperación.
+                    </p>
+                </div>
+
+                {{-- Benefit 4 --}}
+                <div class="bg-white/10 backdrop-filter backdrop-blur-lg rounded-lg p-8 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                    <div class="flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 mx-auto">
+                        <i class="fas fa-calendar-check text-3xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4">Reservas 24/7</h3>
+                    <p class="text-indigo-100 text-center leading-relaxed">
+                        Sistema de reservas online disponible las 24 horas. Agenda tu cita cuando más te convenga.
+                    </p>
+                </div>
+
+                {{-- Benefit 5 --}}
+                <div class="bg-white/10 backdrop-filter backdrop-blur-lg rounded-lg p-8 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                    <div class="flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 mx-auto">
+                        <i class="fas fa-clock text-3xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4">Horario Flexible</h3>
+                    <p class="text-indigo-100 text-center leading-relaxed">
+                        Horarios adaptados a tu rutina diaria, con sesiones matutinas, vespertinas y fines de semana.
+                    </p>
+                </div>
+
+                {{-- Benefit 6 --}}
+                <div class="bg-white/10 backdrop-filter backdrop-blur-lg rounded-lg p-8 hover:bg-white/20 transition-all duration-300 border border-white/20">
+                    <div class="flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 mx-auto">
+                        <i class="fas fa-star text-3xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-4">Resultados Comprobados</h3>
+                    <p class="text-indigo-100 text-center leading-relaxed">
+                        Miles de pacientes satisfechos. Nuestros tratamientos tienen un alto índice de éxito demostrado.
+                    </p>
+                </div>
+            </div>
+
+            {{-- Call to Action --}}
+            <div class="text-center mt-16">
+                <a href="{{ route('tratamientos.index') }}" 
+                   class="inline-flex items-center justify-center px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-200 shadow-lg hover:shadow-xl">
+                    Descubre Nuestros Tratamientos
+                    <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </a>
             </div>
         </div>
-    </div>
+    </section>
+
+    {{-- 4. Team Carousel Section --}}
+    <x-team-carousel />
 </x-app-layout>
+

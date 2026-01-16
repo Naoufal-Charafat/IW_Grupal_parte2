@@ -1,4 +1,4 @@
-<nav class="nav" id="mainNav">
+<nav class="nav transparent" id="mainNav">
     <div class="nav-content">
         <a href="{{ url('/') }}" class="logo">
             <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
@@ -16,7 +16,7 @@
         <div class="nav-links">
             <!--<a href="{{ url('/#equipo') }}" class="nav-link">Equipo</a>-->
             <a href="{{ route('tratamientos.index') }}" class="nav-link">Tratamientos</a>
-            <!-- <a href="{{ url('/#contacto') }}" class="nav-link">Contacto</a> -->
+            <a href="{{ route('contacto.index') }}" class="nav-link">Contacto</a>
 
             @if (Route::has('login'))
                 <div style="margin-left: 20px;">
@@ -39,6 +39,10 @@
     <div class="sidebar-content">
         <a href="{{ route('tratamientos.index') }}" class="sidebar-link">
             <i class="fas fa-clipboard-list"></i> Tratamientos
+        </a>
+        
+        <a href="{{ route('contacto.index') }}" class="sidebar-link">
+            <i class="fas fa-envelope"></i> Contacto
         </a>
 
         @if (Route::has('login'))
@@ -70,6 +74,7 @@
         const hamburger = document.getElementById('hamburger');
         const sidebar = document.getElementById('mobileSidebar');
         const overlay = document.getElementById('sidebarOverlay');
+        const nav = document.getElementById('mainNav');
 
         function toggleMenu() {
             hamburger.classList.toggle('active');
@@ -86,5 +91,22 @@
         sidebarLinks.forEach(link => {
             link.addEventListener('click', toggleMenu);
         });
+
+        // Handle scroll for transparent header effect
+        function handleScroll() {
+            if (window.scrollY > 50) {
+                nav.classList.remove('transparent');
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.add('transparent');
+                nav.classList.remove('scrolled');
+            }
+        }
+
+        // Listen to scroll events
+        window.addEventListener('scroll', handleScroll);
+        
+        // Initial check
+        handleScroll();
     });
 </script>
