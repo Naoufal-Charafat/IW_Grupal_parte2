@@ -56,7 +56,7 @@
                         </svg>
                         <div>
                             <span class="text-2xl font-bold">{{ $tratamiento->rango_precio }}</span>
-                            @if($tratamiento->hasPriceRange())
+                            @if ($tratamiento->hasPriceRange())
                                 <p class="text-sm text-indigo-100 mt-1">Precio varía según profesional</p>
                             @endif
                         </div>
@@ -77,50 +77,58 @@
                 <div class="px-8 py-8 bg-gray-50 border-t border-gray-200">
                     <h2 class="text-2xl font-bold text-gray-900 mb-4">Profesionales Disponibles</h2>
                     <p class="text-gray-600 mb-6">Selecciona un profesional para reservar tu cita</p>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($tratamiento->profesionales as $profesional)
-                            <div class="bg-white rounded-lg shadow p-6">
-                                <div class="flex items-center mb-4">
-                                    <div class="bg-indigo-100 rounded-full p-3">
-                                        <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24"
-                                            stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
+                            <div
+                                class="bg-white rounded-lg shadow hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
+                                <!-- Professional Header -->
+                                <div class="bg-gradient-to-r from-indigo-500 to-blue-500 px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="bg-white rounded-full p-3">
+                                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                        </div>
+                                        <div class="ml-4">
+                                            <h3 class="text-lg font-bold text-white">{{ $profesional->user->name }}</h3>
+                                        </div>
                                     </div>
-                                    
-                                    @if($profesional->biografia)
+                                </div>
+
+                                <!-- Professional Body -->
+                                <div class="px-6 py-4">
+                                    @if ($profesional->biografia)
                                         <p class="text-gray-600 text-sm mb-4 line-clamp-3">
                                             {{ Str::limit($profesional->biografia, 120) }}
                                         </p>
                                     @endif
-                                    
-                                    <!-- precio y Duration -->
+
+                                    <!-- Precio y Duración -->
                                     <div class="border-t border-gray-200 pt-4 mt-4">
                                         <div class="flex justify-between items-center mb-2">
                                             <span class="text-sm text-gray-600">Duración:</span>
-                                            <span class="font-semibold text-gray-900">{{ $duracion }} min</span>
+                                            <span
+                                                class="font-semibold text-gray-900">{{ $profesional->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos }}
+                                                min</span>
                                         </div>
                                         <div class="flex justify-between items-center">
                                             <span class="text-sm text-gray-600">Precio:</span>
-                                            <span class="text-xl font-bold text-indigo-600">{{ number_format($precio, 2) }}€</span>
+                                            <span
+                                                class="text-xl font-bold text-indigo-600">{{ number_format($profesional->pivot->precio_personalizado ?? $tratamiento->precio, 2) }}€</span>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Action Footer -->
-                                <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 group-hover:bg-indigo-50 transition-colors">
-                                    <div class="flex items-center justify-center text-indigo-600 font-medium">
-                                        <span>Seleccionar Profesional</span>
-                                        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                        </svg>
-                                    </div>
+                                <div class="bg-gray-50 px-6 py-3 border-t border-gray-200">
+                                    <a href="@auth{{ route('reservas.select-datetime', ['tratamiento' => $tratamiento, 'profesional' => $profesional]) }}@else{{ route('login', ['redirect' => route('reservas.select-datetime', ['tratamiento' => $tratamiento, 'profesional' => $profesional])]) }} @endauth"
+                                        class="block w-full text-center bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-medium">
+                                        Seleccionar Profesional
+                                    </a>
                                 </div>
-                                @if ($profesional->biografia)
-                                    <p class="text-gray-600 text-sm">{{ Str::limit($profesional->biografia, 100) }}</p>
-                                @endif
                             </div>
                         @endforeach
                     </div>
