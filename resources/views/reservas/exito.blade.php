@@ -65,6 +65,14 @@
                     <p class="text-sm text-gray-500 mb-1">Duración</p>
                     <p class="text-lg font-bold text-gray-900">{{ $reserva->duracion_minutos }} minutos</p>
                 </div>
+
+                <!-- Room -->
+                @if($reserva->habitacion)
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">Sala Asignada</p>
+                    <p class="text-lg font-bold text-gray-900">{{ $reserva->habitacion->nombre }}</p>
+                </div>
+                @endif
             </div>
         </div>
 

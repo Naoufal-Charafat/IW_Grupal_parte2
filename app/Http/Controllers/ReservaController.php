@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Habitacion;
 use App\Models\Profesional;
 use App\Models\Reserva;
 use App\Models\Tratamiento;
@@ -171,11 +172,27 @@ class ReservaController extends Controller
         $emailPaciente = $esParaOtro ? $validated['email_paciente'] : auth()->user()->email;
         $telefonoPaciente = $esParaOtro ? ($validated['telefono_paciente'] ?? null) : null;
 
+        // Find an available room for this treatment
+        $habitacionAsignada = $this->findAvailableRoom(
+            $tratamiento,
+            $validated['fecha'],
+            $validated['hora'],
+            $duracion
+        );
+
+        if (!$habitacionAsignada) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'No hay habitaciones disponibles para este tratamiento en el horario seleccionado. Por favor, elige otro horario.');
+        }
+
         // Create reservation
         $reserva = Reserva::create([
             'user_id' => auth()->id(),
             'profesional_id' => $profesional->id,
             'tratamiento_id' => $tratamiento->id,
+            'habitacion_id' => $habitacionAsignada->id,
             'fecha' => $fecha,
             'hora_inicio' => $horaInicio,
             'hora_fin' => $horaFin,
@@ -203,9 +220,39 @@ class ReservaController extends Controller
         $this->authorize('view', $reserva);
 
         // Load relationships
-        $reserva->load(['profesional.user', 'tratamiento']);
+        $reserva->load(['profesional.user', 'tratamiento', 'habitacion']);
 
         return view('reservas.exito', compact('reserva'));
+    }
+
+    /**
+     * Find an available room for a treatment at a specific date and time.
+     *
+     * @param Tratamiento $tratamiento
+     * @param string $fecha Date in Y-m-d format
+     * @param string $hora Time in H:i format
+     * @param int $duracion Duration in minutes
+     * @return Habitacion|null
+     */
+    private function findAvailableRoom(Tratamiento $tratamiento, string $fecha, string $hora, int $duracion): ?Habitacion
+    {
+        $horaInicio = $hora;
+        $horaFin = \Carbon\Carbon::createFromFormat('H:i', $hora)->addMinutes($duracion)->format('H:i');
+
+        // Get rooms for this treatment, prioritizing preferred rooms
+        $habitaciones = $tratamiento->habitaciones()
+            ->where('esta_activo', true)
+            ->orderByDesc('habitacion_tratamiento.es_preferida')
+            ->get();
+
+        // Find first available room
+        foreach ($habitaciones as $habitacion) {
+            if ($habitacion->estaDisponible($fecha, $horaInicio, $horaFin)) {
+                return $habitacion;
+            }
+        }
+
+        return null;
     }
 
     /**

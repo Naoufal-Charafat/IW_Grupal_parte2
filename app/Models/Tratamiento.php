@@ -62,6 +62,16 @@ class Tratamiento extends Model
     }
 
     /**
+     * Get the rooms where this treatment can be performed.
+     */
+    public function habitaciones(): BelongsToMany
+    {
+        return $this->belongsToMany(Habitacion::class, 'habitacion_tratamiento')
+            ->withPivot('es_preferida')
+            ->withTimestamps();
+    }
+
+    /**
      * Scope to filter only active treatments.
      */
     public function scopeActivo($query)
