@@ -5,6 +5,14 @@
             FisioClinic
         </a>
 
+        <!-- Botón Hamburguesa Mobile -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Links Desktop -->
         <div class="nav-links">
             <!--<a href="{{ url('/#equipo') }}" class="nav-link">Equipo</a>-->
             <a href="{{ route('tratamientos.index') }}" class="nav-link">Tratamientos</a>
@@ -25,4 +33,58 @@
         </div>
     </div>
 </nav>
+
+<!-- Sidebar Mobile -->
+<div class="mobile-sidebar" id="mobileSidebar">
+    <div class="sidebar-content">
+        <a href="{{ route('tratamientos.index') }}" class="sidebar-link">
+            <i class="fas fa-clipboard-list"></i> Tratamientos
+        </a>
+
+        @if (Route::has('login'))
+            @auth
+                <a href="{{ url('/dashboard') }}" class="sidebar-link">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            @else
+                <a href="{{ route('login') }}" class="sidebar-link">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </a>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="sidebar-link">
+                        <i class="fas fa-user-plus"></i> Registrarse
+                    </a>
+                @endif
+            @endauth
+        @endif
+    </div>
+</div>
+
+<!-- Overlay para cerrar sidebar -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <div style="height: 80px;"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('mobileSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Cerrar al hacer click en un enlace
+        const sidebarLinks = sidebar.querySelectorAll('.sidebar-link');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+    });
+</script>
