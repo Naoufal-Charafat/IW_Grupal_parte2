@@ -56,7 +56,7 @@
                         </svg>
                         <div>
                             <span class="text-2xl font-bold">{{ $tratamiento->rango_precio }}</span>
-                            @if($tratamiento->hasPriceRange())
+                            @if ($tratamiento->hasPriceRange())
                                 <p class="text-sm text-indigo-100 mt-1">Precio varía según profesional</p>
                             @endif
                         </div>
@@ -77,7 +77,7 @@
                 <div class="px-8 py-8 bg-gray-50 border-t border-gray-200">
                     <h2 class="text-2xl font-bold text-gray-900 mb-4">Profesionales Disponibles</h2>
                     <p class="text-gray-600 mb-6">Selecciona un profesional para reservar tu cita</p>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($tratamiento->profesionales as $profesional)
                             <div class="bg-white rounded-lg shadow p-6">
@@ -89,32 +89,38 @@
                                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                         </svg>
                                     </div>
-                                    
-                                    @if($profesional->biografia)
+
+                                    @if ($profesional->biografia)
                                         <p class="text-gray-600 text-sm mb-4 line-clamp-3">
                                             {{ Str::limit($profesional->biografia, 120) }}
                                         </p>
                                     @endif
-                                    
+
                                     <!-- precio y Duration -->
                                     <div class="border-t border-gray-200 pt-4 mt-4">
                                         <div class="flex justify-between items-center mb-2">
                                             <span class="text-sm text-gray-600">Duración:</span>
-                                            <span class="font-semibold text-gray-900">{{ $profesional->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos }} min</span>
+                                            <span
+                                                class="font-semibold text-gray-900">{{ $profesional->pivot->duracion_personalizada ?? $tratamiento->duracion_minutos }}
+                                                min</span>
                                         </div>
                                         <div class="flex justify-between items-center">
                                             <span class="text-sm text-gray-600">Precio:</span>
-                                            <span class="text-xl font-bold text-indigo-600">{{ number_format($profesional->pivot->precio_personalizado ?? $tratamiento->precio, 2) }}€</span>
+                                            <span
+                                                class="text-xl font-bold text-indigo-600">{{ number_format($profesional->pivot->precio_personalizado ?? $tratamiento->precio, 2) }}€</span>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Action Footer -->
-                                <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 group-hover:bg-indigo-50 transition-colors">
+                                <div
+                                    class="bg-gray-50 px-6 py-3 border-t border-gray-200 group-hover:bg-indigo-50 transition-colors">
                                     <div class="flex items-center justify-center text-indigo-600 font-medium">
                                         <span>Seleccionar Profesional</span>
-                                        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7" />
                                         </svg>
                                     </div>
                                 </div>
