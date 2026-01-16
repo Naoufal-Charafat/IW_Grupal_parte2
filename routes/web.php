@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\TratamientoController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
+
+// Rutas de contacto (públicas)
+Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto.index');
+Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto.store');
 
 // Public rutas para los tratamientos
 Route::get('/tratamientos', [TratamientoController::class, 'index'])->name('tratamientos.index');

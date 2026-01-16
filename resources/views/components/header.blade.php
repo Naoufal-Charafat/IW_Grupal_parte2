@@ -16,7 +16,7 @@
         <div class="nav-links">
             <!--<a href="{{ url('/#equipo') }}" class="nav-link">Equipo</a>-->
             <a href="{{ route('tratamientos.index') }}" class="nav-link">Tratamientos</a>
-            <!-- <a href="{{ url('/#contacto') }}" class="nav-link">Contacto</a> -->
+            <a href="{{ route('contacto.index') }}" class="nav-link">Contacto</a>
 
             @if (Route::has('login'))
                 <div style="margin-left: 20px;">
@@ -39,6 +39,10 @@
     <div class="sidebar-content">
         <a href="{{ route('tratamientos.index') }}" class="sidebar-link">
             <i class="fas fa-clipboard-list"></i> Tratamientos
+        </a>
+        
+        <a href="{{ route('contacto.index') }}" class="sidebar-link">
+            <i class="fas fa-envelope"></i> Contacto
         </a>
 
         @if (Route::has('login'))
