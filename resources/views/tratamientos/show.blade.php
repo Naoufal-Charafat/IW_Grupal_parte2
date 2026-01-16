@@ -54,7 +54,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span class="text-2xl font-bold">{{ number_format($tratamiento->precio, 2) }}€</span>
+                        <div>
+                            <span class="text-2xl font-bold">{{ $tratamiento->rango_precio }}</span>
+                            @if($tratamiento->hasPriceRange())
+                                <p class="text-sm text-indigo-100 mt-1">Precio varía según profesional</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,7 +75,9 @@
             <!-- Professionals Section -->
             @if ($tratamiento->profesionales->isNotEmpty())
                 <div class="px-8 py-8 bg-gray-50 border-t border-gray-200">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Profesionales Disponibles</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Profesionales Disponibles</h2>
+                    <p class="text-gray-600 mb-6">Selecciona un profesional para reservar tu cita</p>
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($tratamiento->profesionales as $profesional)
                             <div class="bg-white rounded-lg shadow p-6">
@@ -82,11 +89,33 @@
                                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                         </svg>
                                     </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-semibold text-gray-900">
-                                            {{ $profesional->user->name }}
-                                        </h3>
-                                        <p class="text-sm text-gray-500">Fisioterapeuta</p>
+                                    
+                                    @if($profesional->biografia)
+                                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                                            {{ Str::limit($profesional->biografia, 120) }}
+                                        </p>
+                                    @endif
+                                    
+                                    <!-- precio y Duration -->
+                                    <div class="border-t border-gray-200 pt-4 mt-4">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-sm text-gray-600">Duración:</span>
+                                            <span class="font-semibold text-gray-900">{{ $duracion }} min</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm text-gray-600">Precio:</span>
+                                            <span class="text-xl font-bold text-indigo-600">{{ number_format($precio, 2) }}€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Action Footer -->
+                                <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 group-hover:bg-indigo-50 transition-colors">
+                                    <div class="flex items-center justify-center text-indigo-600 font-medium">
+                                        <span>Seleccionar Profesional</span>
+                                        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
                                     </div>
                                 </div>
                                 @if ($profesional->biografia)
@@ -98,7 +127,6 @@
                 </div>
             @endif
 
-            <!-- Action Buttons -->
             <div class="px-8 py-8 bg-white border-t border-gray-200">
                 <div class="flex flex-col sm:flex-row gap-4">
                     @auth
