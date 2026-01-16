@@ -1,4 +1,4 @@
-<nav class="nav" id="mainNav">
+<nav class="nav transparent" id="mainNav">
     <div class="nav-content">
         <a href="{{ url('/') }}" class="logo">
             <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
@@ -70,6 +70,7 @@
         const hamburger = document.getElementById('hamburger');
         const sidebar = document.getElementById('mobileSidebar');
         const overlay = document.getElementById('sidebarOverlay');
+        const nav = document.getElementById('mainNav');
 
         function toggleMenu() {
             hamburger.classList.toggle('active');
@@ -86,5 +87,22 @@
         sidebarLinks.forEach(link => {
             link.addEventListener('click', toggleMenu);
         });
+
+        // Handle scroll for transparent header effect
+        function handleScroll() {
+            if (window.scrollY > 50) {
+                nav.classList.remove('transparent');
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.add('transparent');
+                nav.classList.remove('scrolled');
+            }
+        }
+
+        // Listen to scroll events
+        window.addEventListener('scroll', handleScroll);
+        
+        // Initial check
+        handleScroll();
     });
 </script>
