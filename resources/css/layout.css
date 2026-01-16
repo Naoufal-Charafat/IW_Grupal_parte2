@@ -43,9 +43,34 @@ body {
 
 /* Scrolled State (added via JS) */
 .nav.scrolled {
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 2px 10px rgba(0, 102, 204, 0.1);
 }
+
+/* Transparent State (for hero section) */
+.nav.transparent {
+    background: transparent;
+    box-shadow: none;
+}
+
+.nav.transparent .logo-icon {
+   
+ 
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.nav.transparent .btn-nav {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.9), rgba(0, 151, 167, 0.9));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.nav.transparent .hamburger span {
+    background: #FFFFFF;
+}
+
 
 .nav-content {
     max-width: 1200px;

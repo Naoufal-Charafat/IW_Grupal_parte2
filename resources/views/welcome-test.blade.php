@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FisioClinic</title>
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --azul: #0066CC;
+            --turquesa: #0097A7;
+            --blanco: #FFFFFF;
+            --gris-claro: #F8F9FA;
+            --texto: #2C3E50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--gris-claro);
+            font-family: 'Figtree', sans-serif;
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+        .nav {
+            background: transparent;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.3s;
+        }
+
+        .nav.scrolled {
+            background: var(--blanco);
+            box-shadow: 0 2px 10px rgba(0, 102, 204, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--blanco);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav.scrolled .logo {
+            color: var(--azul);
+        }
+
+        .logo-icon {
+            background: var(--blanco);
+            color: var(--azul);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav.scrolled .logo-icon {
+            background: var(--azul);
+            color: var(--blanco);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav.scrolled .nav-link {
+            color: var(--texto);
+        }
+
+        .nav-link:hover {
+            color: var(--turquesa);
+        }
+
+        .btn {
+            background: var(--blanco);
+            color: var(--azul);
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav.scrolled .btn {
+            background: linear-gradient(135deg, var(--azul), var(--turquesa));
+            color: var(--blanco);
+        }
+
+        /* HERO SECTION  */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            margin-top: 0;
+            overflow: hidden;
+        }
+
+        .hero-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        /* Imágenes  */
+        .slide-1 {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)),
+                url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+        }
+
+        .slide-2 {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)),
+                url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+        }
+
+        .slide-3 {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)),
+                url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+        }
+
+        .hero-overlay {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--blanco);
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-title span {
+            color: #4FC3F7;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--azul), var(--turquesa));
+            color: white;
+            padding: 14px 35px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 14px 35px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            border: 2px solid white;
+        }
+
+        /* ESTADÍSTICAS DEL HERO  */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+        }
+
+        .carousel-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        /* Secciones generales  */
+        .section {
+            padding: 80px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--texto);
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #546E7A;
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Características  */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature {
+            background: var(--blanco);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-icon {
+            background: linear-gradient(135deg, var(--azul), var(--turquesa));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .feature h3 {
+            color: var(--texto);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .feature p {
+            color: #546E7A;
+            font-size: 0.95rem;
+        }
+
+        /* Equipo  */
+        .team-container {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            padding: 10px;
+            scrollbar-width: none;
+        }
+
+        .team-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .team-card {
+            min-width: 300px;
+            background: var(--blanco);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .team-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .team-info {
+            padding: 20px;
+        }
+
+        .team-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--texto);
+            margin-bottom: 5px;
+        }
+
+        /* CTA y Footer  */
+        .cta {
+            background: linear-gradient(135deg, var(--azul), var(--turquesa));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .cta-simple {
+            padding: 60px 0;
+            text-align: center;
+            background: rgba(79, 195, 247, 0.05);
+            /* Color del "bienestar" muy suave */
+            border-top: 1px solid rgba(79, 195, 247, 0.1);
+        }
+
+        .cta-simple h2 {
+            color: #4FC3F7;
+            /* Mismo color que "bienestar" */
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-simple p {
+            color: #546E7A;
+            /* Gris azulado */
+            margin-bottom: 30px;
+        }
+
+        .cta-btns-simple {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-simple {
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-simple.primary {
+            background: #0066CC;
+            color: white;
+        }
+
+        .btn-simple.secondary {
+            background: white;
+            color: #0066CC;
+            border: 2px solid #0066CC;
+        }
+
+        .footer {
+            background: var(--texto);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #90A4AE;
+        }
+
+        /* Flechas simples para el equipo */
+        .team-nav-btn {
+            background: none;
+            border: none;
+            font-size: 30px;
+            color: var(--texto);
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .team-nav-btn:hover {
+            color: var(--azul);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-carousel">
+            <div class="carousel-slide slide-1 active"></div>
+            <div class="carousel-slide slide-2"></div>
+            <div class="carousel-slide slide-3"></div>
+        </div>
+
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Tu <span>Bienestar</span> es Nuestra<br>Mayor Prioridad
+                </h1>
+
+
+                <div class="hero-buttons">
+                    <a href="{{ route('tratamientos.index') }}" class="btn-primary">
+                        <i class="fas fa-heartbeat"></i> Ver Tratamientos
+                    </a>
+                    <a href="{{ route('register') }}" class="btn-secondary">
+                        <i class="fas fa-calendar-check"></i> Reservar Primera Cita
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="carousel-dots">
+            <button class="carousel-dot active" data-slide="0"></button>
+            <button class="carousel-dot" data-slide="1"></button>
+            <button class="carousel-dot" data-slide="2"></button>
+        </div>
+    </section>
+
+    <!-- Treatments Link Card -->
+    <div class="mb-8">
+        <a href="{{ route('tratamientos.index') }}"
+            class="flex items-center gap-4 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-500 p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:shadow-2xl focus:outline-none focus-visible:ring-[#FF2D20] lg:p-10">
+            <div class="flex size-16 shrink-0 items-center justify-center rounded-full bg-white/20 backdrop-blur">
+                <svg class="size-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+            </div>
+
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold text-white">Nuestros Tratamientos</h2>
+                <p class="mt-2 text-white/90 text-lg">
+                    Descubre nuestros servicios de fisioterapia profesional. Masajes terapéuticos,
+                    rehabilitación deportiva y más.
+                </p>
+            </div>
+
+            <svg class="size-8 shrink-0 stroke-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+            </svg>
+        </a>
+    </div>
+
+    <!-- Por qué elegirnos -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Excelencia en Fisioterapia</h2>
+            <p class="section-subtitle">Combinamos tecnología avanzada con atención personalizada</p>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Equipo Certificado</h3>
+                    <p>Fisioterapeutas colegiados con amplia experiencia clínica.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3>Tecnología Avanzada</h3>
+                    <p>Equipamiento de última generación para tratamientos precisos.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-holding-medical"></i>
+                    </div>
+                    <h3>Atención Personal</h3>
+                    <p>Cada tratamiento se adapta a tus necesidades específicas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tratamientos -->
+    <section class="section" style="background-color: #F8F9FA;">
+        <div class="container">
+            <h2 class="section-title">Tratamientos Especializados</h2>
+            <p class="section-subtitle">Soluciones terapéuticas para diferentes condiciones</p>
+
+            @if (isset($tratamientosDestacados) && $tratamientosDestacados->count() > 0)
+                <div class="features">
+                    @foreach ($tratamientosDestacados as $tratamiento)
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <h3>{{ $tratamiento->nombre }}</h3>
+                            <p>{{ Str::limit($tratamiento->descripcion, 100) }}</p>
+                            <div style="margin-top: 15px;">
+                                <span style="color: var(--azul); font-weight: 600;">
+                                    {{ number_format($tratamiento->precio, 2) }}€
+                                </span>
+                                <a href="{{ route('tratamientos.show', $tratamiento) }}"
+                                    style="color: var(--turquesa); margin-left: 15px;">
+                                    Ver detalles →
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p style="text-align: center; color: #546E7A;">No hay tratamientos disponibles.</p>
+            @endif
+        </div>
+    </section>
+
+    <!-- Equipo -->
+    <section id="equipo" class="section">
+        <div class="container">
+            <h2 class="section-title">Nuestro Equipo Médico</h2>
+            <p class="section-subtitle">Profesionales comprometidos con tu recuperación</p>
+
+            @if (isset($profesionales) && $profesionales->count() > 0)
+                <div
+                    style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
+                    <button id="prevBtn" class="team-nav-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+
+                    <div class="team-container" id="teamContainer"
+                        style="display: flex; gap: 25px; width: 650px; overflow: hidden;">
+                        @foreach ($profesionales as $profesional)
+                            <div class="team-card"
+                                style="min-width: 300px; background: var(--blanco); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                                <img src="https://images.unsplash.com/photo-1612349317150?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                                    alt="{{ $profesional->user->name ?? 'Profesional' }}"
+                                    style="width: 100%; height: 200px; object-fit: cover;">
+                                <div style="padding: 20px;">
+                                    <h3
+                                        style="font-size: 1.2rem; font-weight: 700; color: var(--texto); margin-bottom: 5px;">
+                                        {{ $profesional->user->name ?? 'Profesional' }}
+                                    </h3>
+                                    <p style="color: var(--turquesa); margin-bottom: 15px;">
+                                        <i class="fas fa-graduation-cap"></i> Fisioterapeuta
+                                    </p>
+                                    <p style="color: #546E7A; margin-bottom: 15px;">
+                                        {{ Str::limit($profesional->biografia ?? 'Especialista en fisioterapia.', 80) }}
+                                    </p>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="color: var(--azul); font-weight: 600;">
+                                            {{ number_format($profesional->tarifa_hora, 2) }}€/hora
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <button id="nextBtn" class="team-nav-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            @else
+                <div style="text-align: center; padding: 40px; background: var(--blanco); border-radius: 12px;">
+                    <h3 style="color: var(--texto); margin-bottom: 15px;">Equipo en Formación</h3>
+                    <p style="color: #546E7A;">Pronto anunciaremos a nuestros especialistas.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta-simple">
+        <h2>¿Listo para comenzar?</h2>
+        <p>Reserva tu cita y comienza tu camino hacia el bienestar</p>
+
+        <div class="cta-btns-simple">
+            @auth
+                <a href="{{ url('/dashboard') }}" class="btn-simple primary">
+                    <i class="fas fa-calendar-alt"></i> Agendar Cita
+                </a>
+            @else
+                <a href="{{ route('register') }}" class="btn-simple primary">
+                    <i class="fas fa-user-plus"></i> Crear Cuenta
+                </a>
+                <a href="{{ route('login') }}" class="btn-simple secondary">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </a>
+            @endauth
+        </div>
+    </section>
+
+    <!-- JavaScript  -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // carrusel automát.
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+
+            if (slides.length > 0) {
+                let currentSlide = 0;
+                const slideInterval = 3000; // Cambia cada 3 segundos
+
+                function showSlide(n) {
+                    slides.forEach(slide => {
+                        slide.classList.remove('active');
+                    });
+
+                    dots.forEach(dot => {
+                        dot.classList.remove('active');
+                    });
+
+                    // Mostrar slide actual
+                    slides[n].classList.add('active');
+                    dots[n].classList.add('active');
+                    currentSlide = n;
+                }
+
+                // Cambio automático de slides
+                function nextSlide() {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    showSlide(currentSlide);
+                }
+
+                // Iniciar carrusel automático si hay slides
+                if (slides.length > 0) {
+                    let slideTimer = setInterval(nextSlide, slideInterval);
+
+                    // Control por dots
+                    dots.forEach((dot, index) => {
+                        dot.addEventListener('click', function() {
+                            clearInterval(slideTimer);
+                            showSlide(index);
+                            slideTimer = setInterval(nextSlide, slideInterval);
+                        });
+                    });
+
+                    // Pausar carrusel al hacer hover
+                    const heroSection = document.querySelector('.hero');
+                    if (heroSection) {
+                        heroSection.addEventListener('mouseenter', function() {
+                            clearInterval(slideTimer);
+                        });
+
+                        heroSection.addEventListener('mouseleave', function() {
+                            slideTimer = setInterval(nextSlide, slideInterval);
+                        });
+                    }
+                }
+            }
+
+            const nav = document.getElementById('mainNav');
+            if (nav) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 100) {
+                        nav.classList.add('scrolled');
+                    } else {
+                        nav.classList.remove('scrolled');
+                    }
+                });
+            }
+
+
+            // Carrusel simple de profesionales
+            const teamContainer = document.getElementById('teamContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (teamContainer && prevBtn && nextBtn) {
+                const cards = teamContainer.querySelectorAll('.team-card');
+                let currentIndex = 0;
+                const cardsPerView = 2;
+                const totalCards = cards.length;
+
+                // Mostrar solo 2 tarjetas al inicio
+                function showCards() {
+                    // Ocultar todas las tarjetas
+                    cards.forEach(card => {
+                        card.style.display = 'none';
+                    });
+
+                    // Mostrar solo las 2 tarjetas actuales
+                    for (let i = currentIndex; i < currentIndex + cardsPerView && i < totalCards; i++) {
+                        cards[i].style.display = 'block';
+                    }
+                }
+
+                // Botón anterior
+                prevBtn.onclick = () => {
+                    if (currentIndex > 0) {
+                        currentIndex -= cardsPerView;
+                        if (currentIndex < 0) currentIndex = 0;
+                        showCards();
+                    }
+                };
+
+                // Botón siguiente
+                nextBtn.onclick = () => {
+                    if (currentIndex + cardsPerView < totalCards) {
+                        currentIndex += cardsPerView;
+                        showCards();
+                    }
+                };
+
+                // Inicializar: mostrar primeros 2 profesionales
+                showCards();
+
+                // Ocultar flechas si hay 2 o menos profesionales
+                if (totalCards <= cardsPerView) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                }
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
