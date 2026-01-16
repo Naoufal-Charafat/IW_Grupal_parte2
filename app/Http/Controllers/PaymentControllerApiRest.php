@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hotel;
 use App\Models\Reserva; // Usamos Reserva consistentemente
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -14,15 +15,10 @@ class PaymentControllerApiRest extends Controller
 
     public function __construct()
     {
-        // CAMBIO 1: Usamos env() en lugar de config() para leer directo del .env
-        // (O asegúrate de crear el archivo config/services.php)
         $this->apiKey = env('TPV_KEY');
         $this->baseUrl = env('TPV_URL');
     }
 
-    /**
-     * PASO A: Iniciar Pago
-     */
     public function initiate(Request $request)
     {
         // 1. Obtener ID
@@ -39,10 +35,12 @@ class PaymentControllerApiRest extends Controller
                 'Key' => $this->apiKey
             ]);
         }
-
+        $hotel = Hotel::where('user_id', $order->user_id)->first();
+        if ($hotel) {
+            $order->monto_total += $order->monto_total * 0.05;
+        }
         $amountFormatted = number_format($order->monto_total, 2, '.', '');
-        $callbackUrl = url('/api/pagos/respuesta');
-
+        $callbackUrl = route('payment.callback');
         // 4. Llamada a la API
         $response = Http::withHeaders([
             'X-API-KEY' => $this->apiKey,
@@ -55,66 +53,53 @@ class PaymentControllerApiRest extends Controller
 
         // 5. Manejo de Respuesta
         if ($response->successful()) {
-            // !!!!!!!!!!!!!!!!!
-            // DEBUG
-            return $response->json();
+            $data = $response->json();
 
             $order->update(['payment_token' => $data['token']]);
 
             return redirect($data['paymentUrl']);
         }
 
-//        dd([
-//            'Estado HTTP' => $response->status(),
-//            'Error del TPV' => $response->json(),
-//            'Datos Enviados' => [
-//                'url' => $this->baseUrl . '/api/v1/payments/init',
-//                'amount' => $amountFormatted,
-//                'callback' => $callbackUrl
-//            ]
-//        ]);
         Log::error('TPV Init Error:', $response->json());
-        return back()->withErrors(['msg' => 'Error al conectar con la pasarela.']);
+        return redirect()->route('reservas.fracaso', ['reserva' => $order->id]);
     }
 
-    /**
-     * PASO C: Retorno y Verificación
-     */
     public function callback(Request $request)
     {
         $token = $request->query('token');
-
         if (!$token) {
-            abort(404, 'Token no encontrado');
+            abort(404, 'Token no encontrado en la URL');
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->apiKey,
-        ])->get($this->baseUrl . "/api/v1/payments/verify/{$token}");
+            'X-API-KEY'    => $this->apiKey,
+            'Content-Type' => 'application/json',
+            'Accept'       => 'application/json',
+        ])->get($this->baseUrl . "api/v1/payments/verify/{$token}");
 
+        $order = Reserva::where('payment_token', $token)->first();
         if ($response->successful()) {
             $verificationData = $response->json();
 
-            if ($verificationData['status'] === 'COMPLETED') {
+            // Verificamos estado
+            if (isset($verificationData['status']) && $verificationData['status'] === 'COMPLETED') {
 
-                // CAMBIO 5: Usar el modelo Reserva, no Order (para evitar errores de clase)
-                $order = Reserva::where('payment_token', $token)->first();
+                if ($order) {
+                    // Actualizar estado
+                    $hotel = Hotel::where('user_id', $order->user_id)->first();
+                    if ($hotel) {
+                        $commission = $order->monto_total * 0.05;
+                        $hotel->increment('total_ref_amount', $commission);
+                    }
+                    $order->update(['estado_pago' => 'pagado']);
 
-                // Añadimos chequeo de si existe la orden
-                if ($order && $order->estado_pago !== 'pagado') { // Asumiendo que tu columna es estado_pago
-                    $order->update([
-                        'estado_pago' => 'pagado'
-                    ]);
-
-                    return view('tratamientos.show', $order->tratamiento_id);
+                    // 3. Redirección final
+                    return redirect()->route('reservas.exito', ['reserva' => $order->id]);
                 }
-            } else {
-                Log::warning("Pago fallido o incompleto para token: $token");
             }
-        } else {
-            Log::error('Error TPV Verify:', $response->json() ?? []);
         }
-
-        return view('tratamientos.index');
+        $order->update(['estado_pago' => 'fallido']);
+        Log::error('Fallo en callback TPV', ['response' => $response->body()]);
+        return redirect()->route('reservas.exito', ['reserva' => $order->id]);
     }
 }

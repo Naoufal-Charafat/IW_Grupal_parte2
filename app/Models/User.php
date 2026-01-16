@@ -65,6 +65,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the hotel profile associated with this user.
+     */
+    public function hotel()
+    {
+        return $this->hasOne(Hotel::class);
+    }
+
+    /**
      * Get the reservations made by this user (as client).
      */
     public function reservas()

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentControllerApiRest;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\TratamientoController;
@@ -29,12 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/reservas/guardar', [ReservaController::class, 'store'])
         ->name('reservas.store');
     
-    Route::get('/reservas/exito/{reserva}', [ReservaController::class, 'success'])
+    Route::get('/reservas/confirmation/{reserva}', [ReservaController::class, 'confirmation'])
         ->name('reservas.exito');
     
     // API endpoint for checking professional availability
     Route::get('/api/profesional/{profesional}/disponibilidad', [ReservaController::class, 'getAvailability'])
         ->name('api.profesional.disponibilidad');
+
+    Route::get('/payments', [PaymentControllerApiRest::class, 'initiate'])->name('payment.initiate');
+    Route::get('/payments/callback', [PaymentControllerApiRest::class, 'callback'])->name('payment.callback');
 });
 
 require __DIR__ . '/auth.php';

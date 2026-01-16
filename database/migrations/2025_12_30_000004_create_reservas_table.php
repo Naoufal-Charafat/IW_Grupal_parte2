@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('profesional_id')->constrained('profesionales')->onDelete('cascade');
             $table->foreignId('habitacion_id')->nullable()->constrained('habitaciones')->onDelete('set null');
             $table->foreignId('tratamiento_id')->constrained('tratamientos')->onDelete('cascade');
+            $table->foreignId('hotel_id')->nullable()->constrained('hoteles');
             $table->date('fecha');
             $table->time('hora_inicio');
             $table->time('hora_fin');
