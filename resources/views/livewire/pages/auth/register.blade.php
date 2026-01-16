@@ -13,6 +13,12 @@ new #[Layout('layouts.app')] class extends Component {
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
+    public $redirect = '';
+
+    public function mount()
+    {
+        $this->redirect = request()->query('redirect', '');
+    }
 
     /**
      * Handle an incoming registration request.
@@ -31,7 +37,12 @@ new #[Layout('layouts.app')] class extends Component {
 
         Auth::login($user);
 
-        $this->redirect('/dashboard', navigate: true);
+        // Check for redirect parameter, then default to dashboard
+        if (!empty($this->redirect)) {
+            $this->redirect($this->redirect);
+        } else {
+            $this->redirect('/dashboard');
+        }
     }
 }; ?>
 

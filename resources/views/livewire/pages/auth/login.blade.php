@@ -27,9 +27,9 @@ new #[Layout('layouts.app')] class extends Component {
 
         // Check for redirect parameter, then session intended, then default dashboard
         if (!empty($this->redirect)) {
-            $this->redirect($this->redirect, navigate: true);
+            $this->redirect($this->redirect);
         } else {
-            $this->redirectIntended(default: '/dashboard', navigate: true);
+            $this->redirectIntended(default: '/dashboard');
         }
     }
 }; ?>

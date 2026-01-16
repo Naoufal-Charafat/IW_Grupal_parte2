@@ -87,25 +87,13 @@
             @endif
 
             <div class="px-8 py-8 bg-white border-t border-gray-200">
-                <div class="flex flex-col sm:flex-row gap-4">
-                    @auth
-                        <a href="{{ url('/dashboard') }}"
-                            class="flex-1 text-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-semibold">
-                            Reservar Cita
-                        </a>
-                    @else
-                        <a href="{{ route('register') }}"
-                            class="flex-1 text-center bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-semibold">
-                            Crear Cuenta para Reservar
-                        </a>
-                        <a href="{{ route('login') }}"
-                            class="flex-1 text-center bg-gray-200 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-300 transition-colors duration-200 font-semibold">
-                            Iniciar Sesión
-                        </a>
-                    @endauth
+                <div class="flex justify-center">
                     <a href="{{ route('tratamientos.index') }}"
-                        class="text-center bg-gray-100 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-200 transition-colors duration-200 font-medium">
-                        ← Volver a Tratamientos
+                        class="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors duration-200 font-medium">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Volver a Tratamientos
                     </a>
                 </div>
             </div>
