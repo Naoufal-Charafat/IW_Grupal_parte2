@@ -1,38 +1,70 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
+use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Reserva;
-use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ReservaPolicy
 {
-    /**
-     * Determine if the user can view the reservation.
-     */
-    public function view(User $user, Reserva $reserva): bool
+    use HandlesAuthorization;
+    
+    public function viewAny(AuthUser $authUser): bool
     {
-        // User can view their own reservations
-        return $user->id === $reserva->user_id;
+        return $authUser->can('ViewAny:Reserva');
     }
 
-    /**
-     * Determine if the user can update the reservation.
-     */
-    public function update(User $user, Reserva $reserva): bool
+    public function view(AuthUser $authUser, Reserva $reserva): bool
     {
-        // User can update their own reservations if not yet completed
-        return $user->id === $reserva->user_id 
-            && $reserva->estado !== 'completado';
+        return $authUser->can('View:Reserva');
     }
 
-    /**
-     * Determine if the user can cancel the reservation.
-     */
-    public function cancel(User $user, Reserva $reserva): bool
+    public function create(AuthUser $authUser): bool
     {
-        // User can cancel their own reservations if confirmed or pending
-        return $user->id === $reserva->user_id 
-            && in_array($reserva->estado, ['confirmado', 'pendiente']);
+        return $authUser->can('Create:Reserva');
     }
+
+    public function update(AuthUser $authUser, Reserva $reserva): bool
+    {
+        return $authUser->can('Update:Reserva');
+    }
+
+    public function delete(AuthUser $authUser, Reserva $reserva): bool
+    {
+        return $authUser->can('Delete:Reserva');
+    }
+
+    public function restore(AuthUser $authUser, Reserva $reserva): bool
+    {
+        return $authUser->can('Restore:Reserva');
+    }
+
+    public function forceDelete(AuthUser $authUser, Reserva $reserva): bool
+    {
+        return $authUser->can('ForceDelete:Reserva');
+    }
+
+    public function forceDeleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('ForceDeleteAny:Reserva');
+    }
+
+    public function restoreAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('RestoreAny:Reserva');
+    }
+
+    public function replicate(AuthUser $authUser, Reserva $reserva): bool
+    {
+        return $authUser->can('Replicate:Reserva');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Reserva');
+    }
+
 }
