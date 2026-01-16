@@ -199,9 +199,8 @@ class ReservaController extends Controller
      */
     public function success(Reserva $reserva)
     {
-        if ($reserva->user_id !== auth()->id()) {
-            abort(403);
-        }
+        // Use policy for authorization
+        $this->authorize('view', $reserva);
 
         // Load relationships
         $reserva->load(['profesional.user', 'tratamiento']);
