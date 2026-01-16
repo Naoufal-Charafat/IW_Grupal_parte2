@@ -32,14 +32,24 @@ class DatabaseSeeder extends Seeder
             TratamientoSeeder::class,
         ]);
 
-        // 4. Crear profesionales (usuarios con rol profesional)
+        // 4. Crear habitaciones/salas de la clínica
+        $this->call([
+            HabitacionSeeder::class,
+        ]);
+
+        // 5. Crear profesionales (usuarios con rol profesional)
         $this->call([
             ProfesionalSeeder::class,
         ]);
 
-        // 5. Finalmente, asignar tratamientos a profesionales (pivot table)
+        // 6. Asignar tratamientos a profesionales (pivot table)
         $this->call([
             ProfesionalTratamientoSeeder::class,
+        ]);
+
+        // 7. Asignar tratamientos a habitaciones (pivot table)
+        $this->call([
+            HabitacionTratamientoSeeder::class,
         ]);
     }
 }
