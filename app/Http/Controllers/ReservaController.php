@@ -165,6 +165,12 @@ class ReservaController extends Controller
             $codigoConfirmacion = 'CITA-' . strtoupper(Str::random(8));
         }
 
+        // Determine patient data: use provided data if booking for someone else, otherwise use logged-in user's data
+        $esParaOtro = $validated['es_para_otro'] ?? false;
+        $nombrePaciente = $esParaOtro ? $validated['nombre_paciente'] : auth()->user()->name;
+        $emailPaciente = $esParaOtro ? $validated['email_paciente'] : auth()->user()->email;
+        $telefonoPaciente = $esParaOtro ? ($validated['telefono_paciente'] ?? null) : null;
+
         // Create reservation
         $reserva = Reserva::create([
             'user_id' => auth()->id(),
@@ -178,10 +184,10 @@ class ReservaController extends Controller
             'estado' => 'confirmado',
             'codigo_confirmacion' => $codigoConfirmacion,
             'notas' => $validated['notas'] ?? null,
-            'es_para_otro' => $validated['es_para_otro'] ?? false,
-            'nombre_paciente' => $validated['nombre_paciente'] ?? null,
-            'email_paciente' => $validated['email_paciente'] ?? null,
-            'telefono_paciente' => $validated['telefono_paciente'] ?? null,
+            'es_para_otro' => $esParaOtro,
+            'nombre_paciente' => $nombrePaciente,
+            'email_paciente' => $emailPaciente,
+            'telefono_paciente' => $telefonoPaciente,
             'creado_por' => auth()->id(),
         ]);
 
@@ -214,19 +220,8 @@ class ReservaController extends Controller
             return response()->json(['error' => 'Fecha requerida'], 400);
         }
 
-        // Get all reservations for this professional on this date
-        $reservas = Reserva::where('profesional_id', $profesional->id)
-            ->where('fecha', $fecha)
-            ->whereIn('estado', ['confirmado', 'bloqueado'])
-            ->get(['hora_inicio', 'hora_fin']);
-
-        // Convert to simple array of time ranges
-        $horasOcupadas = $reservas->map(function ($reserva) {
-            return [
-                'inicio' => \Carbon\Carbon::parse($reserva->hora_inicio)->format('H:i'),
-                'fin' => \Carbon\Carbon::parse($reserva->hora_fin)->format('H:i'),
-            ];
-        });
+        
+        $horasOcupadas = $profesional->getHorasOcupadas($fecha);
 
         return response()->json([
             'horas_ocupadas' => $horasOcupadas
