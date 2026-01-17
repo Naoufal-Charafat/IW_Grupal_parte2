@@ -3,6 +3,7 @@
 use App\Http\Controllers\PaymentControllerApiRest;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\TratamientoController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,8 @@ Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto.s
 // Public rutas para los tratamientos
 Route::get('/tratamientos', [TratamientoController::class, 'index'])->name('tratamientos.index');
 Route::get('/tratamientos/{tratamiento}', [TratamientoController::class, 'show'])->name('tratamientos.show');
+
+Route::get('/tienda', [TiendaController::class, 'index'])->name('tienda.index');
 
 // rutas de reservaciones - necesita que el usuario sea autentificado
 Route::middleware('auth')->group(function () {

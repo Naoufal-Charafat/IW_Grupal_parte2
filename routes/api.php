@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PaymentControllerApiRest;
 use App\Http\Controllers\TratamientoControllerApiRest;
+use App\Http\Controllers\TiendaControllerApiRest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,5 +17,9 @@ Route::post('/login', [TratamientoControllerApiRest::class, 'login'])->name('log
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/services', [TratamientoControllerApiRest::class, 'index']);
+});
+
+Route::prefix('tienda')->group(function () {
+    Route::get('/productos', [TiendaControllerApiRest::class, 'getProductos']);
 });
 

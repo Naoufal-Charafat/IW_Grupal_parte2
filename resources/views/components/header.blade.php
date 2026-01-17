@@ -16,6 +16,7 @@
         <div class="nav-links">
             <!--<a href="{{ url('/#equipo') }}" class="nav-link">Equipo</a>-->
             <a href="{{ route('tratamientos.index') }}" class="nav-link">Tratamientos</a>
+            <a href="{{ route('tienda.index') }}" class="nav-link">Tienda</a>
             <a href="{{ route('contacto.index') }}" class="nav-link">Contacto</a>
 
             @if (Route::has('login'))
