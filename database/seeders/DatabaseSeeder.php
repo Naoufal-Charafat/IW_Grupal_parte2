@@ -51,5 +51,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             HabitacionTratamientoSeeder::class,
         ]);
+
+        // 8. Crear hoteles (referidos)
+        $this->call([
+            HotelSeeder::class,
+        ]);
     }
 }
