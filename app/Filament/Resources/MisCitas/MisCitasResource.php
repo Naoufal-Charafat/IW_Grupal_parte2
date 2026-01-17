@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use UnitEnum;
 
 class MisCitasResource extends Resource
 {
@@ -24,7 +25,7 @@ class MisCitasResource extends Resource
     
     protected static ?string $pluralModelLabel = 'Mis Citas';
     
-    protected static ?string $navigationGroup = 'Mi Cuenta';
+    protected static UnitEnum|string|null $navigationGroup = 'Mi Cuenta';
     
     protected static ?int $navigationSort = 1;
 

@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Hash;
+use UnitEnum;
 
 class MiPerfil extends Page
 {
@@ -20,7 +21,7 @@ class MiPerfil extends Page
     
     protected static ?string $title = 'Mi Perfil';
     
-    protected static ?string $navigationGroup = 'Mi Cuenta';
+    protected static UnitEnum|string|null $navigationGroup = 'Mi Cuenta';
     
     protected static ?int $navigationSort = 2;
 
