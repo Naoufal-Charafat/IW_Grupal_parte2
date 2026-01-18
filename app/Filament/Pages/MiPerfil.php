@@ -2,18 +2,21 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 use UnitEnum;
 use BackedEnum;
 
-class MiPerfil extends Page
+class MiPerfil extends Page implements HasForms
 {
+    use InteractsWithForms;
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-user-circle';
 
     protected string $view = 'filament.pages.mi-perfil';
@@ -49,17 +52,27 @@ class MiPerfil extends Page
     {
         $user = auth()->user();
         
-        $this->profileData = [
+        $this->profileForm->fill([
             'name' => $user->name,
             'email' => $user->email,
             'telefono' => $user->telefono,
             'line_1' => $user->line_1,
             'line_2' => $user->line_2,
             'postal_code' => $user->postal_code,
+        ]);
+        
+        $this->passwordForm->fill([]);
+    }
+    
+    protected function getForms(): array
+    {
+        return [
+            'profileForm',
+            'passwordForm',
         ];
     }
 
-    public function profileForm(Form $form): Form
+    public function profileForm(Schema $form): Schema
     {
         return $form
             ->schema([
@@ -107,7 +120,7 @@ class MiPerfil extends Page
             ->statePath('profileData');
     }
 
-    public function passwordForm(Form $form): Form
+    public function passwordForm(Schema $form): Schema
     {
         return $form
             ->schema([

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\MisCitas\Tables;
 
-use Filament\Tables\Actions\ViewAction;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
@@ -140,8 +140,10 @@ class MisCitasTable
                     ),
             ])
             ->recordActions([
-                ViewAction::make()
-                    ->label('Ver Detalles'),
+                Action::make('view')
+                    ->label('Ver Detalles')
+                    ->icon('heroicon-o-eye')
+                    ->url(fn ($record) => route('filament.admin.resources.mis-citas.view', ['record' => $record])),
             ])
             ->emptyStateHeading('No tienes citas')
             ->emptyStateDescription('Cuando reserves una cita, aparecerá aquí.')

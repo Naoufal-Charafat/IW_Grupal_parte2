@@ -17,7 +17,7 @@ class ListMisCitas extends ListRecords
                 ->label('Reservar Nueva Cita')
                 ->icon('heroicon-o-plus')
                 ->color('success')
-                ->url(route('reservar'))
+                ->url(route('tratamientos.index'))
                 ->visible(fn (): bool => auth()->user()->hasRole('cliente')),
         ];
     }
