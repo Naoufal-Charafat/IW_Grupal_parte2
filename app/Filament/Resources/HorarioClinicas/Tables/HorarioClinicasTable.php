@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Filament\Resources\HorarioClinicas\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
+class HorarioClinicasTable
+{
+    private static array $diasSemana = [
+        0 => 'Domingo',
+        1 => 'Lunes',
+        2 => 'Martes',
+        3 => 'Miércoles',
+        4 => 'Jueves',
+        5 => 'Viernes',
+        6 => 'Sábado',
+    ];
+
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('dia')
+                    ->label('Día de la semana')
+                    ->formatStateUsing(fn(int $state): string => self::$diasSemana[$state] ?? 'Desconocido')
+                    ->sortable(),
+                TextColumn::make('hora_apertura')
+                    ->time()
+                    ->sortable(),
+                TextColumn::make('hora_cierre')
+                    ->time()
+                    ->sortable(),
+                IconColumn::make('es_dia_laboral')
+                    ->boolean(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}
