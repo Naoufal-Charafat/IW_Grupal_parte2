@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Reserva;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -75,10 +76,10 @@ class ProximasCitasWidget extends BaseWidget
             ->emptyStateDescription('Cuando reserves una cita, aparecerá aquí.')
             ->emptyStateIcon('heroicon-o-calendar')
             ->emptyStateActions([
-                \Filament\Tables\Actions\Action::make('reservar')
+                Action::make('reservar')
                     ->label('Reservar Cita')
                     ->icon('heroicon-o-plus')
-                    ->url(route('reservar'))
+                    ->url(route('tratamientos.index'))
                     ->color('primary'),
             ]);
     }
