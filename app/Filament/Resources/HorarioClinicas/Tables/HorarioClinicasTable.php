@@ -11,12 +11,23 @@ use Filament\Tables\Table;
 
 class HorarioClinicasTable
 {
+    private static array $diasSemana = [
+        0 => 'Domingo',
+        1 => 'Lunes',
+        2 => 'Martes',
+        3 => 'Miércoles',
+        4 => 'Jueves',
+        5 => 'Viernes',
+        6 => 'Sábado',
+    ];
+
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
                 TextColumn::make('dia')
-                    ->numeric()
+                    ->label('Día de la semana')
+                    ->formatStateUsing(fn(int $state): string => self::$diasSemana[$state] ?? 'Desconocido')
                     ->sortable(),
                 TextColumn::make('hora_apertura')
                     ->time()

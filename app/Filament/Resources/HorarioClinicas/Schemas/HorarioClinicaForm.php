@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\HorarioClinicas\Schemas;
 
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -13,9 +13,18 @@ class HorarioClinicaForm
     {
         return $schema
             ->components([
-                TextInput::make('dia')
-                    ->required()
-                    ->numeric(),
+                Select::make('dia')
+                    ->label('Día de la semana')
+                    ->options([
+                        0 => 'Domingo',
+                        1 => 'Lunes',
+                        2 => 'Martes',
+                        3 => 'Miércoles',
+                        4 => 'Jueves',
+                        5 => 'Viernes',
+                        6 => 'Sábado',
+                    ])
+                    ->required(),
                 TimePicker::make('hora_apertura')
                     ->required(),
                 TimePicker::make('hora_cierre')

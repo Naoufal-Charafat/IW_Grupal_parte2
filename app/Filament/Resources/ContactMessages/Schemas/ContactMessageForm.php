@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\ContactMessages\Schemas;
 
+use App\Models\Tratamiento;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
@@ -21,9 +23,15 @@ class ContactMessageForm
                     ->required(),
                 TextInput::make('telefono')
                     ->tel(),
-                TextInput::make('servicio_interes'),
+                Select::make('servicio_interes')
+                    ->label('Servicio de interés')
+                    ->options(fn() => Tratamiento::query()->pluck('nombre', 'nombre'))
+                    ->searchable()
+                    ->placeholder('Selecciona un servicio...'),
                 Textarea::make('mensaje')
                     ->required()
+                    ->minLength(10)
+                    ->helperText('Mínimo 10 caracteres')
                     ->columnSpanFull(),
                 Toggle::make('leido')
                     ->required(),

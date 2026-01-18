@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\ContactMessages;
 
-use App\Filament\Resources\ContactMessages\Pages\CreateContactMessage;
 use App\Filament\Resources\ContactMessages\Pages\EditContactMessage;
 use App\Filament\Resources\ContactMessages\Pages\ListContactMessages;
 use App\Filament\Resources\ContactMessages\Schemas\ContactMessageForm;
@@ -37,11 +36,15 @@ class ContactMessageResource extends Resource
         ];
     }
 
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => ListContactMessages::route('/'),
-            'create' => CreateContactMessage::route('/create'),
             'edit' => EditContactMessage::route('/{record}/edit'),
         ];
     }
