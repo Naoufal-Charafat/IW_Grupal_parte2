@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ReservaConfirmada;
 use App\Models\Habitacion;
 use App\Models\Profesional;
 use App\Models\Reserva;
 use App\Models\Tratamiento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class ReservaController extends Controller
@@ -207,6 +209,17 @@ class ReservaController extends Controller
             'telefono_paciente' => $telefonoPaciente,
             'creado_por' => auth()->id(),
         ]);
+
+        // Load relationships needed for email
+        $reserva->load(['profesional.user', 'tratamiento', 'habitacion', 'user']);
+
+        // Send confirmation email
+        try {
+            Mail::to($emailPaciente)->send(new ReservaConfirmada($reserva));
+        } catch (\Exception $e) {
+            // Log the error but don't prevent the reservation from completing
+            \Log::error('Error sending confirmation email: ' . $e->getMessage());
+        }
 
         return redirect()->route('reservas.exito', $reserva);
     }

@@ -45,7 +45,7 @@
                             Precio Mínimo (€)
                         </label>
                         <input type="number" name="precio_min" id="precio_min" value="{{ request('precio_min') }}"
-                            min="0" step="5" placeholder="0"
+                            min="0" step="0.01" placeholder="0"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
 
@@ -55,7 +55,7 @@
                             Precio Máximo (€)
                         </label>
                         <input type="number" name="precio_max" id="precio_max" value="{{ request('precio_max') }}"
-                            min="0" step="5" placeholder="100"
+                            min="0" step="0.01" placeholder="100"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
 

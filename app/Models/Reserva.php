@@ -35,6 +35,7 @@ class Reserva extends Model
         'monto_total',
         'expira_en',
         'notas',
+        'recordatorio_enviado',
         'creado_por',
     ];
 
