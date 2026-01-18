@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/payments', [PaymentControllerApiRest::class, 'initiate'])->name('payment.initiate');
     Route::get('/payments/callback', [PaymentControllerApiRest::class, 'callback'])->name('payment.callback');
-});
 
+    Route::get('/reservas/refund/', [PaymentControllerApiRest::class, 'refund'])->name('reserva.refund');
+
+});
 require __DIR__ . '/auth.php';
