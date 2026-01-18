@@ -7,14 +7,14 @@ use Filament\Actions;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Schema;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewMiCita extends ViewRecord
 {
     protected static string $resource = MisCitasResource::class;
 
-    public function infolist(Infolist $infolist): Infolist
+    public function infolist(Schema $infolist): Schema
     {
         return $infolist
             ->schema([

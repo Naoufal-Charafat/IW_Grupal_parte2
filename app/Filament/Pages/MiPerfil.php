@@ -10,18 +10,19 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Hash;
 use UnitEnum;
+use BackedEnum;
 
 class MiPerfil extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-user-circle';
 
-    protected static string $view = 'filament.pages.mi-perfil';
+    protected string $view = 'filament.pages.mi-perfil';
     
     protected static ?string $navigationLabel = 'Mi Perfil';
     
     protected static ?string $title = 'Mi Perfil';
     
-    protected static UnitEnum|string|null $navigationGroup = 'Mi Cuenta';
+    protected static string|UnitEnum|null $navigationGroup = 'Mi Cuenta';
     
     protected static ?int $navigationSort = 2;
 

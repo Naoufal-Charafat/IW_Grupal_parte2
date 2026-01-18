@@ -17,7 +17,7 @@ class MisCitasResource extends Resource
 {
     protected static ?string $model = Reserva::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlineCalendar;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
     
     protected static ?string $navigationLabel = 'Mis Citas';
     
