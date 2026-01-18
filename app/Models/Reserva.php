@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Reserva extends Model
 {
     use HasFactory;
+    protected $table = 'reservas';
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,7 @@ class Reserva extends Model
         'profesional_id',
         'habitacion_id',
         'tratamiento_id',
+        'hotel_id',
         'codigo_confirmacion',
         'es_para_otro',
         'nombre_paciente',
@@ -37,6 +39,7 @@ class Reserva extends Model
         'notas',
         'recordatorio_enviado',
         'creado_por',
+        'payment_token',
     ];
 
     /**
@@ -87,6 +90,14 @@ class Reserva extends Model
     public function tratamiento(): BelongsTo
     {
         return $this->belongsTo(Tratamiento::class);
+    }
+
+    /**
+     * Get the hotel for this reservation.
+     */
+    public function hotel(): BelongsTo
+    {
+        return $this->belongsTo(Hotel::class);
     }
 
     /**

@@ -47,6 +47,12 @@ class UserSeeder extends Seeder
                 'password' => 'publico',
                 'role' => 'publico',
             ],
+            [
+                'name' => 'hotel',
+                'email' => 'hotel@hotel.com',
+                'password' => 'hotel',
+                'role' => 'cliente',
+            ],
         ];
 
         foreach ($usersData as $userData) {

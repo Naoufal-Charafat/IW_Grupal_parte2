@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\PaymentControllerApiRest;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\TratamientoController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,8 @@ Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto.s
 // Public rutas para los tratamientos
 Route::get('/tratamientos', [TratamientoController::class, 'index'])->name('tratamientos.index');
 Route::get('/tratamientos/{tratamiento}', [TratamientoController::class, 'show'])->name('tratamientos.show');
+
+Route::get('/tienda', [TiendaController::class, 'index'])->name('tienda.index');
 
 // rutas de reservaciones - necesita que el usuario sea autentificado
 Route::middleware('auth')->group(function () {
@@ -29,12 +33,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/reservas/guardar', [ReservaController::class, 'store'])
         ->name('reservas.store');
     
-    Route::get('/reservas/exito/{reserva}', [ReservaController::class, 'success'])
+    Route::get('/reservas/confirmation/{reserva}', [ReservaController::class, 'confirmation'])
         ->name('reservas.exito');
     
     // API endpoint for checking professional availability
     Route::get('/api/profesional/{profesional}/disponibilidad', [ReservaController::class, 'getAvailability'])
         ->name('api.profesional.disponibilidad');
-});
 
+    Route::get('/payments', [PaymentControllerApiRest::class, 'initiate'])->name('payment.initiate');
+    Route::get('/payments/callback', [PaymentControllerApiRest::class, 'callback'])->name('payment.callback');
+
+    Route::get('/reservas/refund/', [PaymentControllerApiRest::class, 'refund'])->name('reserva.refund');
+
+});
 require __DIR__ . '/auth.php';

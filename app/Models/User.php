@@ -7,12 +7,13 @@ use App\Models\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, HasMedia;
+    use HasFactory, Notifiable, HasRoles, HasMedia, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -61,6 +62,14 @@ class User extends Authenticatable
     public function profesional()
     {
         return $this->hasOne(Profesional::class);
+    }
+
+    /**
+     * Get the hotel profile associated with this user.
+     */
+    public function hotel()
+    {
+        return $this->hasOne(Hotel::class);
     }
 
     /**

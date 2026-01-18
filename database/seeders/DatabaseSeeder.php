@@ -53,6 +53,11 @@ class DatabaseSeeder extends Seeder
             HabitacionTratamientoSeeder::class,
         ]);
 
+        // 8. Crear hoteles (referidos)
+        $this->call([
+            HotelSeeder::class,
+        ]);
+
         // 8. Crear reservas de ejemplo para el cliente demo
         $cliente = User::where('email', 'cliente@cliente.com')->first();
         if ($cliente) {

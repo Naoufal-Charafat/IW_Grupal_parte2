@@ -221,13 +221,13 @@ class ReservaController extends Controller
             \Log::error('Error sending confirmation email: ' . $e->getMessage());
         }
 
-        return redirect()->route('reservas.exito', $reserva);
+        return redirect()->route('payment.initiate', ['id' => $reserva->id]);
     }
 
     /**
      * Show pagina de exito de reservacion
      */
-    public function success(Reserva $reserva)
+    public function confirmation(Reserva $reserva)
     {
         // Use policy for authorization
         $this->authorize('view', $reserva);
@@ -235,6 +235,9 @@ class ReservaController extends Controller
         // Load relationships
         $reserva->load(['profesional.user', 'tratamiento', 'habitacion']);
 
+        if($reserva->estado_pago == 'fallido') {
+            return view('reservas.fracaso', compact('reserva'));
+        }
         return view('reservas.exito', compact('reserva'));
     }
 
