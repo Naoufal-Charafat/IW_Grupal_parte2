@@ -19,8 +19,7 @@ class ReservaPolicy
 
     public function view(AuthUser $authUser, Reserva $reserva): bool
     {
-        // Allow if user has permission or is the owner of the reservation
-        return $authUser->can('View:Reserva') || $authUser->id === $reserva->user_id;
+        return $authUser->can('View:Reserva');
     }
 
     public function create(AuthUser $authUser): bool
