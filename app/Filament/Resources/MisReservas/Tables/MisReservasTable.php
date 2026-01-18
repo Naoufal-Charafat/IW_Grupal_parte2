@@ -144,6 +144,43 @@ class MisReservasTable
                     ->label('Ver Detalles')
                     ->icon('heroicon-o-eye')
                     ->url(fn ($record) => route('filament.admin.resources.mis-reservas.view', ['record' => $record])),
+
+                Action::make('valorar')
+                    ->label('Valorar Profesional')
+                    ->icon('heroicon-o-star')
+                    ->color('warning')
+                    ->visible(fn ($record) => $record->estado === 'completado')
+                    ->form([
+                        \Filament\Forms\Components\Textarea::make('comentario')
+                            ->label('Comentario')
+                            ->required(),
+                        \Filament\Forms\Components\Select::make('puntuacion')
+                            ->label('Valoración')
+                            ->options([
+                                1 => '1',
+                                2 => '2',
+                                3 => '3',
+                                4 => '4',
+                                5 => '5',
+                            ])
+                            ->required(),
+                    ])
+                    ->action(function ($record, $data) {
+                        \App\Models\Resena::updateOrCreate(
+                            [
+                                'reserva_id' => $record->id,
+                                'cliente_id' => $record->user_id,
+                                'profesional_id' => $record->profesional_id,
+                            ],
+                            [
+                                'comentario' => $data['comentario'],
+                                'puntuacion' => $data['puntuacion'],
+                            ]
+                        );
+                    })
+                    ->modalHeading('Valorar Profesional')
+                    ->modalSubmitActionLabel('Enviar Valoración')
+                    ->requiresConfirmation(),
             ])
             ->emptyStateHeading('No tienes reservas')
             ->emptyStateDescription('Cuando reserves una cita, aparecerá aquí.')
