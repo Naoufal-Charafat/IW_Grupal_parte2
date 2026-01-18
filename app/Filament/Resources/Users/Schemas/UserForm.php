@@ -35,6 +35,12 @@ class UserForm
                     ->options(['particular' => 'Particular', 'empresa' => 'Empresa'])
                     ->default('particular')
                     ->required(),
+                Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->label('Roles')
+                    ->helperText('Selecciona uno o más roles para el usuario'),
             ]);
     }
 }
