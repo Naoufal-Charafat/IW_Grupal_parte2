@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Filament\Resources\MisCitas\Pages;
+namespace App\Filament\Resources\MisReservas\Pages;
 
-use App\Filament\Resources\MisCitas\MisCitasResource;
+use App\Filament\Resources\MisReservas\MisReservasResource;
 use App\Filament\Widgets\CancelacionInfoWidget;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Actions;
 
-class ListMisCitas extends ListRecords
+class ListMisReservas extends ListRecords
 {
-    protected static string $resource = MisCitasResource::class;
+    protected static string $resource = MisReservasResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('nueva_cita')
+            Actions\Action::make('nueva_reserva')
                 ->label('Reservar Nueva Cita')
                 ->icon('heroicon-o-plus')
                 ->color('success')
@@ -25,7 +25,7 @@ class ListMisCitas extends ListRecords
     
     public function getTitle(): string
     {
-        return 'Mis Citas';
+        return 'Mis Reservas';
     }
     
     public function getHeaderWidgets(): array

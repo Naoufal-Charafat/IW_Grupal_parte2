@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\MisCitas\Tables;
+namespace App\Filament\Resources\MisReservas\Tables;
 
 use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
@@ -9,7 +9,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
-class MisCitasTable
+class MisReservasTable
 {
     public static function configure(Table $table): Table
     {
@@ -123,7 +123,7 @@ class MisCitasTable
                     ->multiple(),
                     
                 Filter::make('proximas')
-                    ->label('Próximas Citas')
+                    ->label('Próximas Reservas')
                     ->query(fn (Builder $query): Builder => $query
                         ->where('fecha', '>=', now()->toDateString())
                         ->whereIn('estado', ['confirmado', 'bloqueado'])
@@ -143,9 +143,9 @@ class MisCitasTable
                 Action::make('view')
                     ->label('Ver Detalles')
                     ->icon('heroicon-o-eye')
-                    ->url(fn ($record) => route('filament.admin.resources.mis-citas.view', ['record' => $record])),
+                    ->url(fn ($record) => route('filament.admin.resources.mis-reservas.view', ['record' => $record])),
             ])
-            ->emptyStateHeading('No tienes citas')
+            ->emptyStateHeading('No tienes reservas')
             ->emptyStateDescription('Cuando reserves una cita, aparecerá aquí.')
             ->emptyStateIcon('heroicon-o-calendar');
     }

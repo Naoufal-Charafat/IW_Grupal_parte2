@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\MisCitas;
+namespace App\Filament\Resources\MisReservas;
 
-use App\Filament\Resources\MisCitas\Pages\ListMisCitas;
-use App\Filament\Resources\MisCitas\Pages\ViewMiCita;
-use App\Filament\Resources\MisCitas\Tables\MisCitasTable;
+use App\Filament\Resources\MisReservas\Pages\ListMisReservas;
+use App\Filament\Resources\MisReservas\Pages\ViewMisReserva;
+use App\Filament\Resources\MisReservas\Tables\MisReservasTable;
 use App\Models\Reserva;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -13,17 +13,17 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
 
-class MisCitasResource extends Resource
+class MisReservasResource extends Resource
 {
     protected static ?string $model = Reserva::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
     
-    protected static ?string $navigationLabel = 'Mis Citas';
+    protected static ?string $navigationLabel = 'Mis Reservas';
     
-    protected static ?string $modelLabel = 'Cita';
+    protected static ?string $modelLabel = 'Reserva';
     
-    protected static ?string $pluralModelLabel = 'Mis Citas';
+    protected static ?string $pluralModelLabel = 'Mis Reservas';
     
     protected static UnitEnum|string|null $navigationGroup = 'Mi Cuenta';
     
@@ -58,7 +58,7 @@ class MisCitasResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return MisCitasTable::configure($table);
+        return MisReservasTable::configure($table);
     }
 
     public static function getRelations(): array
@@ -69,8 +69,8 @@ class MisCitasResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListMisCitas::route('/'),
-            'view' => ViewMiCita::route('/{record}'),
+            'index' => ListMisReservas::route('/'),
+            'view' => ViewMisReserva::route('/{record}'),
         ];
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\MisCitas\Pages;
+namespace App\Filament\Resources\MisReservas\Pages;
 
-use App\Filament\Resources\MisCitas\MisCitasResource;
+use App\Filament\Resources\MisReservas\MisReservasResource;
 use Carbon\Carbon;
 use Filament\Actions;
 use Filament\Infolists\Components\TextEntry;
@@ -12,15 +12,15 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewMiCita extends ViewRecord
+class ViewMisReserva extends ViewRecord
 {
-    protected static string $resource = MisCitasResource::class;
+    protected static string $resource = MisReservasResource::class;
 
     public function infolist(Schema $infolist): Schema
     {
         return $infolist
             ->schema([
-                Section::make('Información de la Cita')
+                Section::make('Información de la Reserva')
                     ->schema([
                         Grid::make(2)
                             ->schema([
@@ -148,31 +148,31 @@ class ViewMiCita extends ViewRecord
     {
         return [
             Actions\Action::make('cancelar')
-                ->label('Cancelar Cita')
+                ->label('Cancelar Reserva')
                 ->icon('heroicon-o-x-circle')
                 ->color('danger')
                 ->visible(fn () => $this->canCancelReservation())
                 ->requiresConfirmation()
-                ->modalHeading('Cancelar Cita')
-                ->modalDescription('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.')
+                ->modalHeading('Cancelar Reserva')
+                ->modalDescription('¿Estás seguro de que deseas cancelar esta reserva? Esta acción no se puede deshacer.')
                 ->modalSubmitActionLabel('Sí, cancelar')
                 ->action(function () {
                     $this->record->update(['estado' => 'cancelado']);
                     
                     Notification::make()
-                        ->title('Cita cancelada')
+                        ->title('Reserva cancelada')
                         ->success()
-                        ->body('Tu cita ha sido cancelada correctamente.')
+                        ->body('Tu reserva ha sido cancelada correctamente.')
                         ->send();
                     
-                    return redirect()->to(MisCitasResource::getUrl('index'));
+                    return redirect()->to(MisReservasResource::getUrl('index'));
                 })
                 ->disabled(fn () => !$this->canCancelReservation())
-                ->tooltip(fn () => !$this->canCancelReservation() ? 'No se puede cancelar una cita con menos de 24 horas de antelación' : null),
+                ->tooltip(fn () => !$this->canCancelReservation() ? 'No se puede cancelar una reserva con menos de 24 horas de antelación' : null),
             
             Actions\Action::make('volver')
-                ->label('Volver a Mis Citas')
-                ->url(MisCitasResource::getUrl('index'))
+                ->label('Volver a Mis Reservas')
+                ->url(MisReservasResource::getUrl('index'))
                 ->color('gray'),
         ];
     }

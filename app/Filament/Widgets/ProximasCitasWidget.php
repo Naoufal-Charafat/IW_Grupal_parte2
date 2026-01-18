@@ -26,8 +26,8 @@ class ProximasCitasWidget extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->heading('Próximas Citas')
-            ->description('Tus citas programadas más próximas')
+            ->heading('Próximas Reservas')
+            ->description('Tus reservas programadas más próximas')
             ->query(
                 Reserva::query()
                     ->where('user_id', auth()->id())
@@ -72,7 +72,7 @@ class ProximasCitasWidget extends BaseWidget
                         default => ucfirst($state),
                     }),
             ])
-            ->emptyStateHeading('No tienes citas próximas')
+            ->emptyStateHeading('No tienes reservas próximas')
             ->emptyStateDescription('Cuando reserves una cita, aparecerá aquí.')
             ->emptyStateIcon('heroicon-o-calendar')
             ->emptyStateActions([
