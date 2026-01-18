@@ -158,14 +158,8 @@ class ViewMisReserva extends ViewRecord
                 ->modalSubmitActionLabel('Sí, cancelar')
                 ->action(function () {
                     $this->record->update(['estado' => 'cancelado']);
-                    
-                    Notification::make()
-                        ->title('Reserva cancelada')
-                        ->success()
-                        ->body('Tu reserva ha sido cancelada correctamente.')
-                        ->send();
-                    
-                    return redirect()->to(MisReservasResource::getUrl('index'));
+
+                    return redirect()->route('reserva.refund', ['id' => $this->record->id]);
                 })
                 ->disabled(fn () => !$this->canCancelReservation())
                 ->tooltip(fn () => !$this->canCancelReservation() ? 'No se puede cancelar una reserva con menos de 24 horas de antelación' : null),

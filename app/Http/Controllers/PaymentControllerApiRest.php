@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Filament\Resources\MisReservas\MisReservasResource;
 use App\Models\Hotel;
 use App\Models\Reserva; // Usamos Reserva consistentemente
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -110,7 +112,12 @@ class PaymentControllerApiRest extends Controller
             abort(404, 'Id no encontrado en la URL');
         }
 
+
         $order = Reserva::findOrFail($id);
+
+        if ($order->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para gestionar esta reserva.');
+        }
         if ($order->estado_pago !== 'pagado') {
             return back()->with('error', 'Esta reserva no se puede reembolsar porque no está pagada.');
         }
@@ -143,14 +150,25 @@ class PaymentControllerApiRest extends Controller
                         $hotel->decrement('total_ref_amount', $commission);
                     }
                     $order->update(['estado_pago' => 'reembolsado']);
+                    $order->update(['estado' => 'cancelado']);
 
+                    Notification::make()
+                        ->title('Reserva cancelada')
+                        ->success()
+                        ->body('Tu reserva ha sido cancelada correctamente.')
+                        ->send();
                     // 3. Redirección final
-                    return redirect()->route('dashboard');
+                    return redirect()->to(MisReservasResource::getUrl('index'));
                 }
             }
         }
         $order->update(['estado_pago' => 'fallido']);
         Log::error('Fallo en callback TPV', ['response' => $response->body()]);
-        return redirect()->route('dashboard');
+        Notification::make()
+            ->title('Error en el reembolso')
+            ->danger()
+            ->body('Hubo un problema de comunicación con el banco. Por favor, contacta con soporte.')
+            ->send();
+        return redirect()->to(MisReservasResource::getUrl('index'));
     }
 }
