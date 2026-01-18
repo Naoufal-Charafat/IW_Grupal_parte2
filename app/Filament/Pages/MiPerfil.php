@@ -89,6 +89,7 @@ class MiPerfil extends Page implements HasForms
                                 TextInput::make('email')
                                     ->label('Correo Electrónico')
                                     ->email()
+                                    ->regex('/^.+@.+\..+$/')
                                     ->required()
                                     ->unique(ignoreRecord: true)
                                     ->maxLength(255),
