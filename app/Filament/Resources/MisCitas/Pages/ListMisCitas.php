@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\MisCitas\Pages;
 
 use App\Filament\Resources\MisCitas\MisCitasResource;
+use App\Filament\Widgets\CancelacionInfoWidget;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Actions;
 
@@ -25,5 +26,12 @@ class ListMisCitas extends ListRecords
     public function getTitle(): string
     {
         return 'Mis Citas';
+    }
+    
+    public function getHeaderWidgets(): array
+    {
+        return [
+            CancelacionInfoWidget::class,
+        ];
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Filament\Resources\MisCitas\Pages;
 
 use App\Filament\Resources\MisCitas\MisCitasResource;
+use Carbon\Carbon;
 use Filament\Actions;
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -145,10 +147,50 @@ class ViewMiCita extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('cancelar')
+                ->label('Cancelar Cita')
+                ->icon('heroicon-o-x-circle')
+                ->color('danger')
+                ->visible(fn () => $this->canCancelReservation())
+                ->requiresConfirmation()
+                ->modalHeading('Cancelar Cita')
+                ->modalDescription('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.')
+                ->modalSubmitActionLabel('Sí, cancelar')
+                ->action(function () {
+                    $this->record->update(['estado' => 'cancelado']);
+                    
+                    Notification::make()
+                        ->title('Cita cancelada')
+                        ->success()
+                        ->body('Tu cita ha sido cancelada correctamente.')
+                        ->send();
+                    
+                    return redirect()->to(MisCitasResource::getUrl('index'));
+                })
+                ->disabled(fn () => !$this->canCancelReservation())
+                ->tooltip(fn () => !$this->canCancelReservation() ? 'No se puede cancelar una cita con menos de 24 horas de antelación' : null),
+            
             Actions\Action::make('volver')
                 ->label('Volver a Mis Citas')
                 ->url(MisCitasResource::getUrl('index'))
                 ->color('gray'),
         ];
+    }
+    
+    protected function canCancelReservation(): bool
+    {
+        // Only allow cancellation if reservation is confirmed or blocked
+        if (!in_array($this->record->estado, ['confirmado', 'bloqueado'])) {
+            return false;
+        }
+        
+        // Check if reservation is more than 24 hours away
+        $fecha = $this->record->fecha instanceof Carbon ? $this->record->fecha->format('Y-m-d') : $this->record->fecha;
+        $hora = $this->record->hora_inicio instanceof Carbon ? $this->record->hora_inicio->format('H:i:s') : $this->record->hora_inicio;
+        $reservationDateTime = Carbon::parse("$fecha $hora");
+        $now = Carbon::now();
+        
+        // Check if reservation is in the future and more than 24 hours away
+        return $reservationDateTime->isFuture() && $now->diffInHours($reservationDateTime) >= 24;
     }
 }
