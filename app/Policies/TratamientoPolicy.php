@@ -11,7 +11,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class TratamientoPolicy
 {
     use HandlesAuthorization;
-
+    
     public function viewAny(AuthUser $authUser): bool
     {
         return $authUser->can('ViewAny:Tratamiento');
@@ -67,14 +67,4 @@ class TratamientoPolicy
         return $authUser->can('Reorder:Tratamiento');
     }
 
-    /**
-     * Determinar si el usuario puede exportar tratamientos a PDF.
-     * - Recepcionista: puede exportar todos los tratamientos
-     * - Profesional: solo puede exportar sus tratamientos
-     * - Super Admin: puede exportar todos los tratamientos
-     */
-    public function exportPdf(AuthUser $authUser): bool
-    {
-        return $authUser->hasAnyRole(['recepcionista', 'profesional', 'super_admin']);
-    }
 }
