@@ -224,13 +224,17 @@ assign_permission "View:Profesional" "recepcionista"
 assign_permission "ViewAny:Tratamiento" "recepcionista"
 assign_permission "View:Tratamiento" "recepcionista"
 
+# Reseñas (solo lectura - ver todas)
+assign_permission "ViewAny:Resena" "recepcionista"
+assign_permission "View:Resena" "recepcionista"
+
 # Página y Widgets
 assign_permission "View:MiPerfil" "recepcionista"
 assign_permission "View:ProximasCitasWidget" "recepcionista"
 assign_permission "View:TratamientoStatsWidget" "recepcionista"
 assign_permission "View:CancelacionInfoWidget" "recepcionista"
 
-echo -e "${GREEN}    ✓ Recepcionista: 34 permisos asignados${NC}"
+echo -e "${GREEN}    ✓ Recepcionista: 36 permisos asignados${NC}"
 
 # -----------------------------------------------------------------------------
 # ROL: PUBLICO (0 permisos)
@@ -307,10 +311,10 @@ else
     ERRORS=$((ERRORS + 1))
 fi
 
-if [ "$RECEPCIONISTA_COUNT" -eq 34 ]; then
-    echo -e "  ${GREEN}✓${NC} recepcionista:  $RECEPCIONISTA_COUNT permisos (esperado: 34)"
+if [ "$RECEPCIONISTA_COUNT" -eq 36 ]; then
+    echo -e "  ${GREEN}✓${NC} recepcionista:  $RECEPCIONISTA_COUNT permisos (esperado: 36)"
 else
-    echo -e "  ${RED}✗${NC} recepcionista:  $RECEPCIONISTA_COUNT permisos (esperado: 34)"
+    echo -e "  ${RED}✗${NC} recepcionista:  $RECEPCIONISTA_COUNT permisos (esperado: 36)"
     ERRORS=$((ERRORS + 1))
 fi
 
@@ -341,7 +345,7 @@ echo ""
 echo -e "${BOLD}Resumen por Rol:${NC}"
 echo "  • cliente:        $CLIENTE_COUNT permisos (8.6% del total)"
 echo "  • profesional:    $PROFESIONAL_COUNT permisos (14.7% del total)"
-echo "  • recepcionista:  $RECEPCIONISTA_COUNT permisos (29.3% del total)"
+echo "  • recepcionista:  $RECEPCIONISTA_COUNT permisos (31.0% del total)"
 echo "  • publico:        $PUBLICO_COUNT permisos (sin acceso)"
 echo "  • super_admin:    $SUPER_ADMIN_COUNT permisos (100% - control total)"
 echo ""
@@ -353,7 +357,7 @@ if [ $ERRORS -eq 0 ]; then
     echo -e "${GREEN}${BOLD}✓ ÉXITO:${NC}${GREEN} Todos los permisos se asignaron correctamente${NC}"
     echo ""
     echo -e "${CYAN}Jerarquía de Permisos:${NC}"
-    echo "  super_admin (todos) > recepcionista (34) > profesional (17) > cliente (10) > publico (0)"
+    echo "  super_admin (todos) > recepcionista (36) > profesional (17) > cliente (10) > publico (0)"
     echo ""
     echo -e "${YELLOW}Nota:${NC} Los permisos destructivos (ForceDelete, Restore, etc.) son exclusivos del super_admin"
     echo ""

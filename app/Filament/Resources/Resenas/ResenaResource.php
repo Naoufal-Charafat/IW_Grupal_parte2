@@ -28,30 +28,71 @@ class ResenaResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Reseñas';
 
+    protected static string|UnitEnum|null $navigationGroup = 'Gestión de tratamientos';
+
     /**
-     * Solo mostrar este recurso a clientes
+     * Mostrar este recurso a todos los roles autorizados
      */
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->check() && auth()->user()->hasRole('cliente');
+        if (!auth()->check()) {
+            return false;
+        }
+
+        $user = auth()->user();
+        return $user->hasAnyRole(['cliente', 'profesional', 'recepcionista', 'super_admin']);
     }
 
     /**
-     * Solo permitir acceso a clientes
+     * Permitir acceso según roles autorizados
      */
     public static function canAccess(): bool
     {
-        return auth()->check() && auth()->user()->hasRole('cliente');
+        if (!auth()->check()) {
+            return false;
+        }
+
+        $user = auth()->user();
+        return $user->hasAnyRole(['cliente', 'profesional', 'recepcionista', 'super_admin']);
     }
 
     /**
-     * Filtrar query para mostrar solo las reseñas del usuario autenticado
+     * Filtrar query según el rol del usuario autenticado
      */
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->where('cliente_id', auth()->id())
-            ->orderBy('created_at', 'desc');
+        $query = parent::getEloquentQuery();
+        $user = auth()->user();
+
+        if ($user->hasRole('super_admin')) {
+            // Super admin ve todas las reseñas
+            return $query->orderBy('created_at', 'desc');
+        }
+
+        if ($user->hasRole('cliente')) {
+            // Cliente solo ve sus propias reseñas
+            return $query->where('cliente_id', $user->id)
+                ->orderBy('created_at', 'desc');
+        }
+
+        if ($user->hasRole('profesional')) {
+            // Profesional solo ve las reseñas que le han hecho
+            $profesional = $user->profesional;
+            if ($profesional) {
+                return $query->where('profesional_id', $profesional->id)
+                    ->orderBy('created_at', 'desc');
+            }
+            // Si no tiene profesional asociado, no ve nada
+            return $query->whereRaw('1 = 0');
+        }
+
+        if ($user->hasRole('recepcionista')) {
+            // Recepcionista ve todas las reseñas
+            return $query->orderBy('created_at', 'desc');
+        }
+
+        // Por defecto, no mostrar nada
+        return $query->whereRaw('1 = 0');
     }
 
     public static function form(Schema $schema): Schema
