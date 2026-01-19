@@ -109,6 +109,14 @@ class Reserva extends Model
     }
 
     /**
+     * Get the review for this reservation (singular).
+     */
+    public function resena(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Resena::class);
+    }
+
+    /**
      * Get the reviews for this reservation.
      */
     public function resenas(): HasMany
