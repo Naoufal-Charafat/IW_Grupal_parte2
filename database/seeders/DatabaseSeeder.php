@@ -99,5 +99,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             BloqueHorarioSeeder::class,
         ]);
+
+        // 11. Crear mensajes de contacto simulados
+        $this->call([
+            ContactMessageSeeder::class,
+        ]);
     }
 }
