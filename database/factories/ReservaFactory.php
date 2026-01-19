@@ -17,7 +17,15 @@ class ReservaFactory extends Factory
     public function definition(): array
     {
         $fecha = $this->faker->dateTimeBetween('-2 months', 'now');
-        $horaInicio = $this->faker->time('H:i');
+        // Generar hora de inicio en intervalos de 30 minutos entre 08:00 y 19:30
+        $startHour = 8;
+        $endHour = 19;
+        $intervals = [];
+        for ($h = $startHour; $h <= $endHour; $h++) {
+            $intervals[] = sprintf('%02d:00', $h);
+            $intervals[] = sprintf('%02d:30', $h);
+        }
+        $horaInicio = $this->faker->randomElement($intervals);
         $duracion = $this->faker->randomElement([30, 45, 60]);
         $horaFin = date('H:i', strtotime("$horaInicio +$duracion minutes"));
 

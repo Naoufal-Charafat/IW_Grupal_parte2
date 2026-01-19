@@ -58,21 +58,41 @@ class DatabaseSeeder extends Seeder
             HotelSeeder::class,
         ]);
 
-        // 8. Crear reservas de ejemplo para el cliente demo
-        $cliente = User::where('email', 'cliente@cliente.com')->first();
-        if ($cliente) {
-            // 3 reservas completadas
-            Reserva::factory()->count(3)->create([
+        // 8. Crear reservas de ejemplo para los clientes demo
+        $clientes = User::whereIn('email', [
+            'cliente@cliente.com',
+            'cliente2@cliente.com',
+            'cliente3@cliente.com',
+        ])->get();
+
+        $totalReservas = 15;
+        $reservasPorCliente = [5, 5, 5]; // 5 para cada cliente
+        foreach ($clientes as $idx => $cliente) {
+            $completadas = 3; // 3 completadas por cliente
+            $confirmadas = $reservasPorCliente[$idx] - $completadas;
+
+            // Completadas (ya realizadas)
+            Reserva::factory()->count($completadas)->create([
                 'user_id' => $cliente->id,
                 'estado' => 'completado',
                 'estado_pago' => 'pagado',
+                'fecha' => now()->subDays(rand(1, 30))->format('Y-m-d'),
             ]);
-            // 2 reservas confirmadas
-            Reserva::factory()->count(2)->create([
-                'user_id' => $cliente->id,
-                'estado' => 'confirmado',
-                'estado_pago' => 'pagado',
-            ]);
+
+            // Confirmadas (en los próximos 14 días)
+            for ($j = 0; $j < $confirmadas; $j++) {
+                Reserva::factory()->create([
+                    'user_id' => $cliente->id,
+                    'estado' => 'confirmado',
+                    'estado_pago' => 'pagado',
+                    'fecha' => now()->addDays(rand(1, 14))->format('Y-m-d'),
+                ]);
+            }
         }
+
+        // 9. Crear bloques de horario para dos profesionales
+        $this->call([
+            BloqueHorarioSeeder::class,
+        ]);
     }
 }
