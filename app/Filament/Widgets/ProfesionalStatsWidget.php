@@ -10,7 +10,12 @@ class ProfesionalStatsWidget extends ChartWidget
 {
     protected ?string $heading = 'Estadísticas de Profesionales';
 
-    protected static ?int $sort = 1;
+    protected static ?int $sort = 2;
+    
+    protected int | string | array $columnSpan = [
+        'md' => 1,
+        'xl' => 1,
+    ];
 
     protected function getData(): array
     {
