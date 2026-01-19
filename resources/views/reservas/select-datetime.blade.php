@@ -246,8 +246,11 @@
             // Load time slots for this date
             loadTimeSlots(date);
 
-            // Disable continue button until time is selected
-            document.getElementById('continue-btn').disabled = true;
+            // Disable continue button until time is selected (if exists)
+            const continueBtn = document.getElementById('continue-btn');
+            if (continueBtn) {
+                continueBtn.disabled = true;
+            }
         }
 
         function loadTimeSlots(date) {
