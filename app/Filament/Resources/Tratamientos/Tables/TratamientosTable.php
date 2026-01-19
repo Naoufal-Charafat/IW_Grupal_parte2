@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Tratamientos\Tables;
 
+use App\Filament\Actions\ExportTratamientosToPdfAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -36,6 +37,9 @@ class TratamientosTable
             ])
             ->filters([
                 //
+            ])
+            ->headerActions([
+                ExportTratamientosToPdfAction::make(),
             ])
             ->recordActions([
                 EditAction::make(),
