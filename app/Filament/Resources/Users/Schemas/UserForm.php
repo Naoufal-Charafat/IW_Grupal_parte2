@@ -36,7 +36,14 @@ class UserForm
                     ->default('particular')
                     ->required(),
                 Select::make('roles')
-                    ->relationship('roles', 'name')
+                    ->relationship(
+                        'roles',
+                        'name',
+                        fn($query) => $query->when(
+                            ! auth()->user()?->hasRole('super_admin'),
+                            fn($q) => $q->where('name', '!=', 'super_admin')
+                        )
+                    )
                     ->multiple()
                     ->preload()
                     ->label('Roles')
