@@ -139,7 +139,7 @@ class ReservaController extends Controller
         $tratamiento = Tratamiento::findOrFail($validated['tratamiento_id']);
         $profesional = Profesional::findOrFail($validated['profesional_id']);
 
-        
+
         $pivotData = $profesional->tratamientos()
             ->where('tratamiento_id', $tratamiento->id)
             ->wherePivot('esta_activo', true)
@@ -235,7 +235,7 @@ class ReservaController extends Controller
         // Load relationships
         $reserva->load(['profesional.user', 'tratamiento', 'habitacion']);
 
-        if($reserva->estado_pago == 'fallido') {
+        if ($reserva->estado_pago == 'fallido') {
             return view('reservas.fracaso', compact('reserva'));
         }
         return view('reservas.exito', compact('reserva'));
@@ -277,13 +277,28 @@ class ReservaController extends Controller
     public function getAvailability(Request $request, Profesional $profesional)
     {
         $fecha = $request->input('fecha');
-        
+
         if (!$fecha) {
             return response()->json(['error' => 'Fecha requerida'], 400);
         }
 
-        
+        // Obtener horas ocupadas por reservas
         $horasOcupadas = $profesional->getHorasOcupadas($fecha);
+
+        // Obtener bloques horarios del profesional para esta fecha
+        $bloqueos = $profesional->bloquesHorario()
+            ->where('fecha', $fecha)
+            ->get(['hora_inicio', 'hora_fin'])
+            ->map(function ($bloqueo) {
+                return [
+                    'inicio' => $bloqueo->hora_inicio->format('H:i'),
+                    'fin' => $bloqueo->hora_fin->format('H:i')
+                ];
+            })
+            ->toArray();
+
+        // Combinar horas ocupadas con bloques horarios
+        $horasOcupadas = array_merge($horasOcupadas, $bloqueos);
 
         return response()->json([
             'horas_ocupadas' => $horasOcupadas

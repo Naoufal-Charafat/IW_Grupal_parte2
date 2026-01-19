@@ -218,7 +218,7 @@ Shield ya está configurado automáticamente, pero si necesitas regenerar los pe
 php artisan shield:generate --all --panel=admin
 
 # Asignar permisos a roles según lógica de negocio
-./scripts/assign_permissions_to_roles.sh
+./scripts/assign_permissions_to_roles_docker.sh
 # O alternativamente:
 php artisan permissions:assign-to-roles --force
 
@@ -606,7 +606,7 @@ El proyecto incluye un sistema automatizado de asignación de permisos a roles. 
 
 **Método 1: Script Bash** (Recomendado)
 ```bash
-./scripts/assign_permissions_to_roles.sh
+./scripts/assign_permissions_to_roles_docker.sh
 ```
 
 **Método 2: Comando Artisan**

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ################################################################################
-# Script de Asignación de Permisos a Roles - FisioClinic
+# Script de Asignación de Permisos a Roles - FisioClinic (BASE DE DATOS LOCAL)
 # 
 # Descripción: Asigna permisos específicos a cada rol según la lógica de negocio
 # Características:
@@ -9,8 +9,9 @@
 #   - Transaccional: Usa transacciones SQL para rollback en caso de error
 #   - Verificación: Valida consistencia de permisos asignados
 #   - Reporte: Genera resumen detallado al finalizar
+#   - Conexión: MySQL local en puerto 3306
 #
-# Uso: ./scripts/assign_permissions_to_roles.sh
+# Uso: ./scripts/assign_permissions_to_roles_local.sh
 ################################################################################
 
 set -e  # Salir inmediatamente si un comando falla
@@ -24,8 +25,8 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 BOLD='\033[1m'
 
-# Configuración de base de datos
-DB_HOST="${DB_HOST:-db}"
+# Configuración de base de datos LOCAL
+DB_HOST="${DB_HOST:-127.0.0.1}"
 DB_PORT="${DB_PORT:-3306}"
 DB_DATABASE="${DB_DATABASE:-clinica}"
 DB_USERNAME="${DB_USERNAME:-root}"
@@ -33,29 +34,29 @@ DB_PASSWORD="${DB_PASSWORD:-root}"
 
 # Banner
 echo -e "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║  ${BOLD}Script de Asignación de Permisos a Roles - FisioClinic${NC}${CYAN}      ║${NC}"
+echo -e "${CYAN}║  ${BOLD}Script de Asignación de Permisos - FisioClinic (LOCAL)${NC}${CYAN}     ║${NC}"
 echo -e "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}"
 echo ""
 
-# Función para ejecutar queries MySQL
+# Función para ejecutar queries MySQL LOCAL
 execute_query() {
     local query="$1"
-    docker exec -i $(docker ps -qf "name=db") mysql -h"$DB_HOST" -u"$DB_USERNAME" -p"$DB_PASSWORD" "$DB_DATABASE" -e "$query" 2>&1
+    mysql -h"$DB_HOST" -P"$DB_PORT" -u"$DB_USERNAME" -p"$DB_PASSWORD" "$DB_DATABASE" -e "$query" 2>&1
 }
 
 # Función para ejecutar queries y obtener resultado
 execute_query_result() {
     local query="$1"
-    docker exec -i $(docker ps -qf "name=db") mysql -h"$DB_HOST" -u"$DB_USERNAME" -p"$DB_PASSWORD" "$DB_DATABASE" -N -e "$query" 2>&1 | grep -v "mysql: \[Warning\]"
+    mysql -h"$DB_HOST" -P"$DB_PORT" -u"$DB_USERNAME" -p"$DB_PASSWORD" "$DB_DATABASE" -N -e "$query" 2>&1 | grep -v "mysql: \[Warning\]"
 }
 
 # Verificar conexión a la base de datos
-echo -e "${BLUE}[1/6]${NC} Verificando conexión a la base de datos..."
+echo -e "${BLUE}[1/6]${NC} Verificando conexión a la base de datos local..."
 if execute_query "SELECT 1;" > /dev/null 2>&1; then
-    echo -e "${GREEN}✓${NC} Conexión exitosa a la base de datos '${DB_DATABASE}'"
+    echo -e "${GREEN}✓${NC} Conexión exitosa a la base de datos '${DB_DATABASE}' en ${DB_HOST}:${DB_PORT}"
 else
-    echo -e "${RED}✗${NC} Error: No se pudo conectar a la base de datos"
-    echo -e "${YELLOW}Asegúrate de que Docker esté ejecutándose y la base de datos esté activa${NC}"
+    echo -e "${RED}✗${NC} Error: No se pudo conectar a la base de datos local"
+    echo -e "${YELLOW}Asegúrate de que MySQL esté ejecutándose en el puerto ${DB_PORT}${NC}"
     exit 1
 fi
 
@@ -139,9 +140,9 @@ assign_permission "View:ProximasCitasWidget" "cliente"
 echo -e "${GREEN}    ✓ Cliente: 10 permisos asignados${NC}"
 
 # -----------------------------------------------------------------------------
-# ROL: PROFESIONAL (15 permisos)
+# ROL: PROFESIONAL (17 permisos)
 # -----------------------------------------------------------------------------
-echo -e "\n${CYAN}  → Asignando permisos a rol 'profesional' (15 permisos)${NC}"
+echo -e "\n${CYAN}  → Asignando permisos a rol 'profesional' (17 permisos)${NC}"
 
 # BloqueHorarios (CRUD completo de los propios)
 assign_permission "ViewAny:BloqueHorario" "profesional"
@@ -155,9 +156,11 @@ assign_permission "ViewAny:Reserva" "profesional"
 assign_permission "View:Reserva" "profesional"
 assign_permission "Update:Reserva" "profesional"
 
-# Tratamientos (solo lectura)
+# Tratamientos (ver, crear y editar solo los propios - policy controlada)
 assign_permission "ViewAny:Tratamiento" "profesional"
 assign_permission "View:Tratamiento" "profesional"
+assign_permission "Create:Tratamiento" "profesional"
+assign_permission "Update:Tratamiento" "profesional"
 
 # Reseñas (solo lectura - ver las que le hacen)
 assign_permission "ViewAny:Resena" "profesional"
@@ -168,7 +171,7 @@ assign_permission "View:MiPerfil" "profesional"
 assign_permission "View:ProfesionalStatsWidget" "profesional"
 assign_permission "View:ProximasCitasWidget" "profesional"
 
-echo -e "${GREEN}    ✓ Profesional: 15 permisos asignados${NC}"
+echo -e "${GREEN}    ✓ Profesional: 17 permisos asignados${NC}"
 
 # -----------------------------------------------------------------------------
 # ROL: RECEPCIONISTA (34 permisos)
@@ -297,10 +300,10 @@ else
     ERRORS=$((ERRORS + 1))
 fi
 
-if [ "$PROFESIONAL_COUNT" -eq 15 ]; then
-    echo -e "  ${GREEN}✓${NC} profesional:    $PROFESIONAL_COUNT permisos (esperado: 15)"
+if [ "$PROFESIONAL_COUNT" -eq 17 ]; then
+    echo -e "  ${GREEN}✓${NC} profesional:    $PROFESIONAL_COUNT permisos (esperado: 17)"
 else
-    echo -e "  ${RED}✗${NC} profesional:    $PROFESIONAL_COUNT permisos (esperado: 15)"
+    echo -e "  ${RED}✗${NC} profesional:    $PROFESIONAL_COUNT permisos (esperado: 17)"
     ERRORS=$((ERRORS + 1))
 fi
 
@@ -330,12 +333,14 @@ echo -e "\n${BLUE}[6/6]${NC} Generando reporte final..."
 
 echo ""
 echo -e "${BOLD}═══════════════════════════════════════════════════════════════${NC}"
-echo -e "${BOLD}               REPORTE DE ASIGNACIÓN DE PERMISOS               ${NC}"
+echo -e "${BOLD}          REPORTE DE ASIGNACIÓN DE PERMISOS (LOCAL)            ${NC}"
 echo -e "${BOLD}═══════════════════════════════════════════════════════════════${NC}"
+echo ""
+echo -e "${BOLD}Conexión:${NC} MySQL Local (${DB_HOST}:${DB_PORT})"
 echo ""
 echo -e "${BOLD}Resumen por Rol:${NC}"
 echo "  • cliente:        $CLIENTE_COUNT permisos (8.6% del total)"
-echo "  • profesional:    $PROFESIONAL_COUNT permisos (12.9% del total)"
+echo "  • profesional:    $PROFESIONAL_COUNT permisos (14.7% del total)"
 echo "  • recepcionista:  $RECEPCIONISTA_COUNT permisos (29.3% del total)"
 echo "  • publico:        $PUBLICO_COUNT permisos (sin acceso)"
 echo "  • super_admin:    $SUPER_ADMIN_COUNT permisos (100% - control total)"
@@ -348,7 +353,7 @@ if [ $ERRORS -eq 0 ]; then
     echo -e "${GREEN}${BOLD}✓ ÉXITO:${NC}${GREEN} Todos los permisos se asignaron correctamente${NC}"
     echo ""
     echo -e "${CYAN}Jerarquía de Permisos:${NC}"
-    echo "  super_admin (todos) > recepcionista (34) > profesional (15) > cliente (10) > publico (0)"
+    echo "  super_admin (todos) > recepcionista (34) > profesional (17) > cliente (10) > publico (0)"
     echo ""
     echo -e "${YELLOW}Nota:${NC} Los permisos destructivos (ForceDelete, Restore, etc.) son exclusivos del super_admin"
     echo ""

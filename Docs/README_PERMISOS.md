@@ -34,13 +34,13 @@ Antes de ejecutar el script, asegúrate de:
 ### Ejecución Simple
 
 ```bash
-./scripts/assign_permissions_to_roles.sh
+./scripts/assign_permissions_to_roles_docker.sh
 ```
 
 ### Ejecución con Bash Explícito
 
 ```bash
-bash scripts/assign_permissions_to_roles.sh
+bash scripts/assign_permissions_to_roles_docker.sh
 ```
 
 ## Distribución de Permisos
@@ -51,7 +51,7 @@ bash scripts/assign_permissions_to_roles.sh
 |-----|----------|-------------|-------------|
 | `publico` | **0** | 0% | Sin acceso al dashboard (no autenticado) |
 | `cliente` | **10** | 8.6% | Ver reservas propias, gestionar reseñas |
-| `profesional` | **15** | 12.9% | Gestionar bloqueos, ver/actualizar reservas |
+| `profesional` | **17** | 14.7% | Gestionar bloqueos, ver/actualizar reservas, gestionar tratamientos propios |
 | `recepcionista` | **34** | 29.3% | Gestión completa de operaciones diarias |
 | `super_admin` | **116** | 100% | Acceso total al sistema |
 
@@ -77,7 +77,7 @@ bash scripts/assign_permissions_to_roles.sh
 
 ---
 
-### 👨‍⚕️ Profesional (15 permisos)
+### 👨‍⚕️ Profesional (17 permisos)
 
 **BloqueHorarios** - CRUD completo (solo propios):
 - `ViewAny:BloqueHorario`
@@ -91,9 +91,11 @@ bash scripts/assign_permissions_to_roles.sh
 - `View:Reserva`
 - `Update:Reserva`
 
-**Tratamientos** - Solo lectura:
+**Tratamientos** - Ver, crear y editar (solo los propios):
 - `ViewAny:Tratamiento`
 - `View:Tratamiento`
+- `Create:Tratamiento` *(Policy: solo puede crear tratamientos asignados a sí mismo)*
+- `Update:Tratamiento` *(Policy: solo puede editar sus propios tratamientos)*
 
 **Reseñas** - Solo lectura (ver las que le hacen):
 - `ViewAny:Resena`
@@ -188,8 +190,8 @@ flowchart TD
   → Asignando permisos a rol 'cliente' (10 permisos)
     ✓ Cliente: 10 permisos asignados
 
-  → Asignando permisos a rol 'profesional' (15 permisos)
-    ✓ Profesional: 15 permisos asignados
+  → Asignando permisos a rol 'profesional' (17 permisos)
+    ✓ Profesional: 17 permisos asignados
 
   → Asignando permisos a rol 'recepcionista' (34 permisos)
     ✓ Recepcionista: 34 permisos asignados
@@ -205,7 +207,7 @@ flowchart TD
 Verificación de Permisos:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   ✓ cliente:        10 permisos (esperado: 10)
-  ✓ profesional:    15 permisos (esperado: 15)
+  ✓ profesional:    17 permisos (esperado: 17)
   ✓ recepcionista:  34 permisos (esperado: 34)
   ✓ publico:        0 permisos (esperado: 0)
   ✓ super_admin:    116 permisos (todos)
@@ -219,7 +221,7 @@ Verificación de Permisos:
 
 Resumen por Rol:
   • cliente:        10 permisos (8.6% del total)
-  • profesional:    15 permisos (12.9% del total)
+  • profesional:    17 permisos (14.7% del total)
   • recepcionista:  34 permisos (29.3% del total)
   • publico:        0 permisos (sin acceso)
   • super_admin:    116 permisos (100% - control total)
@@ -230,7 +232,7 @@ Total de roles configurados: 5
 ✓ ÉXITO: Todos los permisos se asignaron correctamente
 
 Jerarquía de Permisos:
-  super_admin (todos) > recepcionista (34) > profesional (15) > cliente (10) > publico (0)
+  super_admin (todos) > recepcionista (34) > profesional (17) > cliente (10) > publico (0)
 
 Nota: Los permisos destructivos (ForceDelete, Restore, etc.) son exclusivos del super_admin
 
@@ -273,7 +275,7 @@ php artisan permission:cache-reset
 php artisan permission:cache-reset
 
 # Ejecutar el script nuevamente
-./scripts/assign_permissions_to_roles.sh
+./scripts/assign_permissions_to_roles_docker.sh
 ```
 
 ## Integración con Workflow de Desarrollo
@@ -288,7 +290,7 @@ php artisan migrate:fresh --seed
 php artisan shield:generate --all
 
 # 3. Asignar permisos a roles
-./scripts/assign_permissions_to_roles.sh
+./scripts/assign_permissions_to_roles_docker.sh
 
 # 4. Crear super admin (si es necesario)
 php artisan shield:super-admin --user=1

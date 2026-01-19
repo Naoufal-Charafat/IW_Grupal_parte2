@@ -138,7 +138,7 @@ class ReservaForm
                     ->schema([
                         DatePicker::make('fecha')
                             ->label('Fecha de la cita')
-                            ->minDate(now())
+                            ->minDate(fn($record) => $record ? null : now())
                             ->required(),
                         TimePicker::make('hora_inicio')
                             ->label('Hora de inicio')
