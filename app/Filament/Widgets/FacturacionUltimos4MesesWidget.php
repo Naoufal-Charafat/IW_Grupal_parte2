@@ -12,7 +12,7 @@ class FacturacionUltimos4MesesWidget extends ChartWidget
 
     protected static ?int $sort = 4;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int | string | array $columnSpan = 1;
 
     /**
      * Verifica si el widget puede ser visto por el usuario actual.
@@ -52,10 +52,9 @@ class FacturacionUltimos4MesesWidget extends ChartWidget
                 [
                     'label' => 'Facturación (€)',
                     'data' => $importes->toArray(),
-                    'backgroundColor' => 'rgba(34, 197, 94, 0.2)',
+                    'backgroundColor' => 'rgba(34, 197, 94, 0.7)',
                     'borderColor' => 'rgb(34, 197, 94)',
-                    'borderWidth' => 2,
-                    'fill' => true,
+                    'borderWidth' => 1,
                 ],
             ],
             'labels' => $meses->toArray(),
@@ -64,7 +63,7 @@ class FacturacionUltimos4MesesWidget extends ChartWidget
 
     protected function getType(): string
     {
-        return 'line';
+        return 'bar';
     }
 
     protected function getOptions(): array
