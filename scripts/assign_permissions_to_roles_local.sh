@@ -243,16 +243,21 @@ echo -e "\n${CYAN}  → Rol 'publico' sin permisos (acceso no autenticado)${NC}"
 echo -e "${GREEN}    ✓ Publico: 0 permisos (por diseño)${NC}"
 
 # -----------------------------------------------------------------------------
-# ROL: SUPER_ADMIN (mantiene todos los permisos)
+# ROL: SUPER_ADMIN (mantiene todos los permisos + widgets exclusivos)
 # -----------------------------------------------------------------------------
-echo -e "\n${CYAN}  → Rol 'super_admin' mantiene todos los permisos${NC}"
+echo -e "\n${CYAN}  → Asignando permisos exclusivos a rol 'super_admin'${NC}"
+
+# Widgets de Facturación (exclusivos de super_admin)
+assign_permission "View:FacturacionAnualWidget" "super_admin"
+assign_permission "View:FacturacionUltimos4MesesWidget" "super_admin"
+
 SUPER_ADMIN_PERMISOS=$(execute_query_result "
     SELECT COUNT(*) 
     FROM role_has_permissions rhp
     JOIN roles r ON rhp.role_id = r.id
     WHERE r.name = 'super_admin';
 ")
-echo -e "${GREEN}    ✓ Super Admin: ${SUPER_ADMIN_PERMISOS} permisos (sin cambios)${NC}"
+echo -e "${GREEN}    ✓ Super Admin: ${SUPER_ADMIN_PERMISOS} permisos (control total + widgets exclusivos)${NC}"
 
 # =============================================================================
 # VERIFICACIÓN Y REPORTE
