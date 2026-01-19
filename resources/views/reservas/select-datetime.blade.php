@@ -246,8 +246,11 @@
             // Load time slots for this date
             loadTimeSlots(date);
 
-            // Disable continue button until time is selected
-            document.getElementById('continue-btn').disabled = true;
+            // Disable continue button until time is selected (if exists)
+            const continueBtn = document.getElementById('continue-btn');
+            if (continueBtn) {
+                continueBtn.disabled = true;
+            }
         }
 
         function loadTimeSlots(date) {
@@ -265,7 +268,13 @@
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    generateTimeSlots(date, data.horas_ocupadas);
+                    // Si la clínica está cerrada ese día
+                    if (data.cerrado) {
+                        container.innerHTML =
+                            `<p class="text-red-500 text-center py-4">${data.mensaje || 'La clínica está cerrada este día'}</p>`;
+                        return;
+                    }
+                    generateTimeSlots(date, data.horas_ocupadas, data.hora_apertura, data.hora_cierre);
                 })
                 .catch(error => {
                     console.error('Error fetching availability:', error);
@@ -274,23 +283,29 @@
                 });
         }
 
-        function generateTimeSlots(date, horasOcupadas = []) {
+        function generateTimeSlots(date, horasOcupadas = [], horaApertura = '09:00', horaCierre = '19:00') {
             const container = document.getElementById('time-slots-container');
             const slots = [];
 
-            // generar citas entre 9:00 a 19:00
-            for (let hour = 9; hour < 19; hour++) {
-                for (let minute = 0; minute < 60; minute += 30) {
-                    const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+            // Convertir horas a minutos para facilitar la comparación
+            const [horaAperturaH, horaAperturaM] = horaApertura.split(':').map(Number);
+            const [horaCierreH, horaCierreM] = horaCierre.split(':').map(Number);
+            const minutosApertura = horaAperturaH * 60 + horaAperturaM;
+            const minutosCierre = horaCierreH * 60 + horaCierreM;
 
-                    // Check if this time slot is booked
-                    const isBooked = isTimeSlotOccupied(timeString, horasOcupadas);
+            // Generar citas cada 30 minutos entre hora de apertura y cierre
+            for (let minutos = minutosApertura; minutos < minutosCierre; minutos += 30) {
+                const hour = Math.floor(minutos / 60);
+                const minute = minutos % 60;
+                const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
 
-                    slots.push({
-                        time: timeString,
-                        available: !isBooked
-                    });
-                }
+                // Check if this time slot is booked
+                const isBooked = isTimeSlotOccupied(timeString, horasOcupadas);
+
+                slots.push({
+                    time: timeString,
+                    available: !isBooked
+                });
             }
 
             container.innerHTML = '<div class="grid grid-cols-3 gap-3"></div>';

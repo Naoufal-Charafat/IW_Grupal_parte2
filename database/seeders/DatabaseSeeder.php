@@ -90,9 +90,19 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // 9. Crear bloques de horario para dos profesionales
+        // 9. Crear horario de la clínica (horarios de apertura y cierre por día)
+        $this->call([
+            HorarioClinicaSeeder::class,
+        ]);
+
+        // 10. Crear bloques de horario para dos profesionales
         $this->call([
             BloqueHorarioSeeder::class,
+        ]);
+
+        // 11. Crear mensajes de contacto simulados
+        $this->call([
+            ContactMessageSeeder::class,
         ]);
     }
 }
