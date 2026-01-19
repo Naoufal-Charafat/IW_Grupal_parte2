@@ -217,9 +217,16 @@ Shield ya está configurado automáticamente, pero si necesitas regenerar los pe
 # Generar permisos y políticas para todos los recursos
 php artisan shield:generate --all --panel=admin
 
-# Limpiar caché de permisos si es necesario
+# Asignar permisos a roles según lógica de negocio
+./scripts/assign_permissions_to_roles_docker.sh
+# O alternativamente:
+php artisan permissions:assign-to-roles --force
+
+# Limpiar caché de permisos
 php artisan permission:cache-reset
 ```
+
+> 📖 Ver [Guía Completa de Permisos](./scripts/PERMISOS_GUIA_COMPLETA.md) para más detalles
 
 #### 3.5. Ejecutar los Seeders
 
@@ -585,13 +592,36 @@ npm run dev        # Terminal 2
 
 ## 👥 Roles y Funcionalidades
 
-| Rol | Funciones Principales |
-|-----|----------------------|
-| **Público** | Ver información, consultar horarios, registrarse |
-| **Cliente** | Crear citas, ver historial, realizar pagos, comprar |
-| **Profesional** | Ver agenda, bloquear horarios, anotar citas |
-| **Recepcionista** | CRUD completo de citas, asignar salas, notificar |
-| **Administrador** | Gestión completa: usuarios, salas, reportes, config, roles |
+| Rol | Permisos | Funciones Principales |
+|-----|----------|----------------------|
+| **Público** | 0 | Ver información, consultar horarios, registrarse |
+| **Cliente** | 10 | Crear citas, ver historial, realizar pagos, comprar, gestionar reseñas |
+| **Profesional** | 15 | Ver agenda, bloquear horarios, anotar citas, ver reseñas |
+| **Recepcionista** | 34 | CRUD completo de citas, asignar salas, notificar, gestionar usuarios |
+| **Administrador** | 116 | Gestión completa: usuarios, salas, reportes, config, roles |
+
+### 🔐 Asignación Automática de Permisos
+
+El proyecto incluye un sistema automatizado de asignación de permisos a roles. Después de ejecutar las migraciones y generar los permisos con Shield, utiliza uno de estos métodos:
+
+**Método 1: Script Bash** (Recomendado)
+```bash
+./scripts/assign_permissions_to_roles_docker.sh
+```
+
+**Método 2: Comando Artisan**
+```bash
+php artisan permissions:assign-to-roles --force
+```
+
+Este sistema asigna automáticamente los permisos según la lógica de negocio:
+- ✅ **Idempotente**: Puede ejecutarse múltiples veces sin duplicar
+- ✅ **Verificación automática**: Valida que los permisos se asignaron correctamente
+- ✅ **Reporte detallado**: Muestra un resumen completo de la asignación
+
+📖 **Documentación completa:**
+- [Guía de Permisos](./scripts/PERMISOS_GUIA_COMPLETA.md)
+- [Plan de Asignación](./plans/script-asignacion-permisos.md)
 
 ---
 

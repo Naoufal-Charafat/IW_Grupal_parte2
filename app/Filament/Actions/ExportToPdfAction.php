@@ -45,10 +45,32 @@ class ExportToPdfAction
                 // Calculate date range based on period
                 [$startDate, $endDate] = self::getDateRange($data['period'], $data);
 
-                // Query reservations
-                $reservas = Reserva::with(['user', 'profesional', 'habitacion', 'tratamiento'])
-                    ->whereBetween('fecha', [$startDate, $endDate])
-                    ->orderBy('fecha')
+                // Obtener el usuario autenticado
+                $user = auth()->user();
+
+                // Iniciar la consulta base
+                $query = Reserva::with(['user', 'profesional', 'habitacion', 'tratamiento'])
+                    ->whereBetween('fecha', [$startDate, $endDate]);
+
+                // Aplicar filtros según el rol del usuario
+                if ($user->hasRole('profesional')) {
+                    $profesional = $user->profesional;
+
+                    // Si no tiene un registro en la tabla profesionales, no exportar nada
+                    if (!$profesional) {
+                        $query->whereRaw('1 = 0');
+                    } else {
+                        // Filtrar solo las reservas de este profesional
+                        $query->where('profesional_id', $profesional->id);
+                    }
+                } elseif ($user->hasRole('cliente')) {
+                    // Filtrar solo las reservas del cliente
+                    $query->where('user_id', $user->id);
+                }
+                // Para recepcionista y super_admin, no se aplica filtro adicional
+
+                // Ejecutar la consulta
+                $reservas = $query->orderBy('fecha')
                     ->orderBy('hora_inicio')
                     ->get();
 

@@ -100,6 +100,7 @@ class Profesional extends Model
                     'inicio' => $reserva->hora_inicio->format('H:i'),
                     'fin' => $reserva->hora_fin->format('H:i'),
                 ];
-            });
+            })
+            ->toArray();
     }
 }

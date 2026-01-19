@@ -6,11 +6,43 @@ use App\Models\Reserva;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Number;
 
 class ReservaExporter extends Exporter
 {
     protected static ?string $model = Reserva::class;
+
+    /**
+     * Aplicar filtros según el rol del usuario
+     * Los profesionales solo pueden exportar sus propias reservas
+     * Los clientes solo pueden exportar sus propias reservas
+     */
+    public static function modifyQuery(Builder $query): Builder
+    {
+        $user = auth()->user();
+
+        // Si el usuario es profesional, filtrar solo sus reservas
+        if ($user->hasRole('profesional')) {
+            $profesional = $user->profesional;
+
+            // Si no tiene un registro en la tabla profesionales, no exportar nada
+            if (!$profesional) {
+                return $query->whereRaw('1 = 0');
+            }
+
+            // Filtrar solo las reservas de este profesional
+            return $query->where('profesional_id', $profesional->id);
+        }
+
+        // Si el usuario es cliente, filtrar solo sus reservas
+        if ($user->hasRole('cliente')) {
+            return $query->where('user_id', $user->id);
+        }
+
+        // Para otros roles (recepcionista, super_admin), exportar todas las reservas
+        return $query;
+    }
 
     public static function getColumns(): array
     {
@@ -23,7 +55,7 @@ class ReservaExporter extends Exporter
                 ->label('Usuario'),
             ExportColumn::make('es_para_otro')
                 ->label('Es para Otro')
-                ->formatStateUsing(fn ($state) => $state ? 'Sí' : 'No'),
+                ->formatStateUsing(fn($state) => $state ? 'Sí' : 'No'),
             ExportColumn::make('nombre_paciente')
                 ->label('Nombre del Paciente'),
             ExportColumn::make('email_paciente')
@@ -50,7 +82,7 @@ class ReservaExporter extends Exporter
                 ->label('Estado de Pago'),
             ExportColumn::make('monto_total')
                 ->label('Monto Total')
-                ->formatStateUsing(fn ($state) => number_format($state, 2) . ' €'),
+                ->formatStateUsing(fn($state) => number_format($state, 2) . ' €'),
             ExportColumn::make('expira_en')
                 ->label('Expira en'),
             ExportColumn::make('created_at')
