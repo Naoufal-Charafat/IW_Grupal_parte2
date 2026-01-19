@@ -96,4 +96,9 @@ class TratamientoStatsWidget extends ChartWidget
             ],
         ];
     }
+
+    public static function canView(): bool
+    {
+        return auth()->check() && auth()->user()->hasAnyRole(['admin', 'super_admin']);
+    }
 }
