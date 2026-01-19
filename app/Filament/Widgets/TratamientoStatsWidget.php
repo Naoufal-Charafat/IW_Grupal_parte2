@@ -11,7 +11,7 @@ class TratamientoStatsWidget extends ChartWidget
     protected ?string $heading = 'Estadísticas de Tratamientos';
 
     protected static ?int $sort = 3;
-    
+
     protected int | string | array $columnSpan = [
         'md' => 1,
         'xl' => 1,
