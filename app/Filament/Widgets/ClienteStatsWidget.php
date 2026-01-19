@@ -8,6 +8,11 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class ClienteStatsWidget extends BaseWidget
 {
+
+    protected function getView(): string
+    {
+        return 'filament.widgets.cliente-stats-widget';
+    }
     protected static ?int $sort = 0;
 
     /**
