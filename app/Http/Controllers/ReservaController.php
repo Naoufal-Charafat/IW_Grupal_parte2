@@ -282,6 +282,23 @@ class ReservaController extends Controller
             return response()->json(['error' => 'Fecha requerida'], 400);
         }
 
+        // Obtener el día de la semana (0 = Domingo, 1 = Lunes, ..., 6 = Sábado)
+        $diaSemana = date('w', strtotime($fecha));
+
+        // Consultar el horario de la clínica para este día
+        $horarioClinica = \App\Models\HorarioClinica::where('dia', $diaSemana)->first();
+
+        // Si no hay horario o no es día laboral, retornar que la clínica está cerrada
+        if (!$horarioClinica || !$horarioClinica->es_dia_laboral) {
+            return response()->json([
+                'cerrado' => true,
+                'mensaje' => 'La clínica está cerrada este día',
+                'horas_ocupadas' => [],
+                'hora_apertura' => null,
+                'hora_cierre' => null
+            ]);
+        }
+
         // Obtener horas ocupadas por reservas
         $horasOcupadas = $profesional->getHorasOcupadas($fecha);
 
@@ -301,7 +318,10 @@ class ReservaController extends Controller
         $horasOcupadas = array_merge($horasOcupadas, $bloqueos);
 
         return response()->json([
-            'horas_ocupadas' => $horasOcupadas
+            'cerrado' => false,
+            'horas_ocupadas' => $horasOcupadas,
+            'hora_apertura' => $horarioClinica->hora_apertura->format('H:i'),
+            'hora_cierre' => $horarioClinica->hora_cierre->format('H:i')
         ]);
     }
 }
