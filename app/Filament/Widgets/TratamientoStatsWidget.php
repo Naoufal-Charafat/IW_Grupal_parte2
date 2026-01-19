@@ -12,10 +12,7 @@ class TratamientoStatsWidget extends ChartWidget
 
     protected static ?int $sort = 3;
 
-    protected int | string | array $columnSpan = [
-        'md' => 1,
-        'xl' => 1,
-    ];
+    protected int | string | array $columnSpan = 1;
 
     protected function getData(): array
     {
